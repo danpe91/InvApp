@@ -1,0 +1,13 @@
+# java files
+*.class
+
+# netbeans files
+nbproject/private/
+
+# generic files
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
