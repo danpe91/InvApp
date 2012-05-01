@@ -5,15 +5,20 @@ import java.sql.DriverManager;
 
 public class MySQLConnector {
     
-    public static Connection getMySqlConnection() throws Exception{
+    public static Connection getMySqlConnection() {
         String driver = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/inventory";
         String username = "root";
         String password = "toor";
+        Connection conn = null;
+        try {
+            Class.forName(driver);
+        conn = DriverManager.getConnection(url, username, password);
 
-        Class.forName(driver);
-        Connection conn = DriverManager.getConnection(url, username, password);
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         return conn;
     }
 }

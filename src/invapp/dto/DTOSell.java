@@ -11,6 +11,20 @@ public class DTOSell {
     private String seller;
     private Date date;
 
+    public DTOSell() {
+        
+    }
+    
+    public DTOSell(Integer idAccesory, Integer idSell, Integer quantity,
+                    String accesory, String seller, Date date) {
+        this.idAccesory = idAccesory;
+        this.idSell = idSell;
+        this.quantity = quantity;
+        this.accesory = accesory;
+        this.seller = seller;
+        this.date = date;
+        
+    }
     public String getAccesory() {
         return accesory;
     }

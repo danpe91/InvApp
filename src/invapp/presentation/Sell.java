@@ -4,7 +4,9 @@
  */
 package invapp.presentation;
 
-import javax.swing.ComboBoxModel;
+import invapp.data.DAOInventory;
+import invapp.dto.DTOInventory;
+import java.util.List;
 
 /**
  *
@@ -12,18 +14,22 @@ import javax.swing.ComboBoxModel;
  */
 public class Sell extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Sell
-     */
+    private List<DTOInventory> listOfProducts;
+            
     public Sell() {
         initComponents();
         setVisible(true);
     }
 
     public void initCombo() {
-        
-        
+        productosComboBox.removeAllItems();
+        productosComboBox.addItem("Seleccione un producto...");
+        listOfProducts = new DAOInventory().readInventario();
+        for (DTOInventory prod : listOfProducts) {
+            productosComboBox.addItem(prod.getAccesory());
+        }
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,6 +40,7 @@ public class Sell extends javax.swing.JFrame {
     private void initComponents() {
 
         productosComboBox = new javax.swing.JComboBox();
+        newSellButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -52,6 +59,19 @@ public class Sell extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         productosComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        initCombo();
+        productosComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productosComboBoxActionPerformed(evt);
+            }
+        });
+
+        newSellButton.setText("Aceptar");
+        newSellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newSellButtonActionPerformed(evt);
+            }
+        });
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -121,8 +141,13 @@ public class Sell extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(newSellButton)))
                 .addContainerGap(365, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,7 +155,9 @@ public class Sell extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(newSellButton)
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         pack();
@@ -139,6 +166,17 @@ public class Sell extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void productosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productosComboBoxActionPerformed
+        productosComboBox.removeItem("Seleccione un producto...");
+        // TODO agregar componentes de la interfaz y automatizar el llenado de campos al seleccionar producto
+    }//GEN-LAST:event_productosComboBoxActionPerformed
+
+    private void newSellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSellButtonActionPerformed
+        
+        System.out.println("index Seleccionado" + productosComboBox.getSelectedIndex());
+        System.out.println("index Seleccionado" + productosComboBox.getSelectedItem());
+    }//GEN-LAST:event_newSellButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,6 +230,7 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JButton newSellButton;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JComboBox productosComboBox;
