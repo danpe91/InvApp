@@ -136,13 +136,13 @@ public class Welcome extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
-        Inventario inv = new Inventario();
+        Inventory inv = new Inventory();
         this.setVisible(false);
         inv.setVisible(true);
     }//GEN-LAST:event_InventarioButtonActionPerformed
 
     private void VentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentaButtonActionPerformed
-        Venta vta = new Venta();
+        Sell vta = new Sell();
         this.setVisible(false);
         vta.setVisible(true);
     }//GEN-LAST:event_VentaButtonActionPerformed

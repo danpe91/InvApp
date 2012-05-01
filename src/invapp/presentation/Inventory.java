@@ -1,7 +1,7 @@
 package invapp.presentation;
 
-import invapp.data.DAOInventario;
-import invapp.dto.DTOInventario;
+import invapp.data.DAOInventory;
+import invapp.dto.DTOInventory;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -9,12 +9,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author daniel
  */
-public class Inventario extends javax.swing.JFrame {
+public class Inventory extends javax.swing.JFrame {
     
-    public Inventario() {
+    public Inventory() {
         initComponents();
         editButton.setVisible(false);
-        llenarTabla(new DAOInventario().readInventario());
+        llenarTabla(new DAOInventory().readInventario());
+        setVisible(true);
     }
 
     /**
@@ -188,23 +189,21 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void nuevoAccesorioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAccesorioButtonActionPerformed
-        NuevoProducto na = new NuevoProducto();
+        NewProduct na = new NewProduct();
         this.setVisible(false);
-        na.setVisible(true);
     }//GEN-LAST:event_nuevoAccesorioButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int pos = inventoryTable.getSelectedRow();
-        NuevoProducto ed = new NuevoProducto(new DAOInventario().readInventario().get(pos));
+        NewProduct ed = new NewProduct(new DAOInventory().readInventario().get(pos));
         this.setVisible(false);
-        ed.setVisible(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
         editButton.setVisible(true);
     }//GEN-LAST:event_inventoryTableMouseClicked
 
-    private void llenarTabla(List<DTOInventario> inventoryList) {
+    private void llenarTabla(List<DTOInventory> inventoryList) {
         DefaultTableModel currentModel = 
                 (DefaultTableModel) this.inventoryTable.getModel();
         
@@ -212,13 +211,13 @@ public class Inventario extends javax.swing.JFrame {
             currentModel.removeRow(i);
         }
        
-        for (DTOInventario inv : inventoryList) {
+        for (DTOInventory inv : inventoryList) {
             Object[] row = {
-                inv.getAccesorio(),
-                inv.getExistencia(),
-                inv.getVendidas(),
-                inv.getPrecioUnitario(),
-                inv.getTalla()
+                inv.getAccesory(),
+                inv.getStock(),
+                inv.getSold(),
+                inv.getUnitPrice(),
+                inv.getSize()
             };
             currentModel.addRow(row);
         }
@@ -246,7 +245,7 @@ public class Inventario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -256,7 +255,7 @@ public class Inventario extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new Inventario().setVisible(true);
+                new Inventory().setVisible(true);
             }
         });
     }

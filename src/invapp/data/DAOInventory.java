@@ -1,6 +1,6 @@
 package invapp.data;
 
-import invapp.dto.DTOInventario;
+import invapp.dto.DTOInventory;
 import invapp.helper.MySQLConnector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DAOInventario {
+public class DAOInventory {
     
-    public DAOInventario() {
+    public DAOInventory() {
         
     }
 
-    public List<DTOInventario> readInventario() {
-        List<DTOInventario> lista = new LinkedList<DTOInventario>();
+    public List<DTOInventory> readInventario() {
+        List<DTOInventory> lista = new LinkedList<DTOInventory>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
@@ -27,8 +27,8 @@ public class DAOInventario {
             rs = cs.executeQuery();
             
             while(rs.next()) {
-                lista.add(new DTOInventario(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
-                        rs.getInt("sold"), rs.getDouble("unitprice"), rs.getString("size")));
+                lista.add(new DTOInventory(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
+                        rs.getDouble("unitprice"), rs.getString("size")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,19 +47,18 @@ public class DAOInventario {
         return lista;
     }
     
-    public void insertProduct(DTOInventario prod) {
+    public void insertProduct(DTOInventory prod) {
         Connection conn = null;
         CallableStatement cs;
         
         try {
             
             conn = MySQLConnector.getMySqlConnection();
-            cs = conn.prepareCall("call InsertProduct(?,?,?,?,?)");
-            cs.setString("p_accesoryname", prod.getAccesorio());
-            cs.setInt("p_stock", prod.getExistencia());
-            cs.setInt("p_sold", prod.getVendidas());
-            cs.setDouble("p_unitprice", prod.getPrecioUnitario());
-            cs.setString("p_size", prod.getTalla());
+            cs = conn.prepareCall("call InsertProduct(?,?,?,?)");
+            cs.setString("p_accesoryname", prod.getAccesory());
+            cs.setInt("p_stock", prod.getStock());
+            cs.setDouble("p_unitprice", prod.getUnitPrice());
+            cs.setString("p_size", prod.getSize());
             
             cs.executeUpdate();
             
@@ -76,20 +75,19 @@ public class DAOInventario {
         }
     }
     
-    public void editProduct(DTOInventario prod) {
+    public void editProduct(DTOInventory prod) {
         Connection conn = null;
         CallableStatement cs;
         
         try {
             
             conn = MySQLConnector.getMySqlConnection();
-            cs = conn.prepareCall("call UpdateProduct(?,?,?,?,?,?)");
-            cs.setInt("p_idproduct", prod.getIdAccesorio());
-            cs.setString("p_accesoryname", prod.getAccesorio());
-            cs.setInt("p_stock", prod.getExistencia());
-            cs.setInt("p_sold", prod.getVendidas());
-            cs.setDouble("p_unitprice", prod.getPrecioUnitario());
-            cs.setString("p_size", prod.getTalla());
+            cs = conn.prepareCall("call UpdateProduct(?,?,?,?,?)");
+            cs.setInt("p_idproduct", prod.getIdAccesory());
+            cs.setString("p_accesoryname", prod.getAccesory());
+            cs.setInt("p_stock", prod.getStock());
+            cs.setDouble("p_unitprice", prod.getUnitPrice());
+            cs.setString("p_size", prod.getSize());
             
             cs.executeUpdate();
             

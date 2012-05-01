@@ -1,54 +1,55 @@
 package invapp.presentation;
 
-import invapp.data.DAOInventario;
-import invapp.dto.DTOInventario;
+import invapp.data.DAOInventory;
+import invapp.dto.DTOInventory;
 
 /**
  *
  * @author daniel
  */
-public class NuevoProducto extends javax.swing.JFrame {
+public class NewProduct extends javax.swing.JFrame {
 
     private boolean edit;
     private Integer idProduct;
-    private Integer sold;
-    public NuevoProducto(DTOInventario inv) {
+    
+    public NewProduct(DTOInventory inv) {
         initComponents();
-        accesoryTextField.setText(inv.getAccesorio());
-        quantitySpinner.setValue(inv.getExistencia());
-        unitPriceTextField.setText(inv.getPrecioUnitario().toString());
-        sizeTextField.setText(inv.getTalla());
+        accesoryTextField.setText(inv.getAccesory());
+        quantitySpinner.setValue(inv.getStock());
+        unitPriceTextField.setText(inv.getUnitPrice().toString());
+        sizeTextField.setText(inv.getSize());
         agregarButton.setText("Guardar");
-        idProduct = inv.getIdAccesorio();
+        idProduct = inv.getIdAccesory();
         edit = true;
-        sold = inv.getVendidas();
-        
+        setVisible(true);
     }
     
-    public NuevoProducto() {
+    public NewProduct() {
         initComponents();
+        setVisible(true);
     }
 
     public void insertAccesory() {
-        DTOInventario nacc = new DTOInventario(0, accesoryTextField.getText(),
+        DTOInventory nacc = new DTOInventory(0, accesoryTextField.getText(),
                 (Integer)quantitySpinner.getValue(),
                 0, Double.parseDouble(unitPriceTextField.getText()),
                 sizeTextField.getText());
-        new DAOInventario().insertProduct(nacc);
+        new DAOInventory().insertProduct(nacc);
         accesoryTextField.setText("");
         quantitySpinner.setValue(0);
         unitPriceTextField.setText("");
     }
     
     public void editAccesory() {
-        DTOInventario nacc = new DTOInventario(idProduct, accesoryTextField.getText(),
+        DTOInventory nacc = new DTOInventory(idProduct, accesoryTextField.getText(),
                 (Integer)quantitySpinner.getValue(),
-                sold, Double.parseDouble(unitPriceTextField.getText()),
+                Double.parseDouble(unitPriceTextField.getText()),
                 sizeTextField.getText());
-        new DAOInventario().editProduct(nacc);
+        new DAOInventory().editProduct(nacc);
         accesoryTextField.setText("");
         quantitySpinner.setValue(0);
         unitPriceTextField.setText("");
+        sizeTextField.setText("");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -237,13 +238,14 @@ public class NuevoProducto extends javax.swing.JFrame {
     private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
         if(!edit)
             insertAccesory();
-        else
+        else {
             editAccesory();
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
-        Inventario inv = new Inventario();
-        inv.setVisible(true);
+        Inventory inv = new Inventory();
         this.setVisible(false);
     }//GEN-LAST:event_salirButtonActionPerformed
 
@@ -268,13 +270,13 @@ public class NuevoProducto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -284,7 +286,7 @@ public class NuevoProducto extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new NuevoProducto().setVisible(true);
+                new NewProduct().setVisible(true);
             }
         });
     }
