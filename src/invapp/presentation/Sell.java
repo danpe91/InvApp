@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package invapp.presentation;
 
 import invapp.data.DAOInventory;
 import invapp.dto.DTOInventory;
+import invapp.dto.DTOSell;
 import java.util.List;
 
 /**
@@ -15,18 +12,27 @@ import java.util.List;
 public class Sell extends javax.swing.JFrame {
 
     private List<DTOInventory> listOfProducts;
-            
+    private DTOInventory currentProduct;
+    private List<DTOSell> listForSell;
     public Sell() {
         initComponents();
         setVisible(true);
     }
 
+    /*
+     * idAccesory;
+    private Integer idSell;
+    private Integer quantity;
+    private String accesory;
+    private String seller;
+    private Date date;
+     */
     public void initCombo() {
-        productosComboBox.removeAllItems();
-        productosComboBox.addItem("Seleccione un producto...");
+        productsComboBox.removeAllItems();
+        productsComboBox.addItem("Seleccione un producto...");
         listOfProducts = new DAOInventory().readInventario();
         for (DTOInventory prod : listOfProducts) {
-            productosComboBox.addItem(prod.getAccesory());
+            productsComboBox.addItem(prod.getAccesory());
         }
     }
     
@@ -39,8 +45,17 @@ public class Sell extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        productosComboBox = new javax.swing.JComboBox();
+        productsComboBox = new javax.swing.JComboBox();
         newSellButton = new javax.swing.JButton();
+        quantitySpinner = new javax.swing.JSpinner();
+        costTextField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        totalTextField = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -58,11 +73,11 @@ public class Sell extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        productosComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        productsComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         initCombo();
-        productosComboBox.addActionListener(new java.awt.event.ActionListener() {
+        productsComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                productosComboBoxActionPerformed(evt);
+                productsComboBoxActionPerformed(evt);
             }
         });
 
@@ -72,6 +87,51 @@ public class Sell extends javax.swing.JFrame {
                 newSellButtonActionPerformed(evt);
             }
         });
+
+        quantitySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                quantitySpinnerStateChanged(evt);
+            }
+        });
+
+        costTextField.setEditable(false);
+
+        jLabel1.setText("Producto");
+
+        jLabel2.setText("Cantidad");
+
+        jLabel3.setText("Costo");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Accesorio", "Cantidad", "Costo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel4.setFont(new java.awt.Font("Cantarell", 1, 12)); // NOI18N
+        jLabel4.setText("Total");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -143,21 +203,50 @@ public class Sell extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addComponent(newSellButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(newSellButton)))
-                .addContainerGap(365, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(costTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(productsComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 160, Short.MAX_VALUE)
+                            .addComponent(quantitySpinner)
+                            .addComponent(totalTextField))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(productsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(costTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(newSellButton)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addGap(149, 149, 149))
         );
 
         pack();
@@ -167,16 +256,33 @@ public class Sell extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void productosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productosComboBoxActionPerformed
-        productosComboBox.removeItem("Seleccione un producto...");
-        // TODO agregar componentes de la interfaz y automatizar el llenado de campos al seleccionar producto
-    }//GEN-LAST:event_productosComboBoxActionPerformed
+    private void productsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsComboBoxActionPerformed
+        productsComboBox.removeItem("Seleccione un producto...");
+        
+        for(DTOInventory prod : listOfProducts) {
+            if (prod.getAccesory().equals(productsComboBox.getSelectedItem())) {
+                currentProduct = prod;
+                quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, prod.getStock().intValue(), 1));
+                costTextField.setText(prod.getUnitPrice().toString());
+                break;
+            }
+        }
+        
+    }//GEN-LAST:event_productsComboBoxActionPerformed
 
     private void newSellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSellButtonActionPerformed
         
-        System.out.println("index Seleccionado" + productosComboBox.getSelectedIndex());
-        System.out.println("index Seleccionado" + productosComboBox.getSelectedItem());
+        System.out.println("index Seleccionado" + productsComboBox.getSelectedIndex());
+        System.out.println("index Seleccionado" + productsComboBox.getSelectedItem());
     }//GEN-LAST:event_newSellButtonActionPerformed
+
+    private void quantitySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quantitySpinnerStateChanged
+        if(!productsComboBox.getSelectedItem().equals("Seleccione un producto...")) {
+            double cost = currentProduct.getUnitPrice().doubleValue() * Double.valueOf(quantitySpinner.getValue().toString());
+            costTextField.setText(String.valueOf(cost));
+        }
+        
+    }//GEN-LAST:event_quantitySpinnerStateChanged
 
     /**
      * @param args the command line arguments
@@ -223,18 +329,27 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
+    private javax.swing.JTextField costTextField;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newSellButton;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JComboBox productosComboBox;
+    private javax.swing.JComboBox productsComboBox;
+    private javax.swing.JSpinner quantitySpinner;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JTextField totalTextField;
     // End of variables declaration//GEN-END:variables
 }
