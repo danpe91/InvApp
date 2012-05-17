@@ -1,7 +1,7 @@
 package invapp.presentation;
 
-import invapp.data.DAOInventory;
-import invapp.dto.DTOInventory;
+import invapp.business.LogicProduct;
+import invapp.dto.DTOProduct;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,7 +14,7 @@ public class Inventory extends javax.swing.JFrame {
     public Inventory() {
         initComponents();
         editButton.setVisible(false);
-        llenarTabla(new DAOInventory().readInventario());
+        llenarTabla(new LogicProduct().readProducts());
         setVisible(true);
     }
 
@@ -208,7 +208,7 @@ public class Inventory extends javax.swing.JFrame {
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int pos = inventoryTable.getSelectedRow();
-        NewProduct ed = new NewProduct(new DAOInventory().readInventario().get(pos));
+        NewProduct ed = new NewProduct(new LogicProduct().readProducts().get(pos));
         this.setVisible(false);
     }//GEN-LAST:event_editButtonActionPerformed
 
@@ -222,7 +222,7 @@ public class Inventory extends javax.swing.JFrame {
         
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
-    private void llenarTabla(List<DTOInventory> inventoryList) {
+    private void llenarTabla(List<DTOProduct> inventoryList) {
         DefaultTableModel currentModel = 
                 (DefaultTableModel) this.inventoryTable.getModel();
         
@@ -230,7 +230,7 @@ public class Inventory extends javax.swing.JFrame {
             currentModel.removeRow(i);
         }
        
-        for (DTOInventory inv : inventoryList) {
+        for (DTOProduct inv : inventoryList) {
             Object[] row = {
                 inv.getAccesory(),
                 inv.getStock(),

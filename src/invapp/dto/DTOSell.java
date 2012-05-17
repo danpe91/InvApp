@@ -1,52 +1,29 @@
 package invapp.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class DTOSell {
     
-    private Integer idAccesory;
     private Integer idSell;
+    private DTOProduct product;
     private Integer quantity;
-    private String accesory;
+    private Integer sellNumber;
     private String seller;
-    private Date date;
-
+    private Timestamp date;
+    
     public DTOSell() {
         
     }
     
-    public DTOSell(Integer idAccesory, Integer idSell, Integer quantity,
-                    String accesory, String seller, Date date) {
-        this.idAccesory = idAccesory;
+    public DTOSell(Integer idSell, Integer quantity, DTOProduct product,
+                    String seller, Timestamp date, Integer sellNumber) {
         this.idSell = idSell;
         this.quantity = quantity;
-        this.accesory = accesory;
+        this.product = product;
         this.seller = seller;
         this.date = date;
+        this.sellNumber = sellNumber;
         
-    }
-    public String getAccesory() {
-        return accesory;
-    }
-
-    public void setAccesory(String accesory) {
-        this.accesory = accesory;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Integer getIdAccesory() {
-        return idAccesory;
-    }
-
-    public void setIdAccesory(Integer idAccesory) {
-        this.idAccesory = idAccesory;
     }
 
     public Integer getIdSell() {
@@ -72,5 +49,29 @@ public class DTOSell {
     public void setSeller(String seller) {
         this.seller = seller;
     }
-        
+
+    public Integer getSellNumber() {
+        return sellNumber;
+    }
+    
+    public void setSellNumber(Integer sellNumber) {
+        this.sellNumber = sellNumber;
+    }
+
+    public DTOProduct getProduct() {
+        return product;
+    }
+
+    public void setProduct(DTOProduct product) {
+        this.product = product;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
 }

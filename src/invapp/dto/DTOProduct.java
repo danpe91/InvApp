@@ -1,6 +1,6 @@
 package invapp.dto;
 
-public class DTOInventory {
+public class DTOProduct {
     
     private Integer idAccesory;
     private String accesory;
@@ -9,11 +9,11 @@ public class DTOInventory {
     private Double unitPrice;
     private String size;
 
-    public DTOInventory() {
+    public DTOProduct() {
         
     }
     
-    public DTOInventory(Integer idAccesory, String accesory, Integer stock, 
+    public DTOProduct(Integer idAccesory, String accesory, Integer stock, 
                         Integer sold, Double unitPrice, String size) {
         this.idAccesory = idAccesory;
         this.accesory = accesory;
@@ -23,7 +23,7 @@ public class DTOInventory {
         this.size = size;
     }
 
-    public DTOInventory(Integer idAccesory, String accesory, Integer stock, 
+    public DTOProduct(Integer idAccesory, String accesory, Integer stock, 
                         Double unitPrice, String size) {
         this.idAccesory = idAccesory;
         this.accesory = accesory;

@@ -1,37 +1,25 @@
 package invapp.presentation;
 
-import invapp.data.DAOInventory;
-import invapp.dto.DTOInventory;
+import invapp.business.LogicProduct;
+import invapp.dto.DTOProduct;
 import invapp.dto.DTOSell;
 import java.util.List;
 
-/**
- *
- * @author daniel
- */
 public class Sell extends javax.swing.JFrame {
 
-    private List<DTOInventory> listOfProducts;
-    private DTOInventory currentProduct;
+    private List<DTOProduct> listOfProducts;
+    private DTOProduct currentProduct;
     private List<DTOSell> listForSell;
     public Sell() {
         initComponents();
         setVisible(true);
     }
 
-    /*
-     * idAccesory;
-    private Integer idSell;
-    private Integer quantity;
-    private String accesory;
-    private String seller;
-    private Date date;
-     */
     public void initCombo() {
         productsComboBox.removeAllItems();
         productsComboBox.addItem("Seleccione un producto...");
-        listOfProducts = new DAOInventory().readInventario();
-        for (DTOInventory prod : listOfProducts) {
+        listOfProducts = new LogicProduct().readProducts();
+        for (DTOProduct prod : listOfProducts) {
             productsComboBox.addItem(prod.getAccesory());
         }
     }
@@ -81,7 +69,7 @@ public class Sell extends javax.swing.JFrame {
             }
         });
 
-        newSellButton.setText("Aceptar");
+        newSellButton.setText("Vender");
         newSellButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newSellButtonActionPerformed(evt);
@@ -104,20 +92,20 @@ public class Sell extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Accesorio", "Cantidad", "Costo"
+                "Accesorio", "Cantidad", "Costo", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -259,7 +247,7 @@ public class Sell extends javax.swing.JFrame {
     private void productsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productsComboBoxActionPerformed
         productsComboBox.removeItem("Seleccione un producto...");
         
-        for(DTOInventory prod : listOfProducts) {
+        for(DTOProduct prod : listOfProducts) {
             if (prod.getAccesory().equals(productsComboBox.getSelectedItem())) {
                 currentProduct = prod;
                 quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, prod.getStock().intValue(), 1));

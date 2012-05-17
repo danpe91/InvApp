@@ -1,7 +1,7 @@
 package invapp.presentation;
 
-import invapp.data.DAOInventory;
-import invapp.dto.DTOInventory;
+import invapp.business.LogicProduct;
+import invapp.dto.DTOProduct;
 
 /**
  *
@@ -12,7 +12,7 @@ public class NewProduct extends javax.swing.JFrame {
     private boolean edit;
     private Integer idProduct;
     
-    public NewProduct(DTOInventory inv) {
+    public NewProduct(DTOProduct inv) {
         initComponents();
         accesoryTextField.setText(inv.getAccesory());
         quantitySpinner.setValue(inv.getStock());
@@ -30,22 +30,22 @@ public class NewProduct extends javax.swing.JFrame {
     }
 
     public void insertAccesory() {
-        DTOInventory nacc = new DTOInventory(0, accesoryTextField.getText(),
+        DTOProduct nacc = new DTOProduct(0, accesoryTextField.getText(),
                 (Integer)quantitySpinner.getValue(),
                 0, Double.parseDouble(unitPriceTextField.getText()),
                 sizeTextField.getText());
-        new DAOInventory().insertProduct(nacc);
+        new LogicProduct().insertProduct(nacc);
         accesoryTextField.setText("");
         quantitySpinner.setValue(0);
         unitPriceTextField.setText("");
     }
     
     public void editAccesory() {
-        DTOInventory nacc = new DTOInventory(idProduct, accesoryTextField.getText(),
+        DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
                 (Integer)quantitySpinner.getValue(),
                 Double.parseDouble(unitPriceTextField.getText()),
                 sizeTextField.getText());
-        new DAOInventory().editProduct(nacc);
+        new LogicProduct().editProduct(nacc);
         accesoryTextField.setText("");
         quantitySpinner.setValue(0);
         unitPriceTextField.setText("");
@@ -241,6 +241,7 @@ public class NewProduct extends javax.swing.JFrame {
         else {
             editAccesory();
             this.setVisible(false);
+            new Inventory();
         }
     }//GEN-LAST:event_agregarButtonActionPerformed
 

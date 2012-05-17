@@ -1,15 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package invapp.data;
 
 import invapp.dto.DTOSell;
 import invapp.helper.MySQLConnector;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +12,7 @@ import java.util.List;
  */
 public class DAOSell {
     
-    public List<DTOSell> readInventario() {
+    public List<DTOSell> readSells() {
         List<DTOSell> lista = new LinkedList<DTOSell>();
         Connection conn = null;
         ResultSet rs = null;
@@ -48,5 +41,32 @@ public class DAOSell {
             }
         }
         return lista;
+    }
+    
+    public void insertSell(DTOSell sell) {
+        Connection conn = null;
+        CallableStatement cs;
+        
+        try {
+            conn = MySQLConnector.getMySqlConnection();
+            cs = conn.prepareCall("call InsertSell(?,?,?,?,?)");
+            cs.setInt("p_idproduct", sell.getProduct().getIdAccesory());
+            cs.setInt("p_sellnumber", sell.getSellNumber());
+            cs.setInt("p_quantity", sell.getQuantity());
+            cs.setDouble("p_total", sell.getProduct().getUnitPrice() * sell.getQuantity());
+            cs.setTimestamp("p_date", sell.getDate());
+            cs.execute();
+            
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException sqe) {
+                sqe.printStackTrace();
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 package invapp.data;
 
-import invapp.dto.DTOInventory;
+import invapp.dto.DTOProduct;
 import invapp.helper.MySQLConnector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DAOInventory {
+public class DAOProduct {
     
-    public DAOInventory() {
+    public DAOProduct() {
         
     }
 
-    public List<DTOInventory> readInventario() {
-        List<DTOInventory> lista = new LinkedList<DTOInventory>();
+    public List<DTOProduct> readProducts() {
+        List<DTOProduct> lista = new LinkedList<DTOProduct>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
@@ -27,7 +27,7 @@ public class DAOInventory {
             rs = cs.executeQuery();
             
             while(rs.next()) {
-                lista.add(new DTOInventory(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
+                lista.add(new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
                         rs.getDouble("unitprice"), rs.getString("size")));
             }
         } catch (SQLException e) {
@@ -47,7 +47,7 @@ public class DAOInventory {
         return lista;
     }
     
-    public void insertProduct(DTOInventory prod) {
+    public void insertProduct(DTOProduct prod) {
         Connection conn = null;
         CallableStatement cs;
         
@@ -75,7 +75,7 @@ public class DAOInventory {
         }
     }
     
-    public void editProduct(DTOInventory prod) {
+    public void editProduct(DTOProduct prod) {
         Connection conn = null;
         CallableStatement cs;
         
