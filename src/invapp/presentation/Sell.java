@@ -1,18 +1,25 @@
 package invapp.presentation;
 
 import invapp.business.LogicProduct;
+import invapp.business.LogicSell;
 import invapp.dto.DTOProduct;
 import invapp.dto.DTOSell;
+import java.util.LinkedList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class Sell extends javax.swing.JFrame {
 
     private List<DTOProduct> listOfProducts;
-    private DTOProduct currentProduct;
     private List<DTOSell> listForSell;
+    private DTOProduct currentProduct;
+    private Integer sellNumber;
+    
     public Sell() {
+        sellNumber = new LogicSell().getNewSellNumber();
         initComponents();
         setVisible(true);
+        listForSell = new LinkedList<DTOSell>();
     }
 
     public void initCombo() {
@@ -24,6 +31,29 @@ public class Sell extends javax.swing.JFrame {
         }
     }
     
+    private void llenarTabla(List<DTOSell> products) {
+        DefaultTableModel currentModel = 
+                (DefaultTableModel) this.cartTable.getModel();
+        
+        for (int i = 0; i < currentModel.getRowCount(); i++) {
+            currentModel.removeRow(i);
+        }
+
+        // new String [] {
+//                "Accesorio", "Cantidad", "Costo", "Total"
+        for (DTOSell product : products) {
+            
+            Object[] row = {
+                product.getProduct().getAccesory(),
+                product.getQuantity(),
+                product.getProduct().getUnitPrice(),
+                product.getProduct().getUnitPrice() * product.getQuantity()
+            };
+            
+            currentModel.addRow(row);
+        }
+        this.cartTable.requestFocus();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,9 +71,10 @@ public class Sell extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        cartTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         totalTextField = new javax.swing.JTextField();
+        addToCartButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -90,12 +121,9 @@ public class Sell extends javax.swing.JFrame {
 
         jLabel3.setText("Costo");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        cartTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Accesorio", "Cantidad", "Costo", "Total"
@@ -116,10 +144,17 @@ public class Sell extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(cartTable);
 
         jLabel4.setFont(new java.awt.Font("Cantarell", 1, 12)); // NOI18N
         jLabel4.setText("Total");
+
+        addToCartButton.setText("Agregar");
+        addToCartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addToCartButtonActionPerformed(evt);
+            }
+        });
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -190,9 +225,12 @@ public class Sell extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(newSellButton))
+                        .addComponent(newSellButton)
+                        .addGap(89, 89, 89)
+                        .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,8 +244,8 @@ public class Sell extends javax.swing.JFrame {
                             .addComponent(productsComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 160, Short.MAX_VALUE)
                             .addComponent(quantitySpinner)
                             .addComponent(totalTextField))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -232,8 +270,10 @@ public class Sell extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(newSellButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newSellButton)
+                    .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(149, 149, 149))
         );
 
@@ -260,8 +300,9 @@ public class Sell extends javax.swing.JFrame {
 
     private void newSellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSellButtonActionPerformed
         
-        System.out.println("index Seleccionado" + productsComboBox.getSelectedIndex());
-        System.out.println("index Seleccionado" + productsComboBox.getSelectedItem());
+        new LogicSell().insertSells(listForSell);
+        listForSell.clear();
+        llenarTabla(listForSell);
     }//GEN-LAST:event_newSellButtonActionPerformed
 
     private void quantitySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quantitySpinnerStateChanged
@@ -271,6 +312,21 @@ public class Sell extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_quantitySpinnerStateChanged
+
+    private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
+        DTOSell sell = new DTOSell();
+        
+        for (DTOProduct prod : listOfProducts) {
+            if (prod.getAccesory().equals(productsComboBox.getSelectedItem())) {
+                sell.setProduct(prod);
+                break;
+            }
+        }
+        sell.setQuantity((int)quantitySpinner.getValue());
+        sell.setSellNumber(sellNumber);
+        listForSell.add(sell);
+        llenarTabla(listForSell);
+    }//GEN-LAST:event_addToCartButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,13 +348,7 @@ public class Sell extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Sell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Sell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Sell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Sell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -308,6 +358,7 @@ public class Sell extends javax.swing.JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 new Sell().setVisible(true);
             }
@@ -315,6 +366,8 @@ public class Sell extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton addToCartButton;
+    private javax.swing.JTable cartTable;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JTextField costTextField;
@@ -329,7 +382,6 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newSellButton;
     private javax.swing.JMenuItem openMenuItem;

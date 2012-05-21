@@ -69,4 +69,33 @@ public class DAOSell {
             }
         }
     }
+
+    public int getNewSellNumber() {
+        Connection conn = null;
+        CallableStatement cs;
+        ResultSet rs = null;
+        int sellNumber = 0;
+        
+        try {
+            conn = MySQLConnector.getMySqlConnection();
+            cs = conn.prepareCall("call GetNewSellNumber()");
+            rs = cs.executeQuery();
+            
+            if(rs.next())
+                sellNumber = rs.getInt("sellnumber");
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException sqe) {
+                sqe.printStackTrace();
+            }
+        }
+        
+        return sellNumber;
+    }
+    
 }
