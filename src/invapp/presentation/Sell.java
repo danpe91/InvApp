@@ -33,14 +33,11 @@ public class Sell extends javax.swing.JFrame {
     
     private void llenarTabla(List<DTOSell> products) {
         DefaultTableModel currentModel = 
-                (DefaultTableModel) this.cartTable.getModel();
+               (DefaultTableModel) this.cartTable.getModel();
+        Double totalCost = 0.0;
         
-        for (int i = 0; i < currentModel.getRowCount(); i++) {
-            currentModel.removeRow(i);
-        }
+        currentModel.getDataVector().removeAllElements();
 
-        // new String [] {
-//                "Accesorio", "Cantidad", "Costo", "Total"
         for (DTOSell product : products) {
             
             Object[] row = {
@@ -49,10 +46,12 @@ public class Sell extends javax.swing.JFrame {
                 product.getProduct().getUnitPrice(),
                 product.getProduct().getUnitPrice() * product.getQuantity()
             };
-            
             currentModel.addRow(row);
+            totalCost += (double)row[3];
         }
-        this.cartTable.requestFocus();
+        
+        totalTextField.setText(totalCost.toString());
+        cartTable.requestFocus();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -224,29 +223,27 @@ public class Sell extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(newSellButton)
-                        .addGap(89, 89, 89)
-                        .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(costTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(productsComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 160, Short.MAX_VALUE)
-                            .addComponent(quantitySpinner)
-                            .addComponent(totalTextField))
-                        .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(costTextField)
+                            .addComponent(productsComboBox, 0, 163, Short.MAX_VALUE)
+                            .addComponent(quantitySpinner, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(totalTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(newSellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(94, 94, 94)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,11 +267,11 @@ public class Sell extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newSellButton)
+                    .addComponent(newSellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(149, 149, 149))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         pack();
@@ -326,6 +323,8 @@ public class Sell extends javax.swing.JFrame {
         sell.setSellNumber(sellNumber);
         listForSell.add(sell);
         llenarTabla(listForSell);
+//        System.out.println(listForSell.size());
+        //System.out.println(cartTable.getModel().getRowCount());
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
     /**
