@@ -241,9 +241,9 @@ public class Sell extends javax.swing.JFrame {
                         .addComponent(newSellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(94, 94, 94)
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,6 +274,8 @@ public class Sell extends javax.swing.JFrame {
                 .addContainerGap(162, Short.MAX_VALUE))
         );
 
+        getRootPane().setDefaultButton(addToCartButton);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -300,6 +302,8 @@ public class Sell extends javax.swing.JFrame {
         new LogicSell().insertSells(listForSell);
         listForSell.clear();
         llenarTabla(listForSell);
+        dispose();
+        new Sell();
     }//GEN-LAST:event_newSellButtonActionPerformed
 
     private void quantitySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quantitySpinnerStateChanged

@@ -1,6 +1,5 @@
 package invapp.presentation;
 
-
 public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
@@ -32,6 +31,7 @@ public class Welcome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        inventoryButton.setMnemonic('I');
         inventoryButton.setLabel("Inventario");
         inventoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -39,6 +39,7 @@ public class Welcome extends javax.swing.JFrame {
             }
         });
 
+        newSellButton.setMnemonic('V');
         newSellButton.setText("Venta");
         newSellButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,7 +47,13 @@ public class Welcome extends javax.swing.JFrame {
             }
         });
 
+        reportsButton.setMnemonic('R');
         reportsButton.setText("Reportes");
+        reportsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportsButtonActionPerformed(evt);
+            }
+        });
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -143,16 +150,19 @@ public class Welcome extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
-        Inventory inv = new Inventory();
-        this.setVisible(false);
-        inv.setVisible(true);
+        new Inventory();
+        dispose();
     }//GEN-LAST:event_InventarioButtonActionPerformed
 
     private void VentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentaButtonActionPerformed
-        Sell vta = new Sell();
-        this.setVisible(false);
-        vta.setVisible(true);
+        new Sell();
+        dispose();
     }//GEN-LAST:event_VentaButtonActionPerformed
+
+    private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
+        new Reports();
+        dispose();
+    }//GEN-LAST:event_reportsButtonActionPerformed
 
     public static void main(String args[]) {
         
