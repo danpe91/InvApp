@@ -217,9 +217,8 @@ public class Inventory extends javax.swing.JFrame {
     }//GEN-LAST:event_inventoryTableMouseClicked
 
     private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
-        Welcome w = new Welcome();
-        this.setVisible(false);
-        
+        dispose();
+        new Welcome();        
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
     private void llenarTabla(List<DTOProduct> inventoryList) {

@@ -6,10 +6,11 @@ import java.util.List;
 
 public class LogicReport {
     
-    public List<DTOSell> getDailyReport(Integer day, Integer month, Integer year) {
-        System.out.println("Dia: " + day + "\nMes: " + month + "\nAño: " + year);
-        List<DTOSell> lista = new DAOReports().getDailyReport(day, month, year);
-        System.out.println(lista.size());
-        return lista;
+    public List<DTOSell> getDailyReport(Integer day, Integer month, Integer year) {;
+        return new DAOReports().getDailyReport(day, month, year);
+    }
+
+    public List<DTOSell> getMonthlyReport(Integer month, Integer year) {
+        return new DAOReports().getMonthlyReport(month, year);
     }
 }

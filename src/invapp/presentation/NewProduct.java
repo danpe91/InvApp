@@ -51,10 +51,7 @@ public class NewProduct extends javax.swing.JFrame {
                 Double.parseDouble(unitPriceTextField.getText()),
                 sizeTextField.getText());
         new LogicProduct().editProduct(nacc);
-        accesoryTextField.setText("");
-        quantitySpinner.setValue(0);
-        unitPriceTextField.setText("");
-        sizeTextField.setText("");
+        cleanFields();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -247,7 +244,7 @@ public class NewProduct extends javax.swing.JFrame {
             insertAccesory();
         else {
             editAccesory();
-            this.setVisible(false);
+            setVisible(false);
             new Inventory();
         }
     }//GEN-LAST:event_agregarButtonActionPerformed

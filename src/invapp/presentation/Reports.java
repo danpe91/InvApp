@@ -6,13 +6,8 @@ package invapp.presentation;
 
 import invapp.business.LogicReport;
 import invapp.dto.DTOSell;
-import java.awt.Component;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Reports extends javax.swing.JFrame {
 
+    private final String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",  "Octubre", "Noviembre", "Diciembre" };
+    private final int[] daysOfMonths = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     /**
      * Creates new form Reports
      */
@@ -28,12 +25,17 @@ public class Reports extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         Date date = new Date();
-        llenarTabla(new LogicReport().getDailyReport(date.getDate(), date.getMonth() + 1, date.getYear() + 1900));
+        llenarTabla(new LogicReport().getDailyReport( date.getDate(),
+                                                        date.getMonth() + 1,
+                                                        date.getYear() + 1900), dailyReportTable);
+        llenarYearsCombo();
+        llenarYearsCombo2();
     }
 
-    private void llenarTabla(List<DTOSell> products) {
+    private void llenarTabla(List<DTOSell> products, javax.swing.JTable table) {
+        
         DefaultTableModel currentModel = 
-               (DefaultTableModel) dailyReportTable.getModel();
+               (DefaultTableModel) table.getModel();
         Double totalAmount = 0.0;
         
         currentModel.getDataVector().removeAllElements();
@@ -44,13 +46,75 @@ public class Reports extends javax.swing.JFrame {
                 product.getSellNumber(),
                 product.getProduct().getAccesory(),
                 product.getQuantity(),
-                product.getProduct().getUnitPrice() * product.getQuantity()
+                product.getProduct().getUnitPrice() * product.getQuantity(),
+                product.getDate()
             };
             currentModel.addRow(row);
             totalAmount += (double)row[3];
         }
         
-        dailyReportTable.requestFocus();
+        if(products.isEmpty()) {
+            Object[] row = { null, null, null, null };
+            currentModel.addRow(row);
+            currentModel.removeRow(0);
+        }
+        
+    }
+    
+    private void llenarYearsCombo() {
+        
+        yearComboBox.removeAllItems();
+        for ( int i = new Date().getYear() + 1900; i >= 2000; i--) {
+            yearComboBox.addItem(i);
+        }
+        
+        llenarMonthsCombo((int)yearComboBox.getSelectedItem());
+    }
+    
+    private void llenarMonthsCombo(int year) {
+        
+        monthComboBox.removeAllItems();
+        Date date = new Date();
+        int limit = (year == date.getYear() + 1900)? date.getMonth() : 11;
+        
+        for (int i = 0; i <= limit; i++) {
+            monthComboBox.addItem(months[i]);
+        }
+        
+        llenarDaysCombo(year, monthComboBox.getSelectedIndex());
+    }
+    
+    private void llenarDaysCombo(int year, int month) {
+        
+        dayComboBox.removeAllItems();
+        
+        int leapYear = (year % 4 == 0 && month == 1)? 1 : 0;
+        
+        for ( int i = 1; i <= daysOfMonths[month] + leapYear; i++)
+            dayComboBox.addItem(i);
+        
+    }
+    
+    private void llenarYearsCombo2() {
+        
+        yearComboBox2.removeAllItems();
+        for ( int i = new Date().getYear() + 1900; i >= 2000; i--) {
+            yearComboBox2.addItem(i);
+        }
+        
+        llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
+    }
+    
+    private void llenarMonthsCombo2(int year) {
+        
+        monthComboBox2.removeAllItems();
+        Date date = new Date();
+        int limit = (year == date.getYear() + 1900)? date.getMonth() : 11;
+        
+        for (int i = 0; i <= limit; i++) {
+            monthComboBox2.addItem(months[i]);
+        }
+        
     }
     
     /**
@@ -62,11 +126,27 @@ public class Reports extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        testTabbedPane = new javax.swing.JTabbedPane();
+        mainTabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         dailyReportTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        yearComboBox = new javax.swing.JComboBox();
+        monthComboBox = new javax.swing.JComboBox();
+        dayComboBox = new javax.swing.JComboBox();
+        generateDailyReportButton = new javax.swing.JButton();
+        welcomeButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        monthlyReportTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        yearComboBox2 = new javax.swing.JComboBox();
+        monthComboBox2 = new javax.swing.JComboBox();
+        welcome2Button = new javax.swing.JButton();
+        generateMonthlyReportButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -85,7 +165,129 @@ public class Reports extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        mainTabbedPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mainTabbedPaneMouseClicked(evt);
+            }
+        });
+
         dailyReportTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Número de Venta", "Descripción", "Cantidad", "Monto", "Fecha/Hora"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(dailyReportTable);
+
+        jLabel1.setText("Año");
+
+        jLabel2.setText("Mes");
+
+        jLabel3.setText("Día");
+
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboBoxActionPerformed(evt);
+            }
+        });
+
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        monthComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthComboBoxActionPerformed(evt);
+            }
+        });
+
+        dayComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        generateDailyReportButton.setText("Generar");
+        generateDailyReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateDailyReportButtonActionPerformed(evt);
+            }
+        });
+
+        welcomeButton.setText("Inicio");
+        welcomeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                welcomeButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(welcomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(generateDailyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(yearComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dayComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(monthComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(generateDailyReportButton)
+                            .addComponent(welcomeButton)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+
+        mainTabbedPane.addTab("Diario", jPanel2);
+
+        monthlyReportTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -99,57 +301,106 @@ public class Reports extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(dailyReportTable);
+        monthlyReportTable.setPreferredSize(new java.awt.Dimension(664, 382));
+        jScrollPane2.setViewportView(monthlyReportTable);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
-        );
+        jLabel4.setText("Año");
 
-        testTabbedPane.addTab("Diario", jPanel2);
+        jLabel5.setText("Mes");
+
+        yearComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yearComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboBox2ActionPerformed(evt);
+            }
+        });
+
+        monthComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        welcome2Button.setText("Inicio");
+        welcome2Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                welcome2ButtonActionPerformed(evt);
+            }
+        });
+
+        generateMonthlyReportButton.setText("Generar");
+        generateMonthlyReportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateMonthlyReportButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(yearComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(monthComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(yearComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(monthComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(welcome2Button)
+                            .addComponent(generateMonthlyReportButton)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
-        testTabbedPane.addTab("Mensual", jPanel3);
+        mainTabbedPane.addTab("Mensual", jPanel3);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addGap(0, 656, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
+            .addGap(0, 344, Short.MAX_VALUE)
         );
 
-        testTabbedPane.addTab("Relación de Ventas", jPanel4);
+        mainTabbedPane.addTab("Relación de Ventas", jPanel4);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -218,11 +469,11 @@ public class Reports extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(testTabbedPane)
+            .addComponent(mainTabbedPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(testTabbedPane)
+            .addComponent(mainTabbedPane)
         );
 
         pack();
@@ -231,6 +482,50 @@ public class Reports extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void mainTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainTabbedPaneMouseClicked
+
+    }//GEN-LAST:event_mainTabbedPaneMouseClicked
+
+    private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
+        dispose();
+        new Welcome();
+    }//GEN-LAST:event_welcomeButtonActionPerformed
+
+    private void generateDailyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateDailyReportButtonActionPerformed
+
+        llenarTabla(new LogicReport().getDailyReport((int)dayComboBox.getSelectedItem(),
+                                                        monthComboBox.getSelectedIndex() + 1,
+                                                        (int)yearComboBox.getSelectedItem()), 
+                    dailyReportTable);
+    }//GEN-LAST:event_generateDailyReportButtonActionPerformed
+
+    private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
+        if(yearComboBox != null && yearComboBox.getItemCount() > 0)
+            llenarMonthsCombo((int)yearComboBox.getSelectedItem());
+    }//GEN-LAST:event_yearComboBoxActionPerformed
+
+    private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
+        if(monthComboBox != null && monthComboBox.getItemCount() > 0)
+            llenarDaysCombo((int)yearComboBox.getSelectedItem(), monthComboBox.getSelectedIndex());
+            
+    }//GEN-LAST:event_monthComboBoxActionPerformed
+
+    private void generateMonthlyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateMonthlyReportButtonActionPerformed
+        llenarTabla(new LogicReport().getMonthlyReport( monthComboBox2.getSelectedIndex() + 1,
+                                                        (int)yearComboBox2.getSelectedItem()),
+                    monthlyReportTable);
+    }//GEN-LAST:event_generateMonthlyReportButtonActionPerformed
+
+    private void welcome2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcome2ButtonActionPerformed
+        dispose();
+        new Welcome();
+    }//GEN-LAST:event_welcome2ButtonActionPerformed
+
+    private void yearComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBox2ActionPerformed
+        if(yearComboBox2 != null && yearComboBox2.getItemCount() > 0)
+            llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
+    }//GEN-LAST:event_yearComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,13 +547,7 @@ public class Reports extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Reports.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Reports.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Reports.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Reports.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -268,6 +557,7 @@ public class Reports extends javax.swing.JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 new Reports().setVisible(true);
             }
@@ -279,20 +569,36 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JTable dailyReportTable;
+    private javax.swing.JComboBox dayComboBox;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton generateDailyReportButton;
+    private javax.swing.JButton generateMonthlyReportButton;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JComboBox monthComboBox;
+    private javax.swing.JComboBox monthComboBox2;
+    private javax.swing.JTable monthlyReportTable;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
-    private javax.swing.JTabbedPane testTabbedPane;
+    private javax.swing.JButton welcome2Button;
+    private javax.swing.JButton welcomeButton;
+    private javax.swing.JComboBox yearComboBox;
+    private javax.swing.JComboBox yearComboBox2;
     // End of variables declaration//GEN-END:variables
 }

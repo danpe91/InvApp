@@ -1,5 +1,7 @@
 package invapp.presentation;
 
+import java.util.Calendar;
+
 public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
@@ -150,18 +152,18 @@ public class Welcome extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
-        new Inventory();
         dispose();
+        new Inventory();
     }//GEN-LAST:event_InventarioButtonActionPerformed
 
     private void VentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentaButtonActionPerformed
-        new Sell();
         dispose();
+        new Sell();
     }//GEN-LAST:event_VentaButtonActionPerformed
 
     private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
-        new Reports();
         dispose();
+        new Reports();
     }//GEN-LAST:event_reportsButtonActionPerformed
 
     public static void main(String args[]) {

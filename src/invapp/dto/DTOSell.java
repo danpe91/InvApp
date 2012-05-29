@@ -1,6 +1,6 @@
 package invapp.dto;
 
-import java.sql.Timestamp;
+import invapp.helper.MyTimestamp;
 
 public class DTOSell {
     
@@ -9,19 +9,19 @@ public class DTOSell {
     private Integer quantity;
     private Integer sellNumber;
     private String seller;
-    private Timestamp date;
+    private MyTimestamp date;
     
     public DTOSell() {
         
     }
     
     public DTOSell(Integer idSell, Integer quantity, DTOProduct product,
-                    String seller, Timestamp date, Integer sellNumber) {
+                    String seller, java.sql.Timestamp date, Integer sellNumber) {
         this.idSell = idSell;
         this.quantity = quantity;
         this.product = product;
         this.seller = seller;
-        this.date = date;
+        this.date = new MyTimestamp(date);
         this.sellNumber = sellNumber;
         
     }
@@ -66,11 +66,11 @@ public class DTOSell {
         this.product = product;
     }
 
-    public Timestamp getDate() {
+    public MyTimestamp getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(MyTimestamp date) {
         this.date = date;
     }
 

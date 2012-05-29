@@ -74,6 +74,7 @@ public class Sell extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         totalTextField = new javax.swing.JTextField();
         addToCartButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -155,6 +156,13 @@ public class Sell extends javax.swing.JFrame {
             }
         });
 
+        exitButton.setText("Inicio");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
@@ -224,7 +232,7 @@ public class Sell extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -238,6 +246,8 @@ public class Sell extends javax.swing.JFrame {
                             .addComponent(quantitySpinner, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(totalTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(newSellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -270,7 +280,8 @@ public class Sell extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newSellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exitButton))
                 .addContainerGap(162, Short.MAX_VALUE))
         );
 
@@ -331,6 +342,11 @@ public class Sell extends javax.swing.JFrame {
         //System.out.println(cartTable.getModel().getRowCount());
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        dispose();
+        new Welcome();
+    }//GEN-LAST:event_exitButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -377,6 +393,7 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JButton exitButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;

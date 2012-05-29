@@ -7,13 +7,13 @@ public class MySQLConnector {
     
     public static Connection getMySqlConnection() {
         String driver = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/inventory";
+        String url = "jdbc:mysql://localhost:3306/invapp";
         String username = "root";
         String password = "toor";
         Connection conn = null;
         try {
             Class.forName(driver);
-        conn = DriverManager.getConnection(url, username, password);
+            conn = DriverManager.getConnection(url, username, password);
 
         } catch (Exception e) {
             e.printStackTrace();

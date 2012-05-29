@@ -12,3 +12,4 @@ nbproject/private/
 *.out
 
 /build/
+/dist/

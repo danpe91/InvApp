@@ -54,7 +54,7 @@ public class DAOSell {
             cs.setInt("p_sellnumber", sell.getSellNumber());
             cs.setInt("p_quantity", sell.getQuantity());
             cs.setDouble("p_total", sell.getProduct().getUnitPrice() * sell.getQuantity());
-            cs.setTimestamp("p_date", sell.getDate());
+            cs.setTimestamp("p_date", (Timestamp)sell.getDate());
             cs.execute();
             
         } catch (SQLException se) {
