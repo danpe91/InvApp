@@ -3,10 +3,6 @@ package invapp.presentation;
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
 
-/**
- *
- * @author daniel
- */
 public class NewProduct extends javax.swing.JFrame {
 
     private boolean edit;

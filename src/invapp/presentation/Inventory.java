@@ -14,7 +14,7 @@ public class Inventory extends javax.swing.JFrame {
     public Inventory() {
         initComponents();
         editButton.setVisible(false);
-        llenarTabla(new LogicProduct().readProducts());
+        llenarTabla(new LogicProduct().readInventory());
         setVisible(true);
     }
 
@@ -208,7 +208,7 @@ public class Inventory extends javax.swing.JFrame {
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int pos = inventoryTable.getSelectedRow();
-        NewProduct ed = new NewProduct(new LogicProduct().readProducts().get(pos));
+        NewProduct ed = new NewProduct(new LogicProduct().readInventory().get(pos));
         this.setVisible(false);
     }//GEN-LAST:event_editButtonActionPerformed
 

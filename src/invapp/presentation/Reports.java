@@ -1,26 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package invapp.presentation;
 
+import invapp.business.LogicProduct;
 import invapp.business.LogicReport;
+import invapp.dto.DTOProduct;
 import invapp.dto.DTOSell;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author daniel
- */
 public class Reports extends javax.swing.JFrame {
 
     private final String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",  "Octubre", "Noviembre", "Diciembre" };
     private final int[] daysOfMonths = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    /**
-     * Creates new form Reports
-     */
+
     public Reports() {
         initComponents();
         setVisible(true);
@@ -30,6 +22,7 @@ public class Reports extends javax.swing.JFrame {
                                                         date.getYear() + 1900), dailyReportTable);
         llenarYearsCombo();
         llenarYearsCombo2();
+        llenarTablaRelacionDeVentas(new LogicProduct().readInventory());
     }
 
     private void llenarTabla(List<DTOSell> products, javax.swing.JTable table) {
@@ -117,6 +110,25 @@ public class Reports extends javax.swing.JFrame {
         
     }
     
+    private void llenarTablaRelacionDeVentas(List<DTOProduct> products) {
+         DefaultTableModel currentModel = 
+               (DefaultTableModel) sellsTable.getModel();
+        
+        currentModel.getDataVector().removeAllElements();
+
+        for (DTOProduct product : products) {
+            
+            Object[] row = {
+                product.getAccesory(),
+                product.getStock(),
+                product.getSize(),
+                product.getSold(),
+                product.getUnitPrice() * product.getSold()
+            };
+            currentModel.addRow(row);
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,6 +160,9 @@ public class Reports extends javax.swing.JFrame {
         welcome2Button = new javax.swing.JButton();
         generateMonthlyReportButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        sellsTable = new javax.swing.JTable();
+        startButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -282,7 +297,7 @@ public class Reports extends javax.swing.JFrame {
                             .addComponent(generateDailyReportButton)
                             .addComponent(welcomeButton)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Diario", jPanel2);
@@ -384,20 +399,55 @@ public class Reports extends javax.swing.JFrame {
                             .addComponent(welcome2Button)
                             .addComponent(generateMonthlyReportButton)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(206, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Mensual", jPanel3);
+
+        sellsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descripción", "Existencia", "Talla", "Ventas", "Total Vendido"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(sellsTable);
+
+        startButton.setText("Inicio");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 656, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 344, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Relación de Ventas", jPanel4);
@@ -527,6 +577,11 @@ public class Reports extends javax.swing.JFrame {
             llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
     }//GEN-LAST:event_yearComboBox2ActionPerformed
 
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        dispose();
+        new Welcome();
+    }//GEN-LAST:event_startButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -587,6 +642,7 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JComboBox monthComboBox;
@@ -596,6 +652,8 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JTable sellsTable;
+    private javax.swing.JButton startButton;
     private javax.swing.JButton welcome2Button;
     private javax.swing.JButton welcomeButton;
     private javax.swing.JComboBox yearComboBox;

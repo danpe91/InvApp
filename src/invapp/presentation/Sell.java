@@ -23,9 +23,11 @@ public class Sell extends javax.swing.JFrame {
     }
 
     public void initCombo() {
+        
         productsComboBox.removeAllItems();
         productsComboBox.addItem("Seleccione un producto...");
         listOfProducts = new LogicProduct().readProducts();
+        
         for (DTOProduct prod : listOfProducts) {
             productsComboBox.addItem(prod.getAccesory());
         }
@@ -53,6 +55,16 @@ public class Sell extends javax.swing.JFrame {
         totalTextField.setText(totalCost.toString());
         cartTable.requestFocus();
     }
+    
+    private void initSizeCombo(List<String> sizes) {
+        
+        sizeComboBox.removeAllItems();
+        
+        for(String size : sizes) {
+            sizeComboBox.addItem(size);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,6 +87,8 @@ public class Sell extends javax.swing.JFrame {
         totalTextField = new javax.swing.JTextField();
         addToCartButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        sizeComboBox = new javax.swing.JComboBox();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -163,6 +177,10 @@ public class Sell extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Talla");
+
+        sizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chica", "Mediana", "Grande" }));
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
@@ -234,17 +252,24 @@ public class Sell extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4))
+                                .addGap(81, 81, 81))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(costTextField)
                             .addComponent(productsComboBox, 0, 163, Short.MAX_VALUE)
                             .addComponent(quantitySpinner, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(totalTextField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(totalTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sizeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
@@ -264,6 +289,10 @@ public class Sell extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(productsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(sizeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -401,6 +430,7 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newSellButton;
@@ -410,6 +440,7 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JSpinner quantitySpinner;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JComboBox sizeComboBox;
     private javax.swing.JTextField totalTextField;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,7 +31,7 @@ public class DTOProduct {
         this.unitPrice = unitPrice;
         this.size = size;
     }
-
+    
     public String getAccesory() {
         return accesory;
     }

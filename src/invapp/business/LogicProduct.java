@@ -6,8 +6,8 @@ import java.util.List;
 
 public class LogicProduct {
     
-    public List<DTOProduct> readProducts() {
-        return new DAOProduct().readProducts();
+    public List<DTOProduct> readInventory() {
+        return new DAOProduct().readInventory();
     }
     
     public void insertProduct(DTOProduct product) {
@@ -16,5 +16,9 @@ public class LogicProduct {
     
     public void editProduct(DTOProduct product) {
         new DAOProduct().editProduct(product);
+    }
+
+    public List<DTOProduct> readProducts() {
+        return new DAOProduct().readProducts();
     }
 }

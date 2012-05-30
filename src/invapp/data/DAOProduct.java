@@ -15,7 +15,8 @@ public class DAOProduct {
         
     }
 
-    public List<DTOProduct> readProducts() {
+    public List<DTOProduct> readInventory() {
+        
         List<DTOProduct> lista = new LinkedList<DTOProduct>();
         Connection conn = null;
         ResultSet rs = null;
@@ -28,7 +29,7 @@ public class DAOProduct {
             
             while(rs.next()) {
                 lista.add(new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
-                        rs.getDouble("unitprice"), rs.getString("size")));
+                        rs.getInt("sold"), rs.getDouble("unitprice"), rs.getString("size")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,6 +49,7 @@ public class DAOProduct {
     }
     
     public void insertProduct(DTOProduct prod) {
+        
         Connection conn = null;
         CallableStatement cs;
         
@@ -76,6 +78,7 @@ public class DAOProduct {
     }
     
     public void editProduct(DTOProduct prod) {
+        
         Connection conn = null;
         CallableStatement cs;
         
@@ -102,5 +105,38 @@ public class DAOProduct {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<DTOProduct> readProducts() {
+        
+        List<DTOProduct> lista = new LinkedList<DTOProduct>();
+        Connection conn = null;
+        ResultSet rs = null;
+        CallableStatement cs;
+        
+        try {
+            conn = MySQLConnector.getMySqlConnection();
+            cs = conn.prepareCall("call readProducts()");
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                lista.add(new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
+                        rs.getInt("sold"), rs.getDouble("unitprice"), rs.getString("size")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    conn.close();
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lista;
     }
 }
