@@ -139,4 +139,73 @@ public class DAOProduct {
         }
         return lista;
     }
+    
+    public List<DTOProduct> readDataForProduct(String accesoryname) {
+        
+        List<DTOProduct> lista = new LinkedList<DTOProduct>();
+        Connection conn = null;
+        ResultSet rs = null;
+        CallableStatement cs;
+        
+        try {
+            conn = MySQLConnector.getMySqlConnection();
+            cs = conn.prepareCall("call GetDataByName(?)");
+            cs.setString("p_accesoryname", accesoryname);
+            rs = cs.executeQuery();
+            
+            while(rs.next()) {
+                lista.add(new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
+                        rs.getInt("sold"), rs.getDouble("unitprice"), rs.getString("size")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    conn.close();
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lista;
+    }
+    
+    public DTOProduct readDataForProduct(String accesoryname, String size) {
+        
+        DTOProduct lista = new DTOProduct();
+        Connection conn = null;
+        ResultSet rs = null;
+        CallableStatement cs;
+        
+        try {
+            conn = MySQLConnector.getMySqlConnection();
+            cs = conn.prepareCall("call GetDataByNameandsize(?,?)");
+            cs.setString("p_accesoryname", accesoryname);
+            cs.setString("p_size", size);
+            rs = cs.executeQuery();
+            
+            if(rs.next()) {
+                lista = (new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"), rs.getInt("stock"),
+                        rs.getInt("sold"), rs.getDouble("unitprice"), rs.getString("size")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                try {
+                    conn.close();
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lista;
+    }
 }

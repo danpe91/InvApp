@@ -344,6 +344,9 @@
           <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Chica&quot;, &quot;Mediana&quot;, &quot;Grande&quot; })" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sizeComboBoxActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

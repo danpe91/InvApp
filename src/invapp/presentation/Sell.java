@@ -56,12 +56,12 @@ public class Sell extends javax.swing.JFrame {
         cartTable.requestFocus();
     }
     
-    private void initSizeCombo(List<String> sizes) {
+    private void initSizeCombo(List<DTOProduct> sizes) {
         
         sizeComboBox.removeAllItems();
         
-        for(String size : sizes) {
-            sizeComboBox.addItem(size);
+        for(DTOProduct size : sizes) {
+            sizeComboBox.addItem(size.getSize());
         }
     }
     
@@ -180,6 +180,11 @@ public class Sell extends javax.swing.JFrame {
         jLabel5.setText("Talla");
 
         sizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chica", "Mediana", "Grande" }));
+        sizeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sizeComboBoxActionPerformed(evt);
+            }
+        });
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -331,6 +336,7 @@ public class Sell extends javax.swing.JFrame {
                 currentProduct = prod;
                 quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, prod.getStock().intValue(), 1));
                 costTextField.setText(prod.getUnitPrice().toString());
+                initSizeCombo(new LogicProduct().readDataForProduct(prod.getAccesory()));
                 break;
             }
         }
@@ -367,14 +373,25 @@ public class Sell extends javax.swing.JFrame {
         sell.setSellNumber(sellNumber);
         listForSell.add(sell);
         llenarTabla(listForSell);
-//        System.out.println(listForSell.size());
-        //System.out.println(cartTable.getModel().getRowCount());
+
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         dispose();
         new Welcome();
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void sizeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeComboBoxActionPerformed
+        if (sizeComboBox.getItemCount() > 0) {
+
+            DTOProduct prod = new LogicProduct().readDataForProduct(productsComboBox.getSelectedItem().toString(), 
+                                                                sizeComboBox.getSelectedItem().toString());
+
+            quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, prod.getStock().intValue(), 1));
+            costTextField.setText(prod.getUnitPrice().toString());
+
+        }
+    }//GEN-LAST:event_sizeComboBoxActionPerformed
 
     /**
      * @param args the command line arguments

@@ -21,4 +21,12 @@ public class LogicProduct {
     public List<DTOProduct> readProducts() {
         return new DAOProduct().readProducts();
     }
+    
+    public List<DTOProduct> readDataForProduct(String accesoryname) {
+        return new DAOProduct().readDataForProduct(accesoryname);
+    }
+    
+    public DTOProduct readDataForProduct(String accesoryname, String size) {
+        return new DAOProduct().readDataForProduct(accesoryname, size);
+    }
 }
