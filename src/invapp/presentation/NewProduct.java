@@ -2,53 +2,71 @@ package invapp.presentation;
 
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
+import javax.swing.text.BadLocationException;
 
 public class NewProduct extends javax.swing.JFrame {
 
     private boolean edit;
     private Integer idProduct;
-    
+
     public NewProduct(DTOProduct inv) {
+        setTitle("Nueva Prenda");
         initComponents();
+        setLocationByPlatform(true);
+        setLookAndFeel();
         accesoryTextField.setText(inv.getAccesory());
         quantitySpinner.setValue(inv.getStock());
         unitPriceTextField.setText(inv.getUnitPrice().toString());
         sizeTextField.setText(inv.getSize());
+        codeTextField.setText(inv.getCode());
+        brandTextField.setText(inv.getBrand());
+        modelTextField.setText(inv.getModel());
+        colorTextField.setText(inv.getColor());
         agregarButton.setText("Guardar");
         idProduct = inv.getIdAccesory();
         edit = true;
-        setVisible(true);
     }
-    
+
     public NewProduct() {
         initComponents();
-        setVisible(true);
-        
+
     }
 
     public void insertAccesory() {
-        DTOProduct nacc = new DTOProduct(0, accesoryTextField.getText(),
-                (Integer)quantitySpinner.getValue(),
-                0, Double.parseDouble(unitPriceTextField.getText()),
-                sizeTextField.getText());
+        DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
+                (Integer) quantitySpinner.getValue(), 0,
+                Double.parseDouble(unitPriceTextField.getText()),
+                sizeTextField.getText(), codeTextField.getText(),
+                colorTextField.getText(), brandTextField.getText(),
+                modelTextField.getText());
+
         new LogicProduct().insertProduct(nacc);
         cleanFields();
     }
-    
+
     public void cleanFields() {
         accesoryTextField.setText("");
         quantitySpinner.setValue(0);
         unitPriceTextField.setText("");
         sizeTextField.setText("");
+        codeTextField.setText("");
+        brandTextField.setText("");
+        modelTextField.setText("");
+        colorTextField.setText("");
     }
+
     public void editAccesory() {
         DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
-                (Integer)quantitySpinner.getValue(),
+                (Integer) quantitySpinner.getValue(), 0,
                 Double.parseDouble(unitPriceTextField.getText()),
-                sizeTextField.getText());
+                sizeTextField.getText(), codeTextField.getText(),
+                colorTextField.getText(), brandTextField.getText(),
+                modelTextField.getText());
+
         new LogicProduct().editProduct(nacc);
         cleanFields();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,6 +86,14 @@ public class NewProduct extends javax.swing.JFrame {
         sizeTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         salirButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        colorTextField = new javax.swing.JTextField();
+        brandTextField = new javax.swing.JTextField();
+        modelTextField = new javax.swing.JTextField();
+        codeTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -83,7 +109,7 @@ public class NewProduct extends javax.swing.JFrame {
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Accesorio");
 
@@ -107,6 +133,14 @@ public class NewProduct extends javax.swing.JFrame {
                 salirButtonActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("Color");
+
+        jLabel5.setText("Marca");
+
+        jLabel7.setText("Modelo");
+
+        jLabel8.setText("Código");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -175,15 +209,15 @@ public class NewProduct extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(agregarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
@@ -191,14 +225,22 @@ public class NewProduct extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(accesoryTextField)
                             .addComponent(quantitySpinner)))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
                         .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(modelTextField, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(unitPriceTextField)
-                            .addComponent(sizeTextField))))
+                            .addComponent(sizeTextField)
+                            .addComponent(colorTextField)
+                            .addComponent(brandTextField)
+                            .addComponent(codeTextField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -220,11 +262,27 @@ public class NewProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(colorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(agregarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(salirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(168, Short.MAX_VALUE))
+                    .addComponent(agregarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         getRootPane().setDefaultButton(agregarButton);
@@ -237,33 +295,21 @@ public class NewProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
-        if(!edit)
+        if (!edit) {
             insertAccesory();
-        else {
+        } else {
             editAccesory();
             setVisible(false);
-            new Inventory();
+            new Inventory().setVisible(true);
         }
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
-        Inventory inv = new Inventory();
-        this.setVisible(false);
+        
+        dispose();
     }//GEN-LAST:event_salirButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+    private void setLookAndFeel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -271,31 +317,17 @@ public class NewProduct extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
         }
-        //</editor-fold>
 
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new NewProduct().setVisible(true);
-            }
-        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JTextField accesoryTextField;
     private javax.swing.JButton agregarButton;
+    private javax.swing.JTextField brandTextField;
+    private javax.swing.JTextField codeTextField;
+    private javax.swing.JTextField colorTextField;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -306,9 +338,14 @@ public class NewProduct extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JTextField modelTextField;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JSpinner quantitySpinner;

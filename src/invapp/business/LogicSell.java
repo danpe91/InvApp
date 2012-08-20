@@ -20,4 +20,5 @@ public class LogicSell {
     public Integer getNewSellNumber() {
         return new DAOSell().getNewSellNumber() + 1;
     }
+
 }

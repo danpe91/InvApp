@@ -8,30 +8,30 @@ public class DTOProduct {
     private Integer sold;
     private Double unitPrice;
     private String size;
-
+    private String code;
+    private String color;
+    private String brand;
+    private String model;
+	
     public DTOProduct() {
         
     }
     
     public DTOProduct(Integer idAccesory, String accesory, Integer stock, 
-                        Integer sold, Double unitPrice, String size) {
+                        Integer sold, Double unitPrice, String size, String code,
+                        String color, String brand, String model) {
         this.idAccesory = idAccesory;
         this.accesory = accesory;
         this.stock = stock;
         this.sold = sold;
         this.unitPrice = unitPrice;
         this.size = size;
+        this.code = code;
+        this.color = color;
+        this.brand = brand;
+        this.model = model;
     }
 
-    public DTOProduct(Integer idAccesory, String accesory, Integer stock, 
-                        Double unitPrice, String size) {
-        this.idAccesory = idAccesory;
-        this.accesory = accesory;
-        this.stock = stock;
-        this.unitPrice = unitPrice;
-        this.size = size;
-    }
-    
     public String getAccesory() {
         return accesory;
     }
@@ -79,6 +79,43 @@ public class DTOProduct {
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
- 
-    
+	 
+	public String getColor() {
+		return color;
+	}
+	
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	public String getBrand() {
+		return brand;
+	}
+	
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	
+	public String getModel() {
+		return model;
+	}
+	
+	public void setModel(String model) {
+		this.model = model;
+	}
+	
+        public String getCode() {
+            return code;
+        }
+        
+        public void setCode(String code) {
+            this.code = code;
+        }
+        
+        public String toString() {
+            return "Código: " + this.code +
+                    "\nProducto: " + this.accesory + 
+                    "\n Marca: " + this.brand + 
+                    "\n Modelo: " + this.model;
+        }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 public class Reports extends javax.swing.JFrame {
 
@@ -17,39 +16,46 @@ public class Reports extends javax.swing.JFrame {
     private final int[] daysOfMonths = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     public Reports() {
+        setTitle("Reportes");
+        setLocationByPlatform(true);
         initComponents();
-        setVisible(true);
+        setLookAndFeel();
         Date date = new Date();
+        
+        daylyTotalAmountLabel.setText( "$" + 
         llenarTabla(new LogicReport().getDailyReport( date.getDate(),
                                                         date.getMonth() + 1,
-                                                        date.getYear() + 1900), dailyReportTable);
+                                                        date.getYear() + 1900), dailyReportTable));
+        
+        monthlyTotalAmountLabel.setText( "$" + 
         llenarTabla(new LogicReport().getMonthlyReport( date.getMonth() + 1,
-                                                        date.getYear() + 1900), monthlyReportTable);
+                                                        date.getYear() + 1900), monthlyReportTable));
         llenarYearsCombo();
         llenarYearsCombo2();
         llenarTablaRelacionDeVentas(new LogicProduct().readInventory());
     }
 
-    private void llenarTabla(List<DTOSell> products, javax.swing.JTable table) {
+    private double llenarTabla(List<DTOSell> products, javax.swing.JTable table) {
         
         DefaultTableModel currentModel = 
                (DefaultTableModel) table.getModel();
-        Double totalAmount = 0.0;
+        Double totalAmount = 0d;
         
         currentModel.getDataVector().removeAllElements();
 
         for (DTOSell product : products) {
-            
+            double amount = product.getProduct().getUnitPrice() * product.getQuantity();
             Object[] row = {
                 product.getSellNumber(),
                 product.getProduct().getAccesory(),
                 product.getProduct().getSize(),
                 product.getQuantity(),
-                product.getProduct().getUnitPrice() * product.getQuantity(),
+                amount,
                 product.getDate()
             };
+            
             currentModel.addRow(row);
-            totalAmount += (double)row[4];
+            totalAmount += amount;
         }
         
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -63,6 +69,8 @@ public class Reports extends javax.swing.JFrame {
             currentModel.addRow(row);
             currentModel.removeRow(0);
         }
+        
+        return totalAmount;
         
     }
     
@@ -169,6 +177,9 @@ public class Reports extends javax.swing.JFrame {
         dayComboBox = new javax.swing.JComboBox();
         generateDailyReportButton = new javax.swing.JButton();
         welcomeButton = new javax.swing.JButton();
+        daylyTotalSellsLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        daylyTotalAmountLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -178,6 +189,8 @@ public class Reports extends javax.swing.JFrame {
         generateMonthlyReportButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         monthlyReportTable = new javax.swing.JTable();
+        monthlyTotalSellsLabel = new javax.swing.JLabel();
+        monthlyTotalAmountLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         sellsTable = new javax.swing.JTable();
@@ -274,27 +287,48 @@ public class Reports extends javax.swing.JFrame {
             }
         });
 
+        daylyTotalSellsLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N
+        daylyTotalSellsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        daylyTotalSellsLabel.setText("Venta Total");
+
+        daylyTotalAmountLabel.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        daylyTotalAmountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        daylyTotalAmountLabel.setText("jLabel7");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yearComboBox, 0, 157, Short.MAX_VALUE)
-                            .addComponent(dayComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(monthComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(yearComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dayComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(monthComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(welcomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(generateDailyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(welcomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(generateDailyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(daylyTotalSellsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addComponent(daylyTotalAmountLabel)
+                                .addGap(82, 82, 82)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -304,7 +338,7 @@ public class Reports extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -321,7 +355,13 @@ public class Reports extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(generateDailyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(welcomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 181, Short.MAX_VALUE)))
+                        .addGap(51, 51, 51)
+                        .addComponent(daylyTotalSellsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(daylyTotalAmountLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -392,26 +432,41 @@ public class Reports extends javax.swing.JFrame {
         monthlyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
         monthlyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
 
+        monthlyTotalSellsLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N
+        monthlyTotalSellsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        monthlyTotalSellsLabel.setText("Venta Total");
+
+        monthlyTotalAmountLabel.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        monthlyTotalAmountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        monthlyTotalAmountLabel.setText("jLabel7");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yearComboBox2, 0, 146, Short.MAX_VALUE)
-                            .addComponent(monthComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(yearComboBox2, 0, 164, Short.MAX_VALUE)
+                                    .addComponent(monthComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(monthlyTotalSellsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(74, 74, 74)
+                        .addComponent(monthlyTotalAmountLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -420,7 +475,7 @@ public class Reports extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -433,7 +488,11 @@ public class Reports extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 189, Short.MAX_VALUE)))
+                        .addGap(63, 63, 63)
+                        .addComponent(monthlyTotalSellsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(monthlyTotalAmountLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -479,7 +538,7 @@ public class Reports extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(385, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -576,15 +635,15 @@ public class Reports extends javax.swing.JFrame {
 
     private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
         dispose();
-        new Welcome();
+        new Welcome().setVisible(true);
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
     private void generateDailyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateDailyReportButtonActionPerformed
-
+        daylyTotalAmountLabel.setText( "$" + 
         llenarTabla(new LogicReport().getDailyReport((int)dayComboBox.getSelectedItem(),
                                                         monthComboBox.getSelectedIndex() + 1,
                                                         (int)yearComboBox.getSelectedItem()), 
-                    dailyReportTable);
+                    dailyReportTable));
     }//GEN-LAST:event_generateDailyReportButtonActionPerformed
 
     private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
@@ -599,14 +658,15 @@ public class Reports extends javax.swing.JFrame {
     }//GEN-LAST:event_monthComboBoxActionPerformed
 
     private void generateMonthlyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateMonthlyReportButtonActionPerformed
+        monthlyTotalAmountLabel.setText( "$" + 
         llenarTabla(new LogicReport().getMonthlyReport( monthComboBox2.getSelectedIndex() + 1,
                                                         (int)yearComboBox2.getSelectedItem()),
-                    monthlyReportTable);
+                    monthlyReportTable));
     }//GEN-LAST:event_generateMonthlyReportButtonActionPerformed
 
     private void welcome2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcome2ButtonActionPerformed
         dispose();
-        new Welcome();
+        new Welcome().setVisible(true);
     }//GEN-LAST:event_welcome2ButtonActionPerformed
 
     private void yearComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBox2ActionPerformed
@@ -616,7 +676,7 @@ public class Reports extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         dispose();
-        new Welcome();
+        new Welcome().setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
@@ -631,19 +691,8 @@ public class Reports extends javax.swing.JFrame {
         getRootPane().setDefaultButton(generateDailyReportButton);
     }//GEN-LAST:event_jPanel2ComponentShown
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+    private void setLookAndFeel() {
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -652,21 +701,10 @@ public class Reports extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Reports.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            
         }
-        //</editor-fold>
-
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                new Reports().setVisible(true);
-            }
-        });
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;
@@ -674,6 +712,8 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JTable dailyReportTable;
     private javax.swing.JComboBox dayComboBox;
+    private javax.swing.JLabel daylyTotalAmountLabel;
+    private javax.swing.JLabel daylyTotalSellsLabel;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
@@ -686,6 +726,7 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -697,6 +738,8 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JComboBox monthComboBox;
     private javax.swing.JComboBox monthComboBox2;
     private javax.swing.JTable monthlyReportTable;
+    private javax.swing.JLabel monthlyTotalAmountLabel;
+    private javax.swing.JLabel monthlyTotalSellsLabel;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;

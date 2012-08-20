@@ -12,10 +12,12 @@ import javax.swing.table.DefaultTableModel;
 public class Inventory extends javax.swing.JFrame {
     
     public Inventory() {
+        setTitle("Inventario");
+        setLocationByPlatform(true);
         initComponents();
+        setLookAndFeel();
         editButton.setVisible(false);
-        llenarTabla(new LogicProduct().readInventory());
-        setVisible(true);
+        
     }
 
     /**
@@ -48,20 +50,27 @@ public class Inventory extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         inventoryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Accesorio", "Existencia", "Vendidas", "Precio Unitario", "Talla"
+                "Código", "Accesorio", "Marca", "Modelo", "Existencia", "Vendidas", "Precio Unitario", "Talla", "Color"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -170,28 +179,26 @@ public class Inventory extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(welcomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
+                        .addGap(201, 201, 201)
                         .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(nuevoAccesorioButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                        .addComponent(nuevoAccesorioButton)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(welcomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nuevoAccesorioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(82, 82, 82))
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nuevoAccesorioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -202,14 +209,14 @@ public class Inventory extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void nuevoAccesorioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAccesorioButtonActionPerformed
-        NewProduct na = new NewProduct();
-        this.setVisible(false);
+        new NewProduct().setVisible(true);
+        //dispose();
     }//GEN-LAST:event_nuevoAccesorioButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int pos = inventoryTable.getSelectedRow();
-        NewProduct ed = new NewProduct(new LogicProduct().readInventory().get(pos));
-        this.setVisible(false);
+        new NewProduct(new LogicProduct().readInventory().get(pos)).setVisible(true);
+        dispose();
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
@@ -218,43 +225,38 @@ public class Inventory extends javax.swing.JFrame {
 
     private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
         dispose();
-        new Welcome();        
+        new Welcome().setVisible(true);
     }//GEN-LAST:event_welcomeButtonActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        llenarTabla(new LogicProduct().readInventory());
+    }//GEN-LAST:event_formWindowGainedFocus
 
     private void llenarTabla(List<DTOProduct> inventoryList) {
         DefaultTableModel currentModel = 
                 (DefaultTableModel) this.inventoryTable.getModel();
         
-        for (int i = 0; i < currentModel.getRowCount(); i++) {
-            currentModel.removeRow(i);
-        }
+        currentModel.getDataVector().removeAllElements();
        
         for (DTOProduct inv : inventoryList) {
             Object[] row = {
+                inv.getCode(),
                 inv.getAccesory(),
+                inv.getBrand(),
+                inv.getModel(),
                 inv.getStock(),
                 inv.getSold(),
                 inv.getUnitPrice(),
-                inv.getSize()
+                inv.getSize(),
+                inv.getColor()
             };
             currentModel.addRow(row);
         }
         this.inventoryTable.requestFocus();
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+    private void setLookAndFeel() {
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -263,20 +265,10 @@ public class Inventory extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            
         }
-        //</editor-fold>
-
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Inventory().setVisible(true);
-            }
-        });
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;

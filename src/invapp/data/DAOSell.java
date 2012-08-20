@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class DAOSell {
     
-    public List<DTOSell> readSells() {
-        List<DTOSell> lista = new LinkedList<DTOSell>();
+    public List<DTOSell> sreadSells() {
+        List<DTOSell> lista = new LinkedList<>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
