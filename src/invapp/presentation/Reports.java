@@ -273,6 +273,7 @@ public class Reports extends javax.swing.JFrame {
 
         dayComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        generateDailyReportButton.setMnemonic('g');
         generateDailyReportButton.setText("Generar");
         generateDailyReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,6 +281,7 @@ public class Reports extends javax.swing.JFrame {
             }
         });
 
+        welcomeButton.setMnemonic('i');
         welcomeButton.setText("Inicio");
         welcomeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,6 +388,7 @@ public class Reports extends javax.swing.JFrame {
 
         monthComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        welcome2Button.setMnemonic('i');
         welcome2Button.setText("Inicio");
         welcome2Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,6 +396,7 @@ public class Reports extends javax.swing.JFrame {
             }
         });
 
+        generateMonthlyReportButton.setMnemonic('g');
         generateMonthlyReportButton.setText("Generar");
         generateMonthlyReportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -522,6 +526,7 @@ public class Reports extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(sellsTable);
 
+        startButton.setMnemonic('i');
         startButton.setText("Inicio");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

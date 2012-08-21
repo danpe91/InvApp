@@ -88,6 +88,7 @@ public class Inventory extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(inventoryTable);
 
+        nuevoAccesorioButton.setMnemonic('n');
         nuevoAccesorioButton.setText("Nuevo Accesorio");
         nuevoAccesorioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +96,7 @@ public class Inventory extends javax.swing.JFrame {
             }
         });
 
+        editButton.setMnemonic('e');
         editButton.setText("Editar");
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +104,7 @@ public class Inventory extends javax.swing.JFrame {
             }
         });
 
+        welcomeButton.setMnemonic('i');
         welcomeButton.setText("Inicio");
         welcomeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

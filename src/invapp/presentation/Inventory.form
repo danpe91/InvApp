@@ -236,6 +236,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="nuevoAccesorioButton">
       <Properties>
+        <Property name="mnemonic" type="int" value="110"/>
         <Property name="text" type="java.lang.String" value="Nuevo Accesorio"/>
       </Properties>
       <Events>
@@ -244,6 +245,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="editButton">
       <Properties>
+        <Property name="mnemonic" type="int" value="101"/>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
       <Events>
@@ -252,6 +254,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="welcomeButton">
       <Properties>
+        <Property name="mnemonic" type="int" value="105"/>
         <Property name="text" type="java.lang.String" value="Inicio"/>
       </Properties>
       <Events>

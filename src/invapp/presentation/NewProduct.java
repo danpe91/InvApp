@@ -127,6 +127,7 @@ public class NewProduct extends javax.swing.JFrame {
 
         jLabel6.setText("Talla");
 
+        salirButton.setMnemonic('s');
         salirButton.setText("Salir");
         salirButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
