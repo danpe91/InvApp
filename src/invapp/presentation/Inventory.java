@@ -139,7 +139,6 @@ public class Inventory extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
-        editMenu.setMnemonic('e');
         editMenu.setText("Edit");
 
         cutMenuItem.setMnemonic('t');
@@ -219,7 +218,7 @@ public class Inventory extends javax.swing.JFrame {
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int pos = inventoryTable.getSelectedRow();
         new NewProduct(new LogicProduct().readInventory().get(pos)).setVisible(true);
-        dispose();
+        // dispose();
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
@@ -255,7 +254,7 @@ public class Inventory extends javax.swing.JFrame {
             };
             currentModel.addRow(row);
         }
-        this.inventoryTable.requestFocus();
+        
     }
     
     private void setLookAndFeel() {
