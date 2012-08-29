@@ -27,6 +27,7 @@ public class Sell extends javax.swing.JFrame {
         setLookAndFeel();
         listForSell = new LinkedList<>();
         cleanFields();
+        cartTable.setFocusable(false);
 
     }
 
