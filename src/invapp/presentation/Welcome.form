@@ -101,6 +101,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -121,11 +122,9 @@
               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="exitButton" pref="125" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="reportsButton" max="32767" attributes="0"/>
-                      <Component id="inventoryButton" alignment="0" max="32767" attributes="0"/>
-                      <Component id="newSellButton" alignment="0" pref="125" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="reportsButton" alignment="1" max="32767" attributes="0"/>
+                  <Component id="inventoryButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="newSellButton" alignment="0" pref="125" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="97" max="32767" attributes="0"/>
           </Group>
@@ -151,7 +150,7 @@
     <Component class="javax.swing.JButton" name="inventoryButton">
       <Properties>
         <Property name="mnemonic" type="int" value="73"/>
-        <Property name="label" type="java.lang.String" value="Inventario"/>
+        <Property name="text" type="java.lang.String" value="Inventario"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InventarioButtonActionPerformed"/>
