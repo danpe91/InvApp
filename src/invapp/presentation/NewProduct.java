@@ -300,8 +300,7 @@ public class NewProduct extends javax.swing.JFrame {
             insertAccesory();
         } else {
             editAccesory();
-            setVisible(false);
-            new Inventory().setVisible(true);
+            dispose();
         }
     }//GEN-LAST:event_agregarButtonActionPerformed
 

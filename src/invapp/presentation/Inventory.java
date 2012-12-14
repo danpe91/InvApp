@@ -49,12 +49,17 @@ public class Inventory extends javax.swing.JFrame {
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
             }
             public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -233,6 +238,11 @@ public class Inventory extends javax.swing.JFrame {
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         llenarTabla(new LogicProduct().readInventory());
     }//GEN-LAST:event_formWindowGainedFocus
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        
+        new Welcome().setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     private void llenarTabla(List<DTOProduct> inventoryList) {
         DefaultTableModel currentModel = 

@@ -2,8 +2,51 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+DROP SCHEMA IF EXISTS `invapp` ;
 CREATE SCHEMA IF NOT EXISTS `invapp` DEFAULT CHARACTER SET latin1 ;
 USE `invapp` ;
+
+-- -----------------------------------------------------
+-- Table `invapp`.`products`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `invapp`.`products` ;
+
+CREATE  TABLE IF NOT EXISTS `invapp`.`products` (
+  `idproduct` INT NOT NULL AUTO_INCREMENT ,
+  `accesoryname` VARCHAR(50) NOT NULL ,
+  `stock` INT NOT NULL ,
+  `sold` INT NOT NULL ,
+  `unitprice` DOUBLE NOT NULL ,
+  `size` VARCHAR(20) NOT NULL ,
+  `code` VARCHAR(50) NOT NULL ,
+  `color` VARCHAR(50) NOT NULL ,
+  `brand` VARCHAR(50) NOT NULL ,
+  `model` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`idproduct`, `code`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `invapp`.`sells`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `invapp`.`sells` ;
+
+CREATE  TABLE IF NOT EXISTS `invapp`.`sells` (
+  `idsell` INT NOT NULL AUTO_INCREMENT ,
+  `idproduct` INT NOT NULL ,
+  `sellnumber` INT NOT NULL ,
+  `quantity` INT NOT NULL ,
+  `total` DOUBLE NOT NULL ,
+  `date` DATETIME NOT NULL ,
+  PRIMARY KEY (`idsell`) ,
+  INDEX `FK_Sells_Products` (`idproduct` ASC) ,
+  CONSTRAINT `FK_Sells_Products`
+    FOREIGN KEY (`idproduct` )
+    REFERENCES `invapp`.`products` (`idproduct` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- procedure ReadInventory
