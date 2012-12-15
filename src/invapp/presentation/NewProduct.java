@@ -2,7 +2,6 @@ package invapp.presentation;
 
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
-import javax.swing.text.BadLocationException;
 
 public class NewProduct extends javax.swing.JFrame {
 
@@ -10,6 +9,7 @@ public class NewProduct extends javax.swing.JFrame {
     private Integer idProduct;
 
     public NewProduct(DTOProduct inv) {
+
         setTitle("Nueva Prenda");
         initComponents();
         setLocationByPlatform(true);
@@ -33,18 +33,29 @@ public class NewProduct extends javax.swing.JFrame {
     }
 
     public void insertAccesory() {
-        DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
-                (Integer) quantitySpinner.getValue(), 0,
-                Double.parseDouble(unitPriceTextField.getText()),
-                sizeTextField.getText(), codeTextField.getText(),
-                colorTextField.getText(), brandTextField.getText(),
-                modelTextField.getText());
 
-        new LogicProduct().insertProduct(nacc);
-        cleanFields();
+        if (checkEmptyFields()) {
+
+            try {
+                
+            DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
+                    (Integer) quantitySpinner.getValue(), 0,
+                    Double.parseDouble(unitPriceTextField.getText()),
+                    sizeTextField.getText(), codeTextField.getText(),
+                    colorTextField.getText(), brandTextField.getText(),
+                    modelTextField.getText());
+            
+            new LogicProduct().insertProduct(nacc);
+            cleanFields();
+
+            } catch (NumberFormatException e) {
+                
+            }
+        }
     }
 
     public void cleanFields() {
+        
         accesoryTextField.setText("");
         quantitySpinner.setValue(0);
         unitPriceTextField.setText("");
@@ -56,6 +67,7 @@ public class NewProduct extends javax.swing.JFrame {
     }
 
     public void editAccesory() {
+        
         DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
                 (Integer) quantitySpinner.getValue(), 0,
                 Double.parseDouble(unitPriceTextField.getText()),
@@ -65,6 +77,18 @@ public class NewProduct extends javax.swing.JFrame {
 
         new LogicProduct().editProduct(nacc);
         cleanFields();
+    }
+
+    private boolean checkEmptyFields() {
+
+        return !(accesoryTextField.getText().isEmpty()
+                || unitPriceTextField.getText().isEmpty()
+                || sizeTextField.getText().isEmpty()
+                || colorTextField.getText().isEmpty()
+                || brandTextField.getText().isEmpty()
+                || modelTextField.getText().isEmpty()
+                || codeTextField.getText().isEmpty());
+
     }
 
     /**
@@ -95,19 +119,6 @@ public class NewProduct extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentsMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,68 +153,6 @@ public class NewProduct extends javax.swing.JFrame {
         jLabel7.setText("Modelo");
 
         jLabel8.setText("Código");
-
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
-
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
-
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(exitMenuItem);
-
-        menuBar.add(fileMenu);
-
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
-
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
-
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
-
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
-
-        menuBar.add(editMenu);
-
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
-
-        contentsMenuItem.setMnemonic('c');
-        contentsMenuItem.setText("Contents");
-        helpMenu.add(contentsMenuItem);
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
-
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -283,7 +232,7 @@ public class NewProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(agregarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         getRootPane().setDefaultButton(agregarButton);
@@ -291,11 +240,8 @@ public class NewProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
-
     private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
+        
         if (!edit) {
             insertAccesory();
         } else {
@@ -305,11 +251,12 @@ public class NewProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_agregarButtonActionPerformed
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
-        
+
         dispose();
     }//GEN-LAST:event_salirButtonActionPerformed
 
     private void setLookAndFeel() {
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -322,20 +269,11 @@ public class NewProduct extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JTextField accesoryTextField;
     private javax.swing.JButton agregarButton;
     private javax.swing.JTextField brandTextField;
     private javax.swing.JTextField codeTextField;
     private javax.swing.JTextField colorTextField;
-    private javax.swing.JMenuItem contentsMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
-    private javax.swing.JMenu editMenu;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -346,12 +284,8 @@ public class NewProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JTextField modelTextField;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JSpinner quantitySpinner;
     private javax.swing.JButton salirButton;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JTextField sizeTextField;
     private javax.swing.JTextField unitPriceTextField;
     // End of variables declaration//GEN-END:variables
