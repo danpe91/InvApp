@@ -464,7 +464,7 @@ public class Reports extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
                     .addComponent(monthlyTotalSellsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
@@ -638,35 +638,24 @@ public class Reports extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
+    private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
+        getRootPane().setDefaultButton(startButton);
+    }//GEN-LAST:event_jPanel4ComponentShown
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         dispose();
         new Welcome().setVisible(true);
-    }//GEN-LAST:event_welcomeButtonActionPerformed
+    }//GEN-LAST:event_startButtonActionPerformed
 
-    private void generateDailyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateDailyReportButtonActionPerformed
-        daylyTotalAmountLabel.setText( "$" + 
-        llenarTabla(new LogicReport().getDailyReport((int)dayComboBox.getSelectedItem(),
-                                                        monthComboBox.getSelectedIndex() + 1,
-                                                        (int)yearComboBox.getSelectedItem()), 
-                    dailyReportTable));
-    }//GEN-LAST:event_generateDailyReportButtonActionPerformed
-
-    private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
-        if(yearComboBox != null && yearComboBox.getItemCount() > 0)
-            llenarMonthsCombo((int)yearComboBox.getSelectedItem());
-    }//GEN-LAST:event_yearComboBoxActionPerformed
-
-    private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
-        if(monthComboBox != null && monthComboBox.getItemCount() > 0)
-            llenarDaysCombo((int)yearComboBox.getSelectedItem(), monthComboBox.getSelectedIndex());
-            
-    }//GEN-LAST:event_monthComboBoxActionPerformed
+    private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
+        getRootPane().setDefaultButton(generateMonthlyReportButton);
+    }//GEN-LAST:event_jPanel3ComponentShown
 
     private void generateMonthlyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateMonthlyReportButtonActionPerformed
-        monthlyTotalAmountLabel.setText( "$" + 
-        llenarTabla(new LogicReport().getMonthlyReport( monthComboBox2.getSelectedIndex() + 1,
-                                                        (int)yearComboBox2.getSelectedItem()),
-                    monthlyReportTable));
+        monthlyTotalAmountLabel.setText( "$" +
+            llenarTabla(new LogicReport().getMonthlyReport( monthComboBox2.getSelectedIndex() + 1,
+                (int)yearComboBox2.getSelectedItem()),
+            monthlyReportTable));
     }//GEN-LAST:event_generateMonthlyReportButtonActionPerformed
 
     private void welcome2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcome2ButtonActionPerformed
@@ -676,25 +665,35 @@ public class Reports extends javax.swing.JFrame {
 
     private void yearComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBox2ActionPerformed
         if(yearComboBox2 != null && yearComboBox2.getItemCount() > 0)
-            llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
+        llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
     }//GEN-LAST:event_yearComboBox2ActionPerformed
-
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        dispose();
-        new Welcome().setVisible(true);
-    }//GEN-LAST:event_startButtonActionPerformed
-
-    private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
-        getRootPane().setDefaultButton(startButton);
-    }//GEN-LAST:event_jPanel4ComponentShown
-
-    private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
-        getRootPane().setDefaultButton(generateMonthlyReportButton);
-    }//GEN-LAST:event_jPanel3ComponentShown
 
     private void jPanel2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentShown
         getRootPane().setDefaultButton(generateDailyReportButton);
     }//GEN-LAST:event_jPanel2ComponentShown
+
+    private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
+        dispose();
+        new Welcome().setVisible(true);
+    }//GEN-LAST:event_welcomeButtonActionPerformed
+
+    private void generateDailyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateDailyReportButtonActionPerformed
+        daylyTotalAmountLabel.setText( "$" +
+            llenarTabla(new LogicReport().getDailyReport((int)dayComboBox.getSelectedItem(),
+                monthComboBox.getSelectedIndex() + 1,
+                (int)yearComboBox.getSelectedItem()),
+            dailyReportTable));
+    }//GEN-LAST:event_generateDailyReportButtonActionPerformed
+
+    private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
+        if(monthComboBox != null && monthComboBox.getItemCount() > 0)
+        llenarDaysCombo((int)yearComboBox.getSelectedItem(), monthComboBox.getSelectedIndex());
+    }//GEN-LAST:event_monthComboBoxActionPerformed
+
+    private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
+        if(yearComboBox != null && yearComboBox.getItemCount() > 0)
+        llenarMonthsCombo((int)yearComboBox.getSelectedItem());
+    }//GEN-LAST:event_yearComboBoxActionPerformed
 
     private void setLookAndFeel() {
         

@@ -1,7 +1,6 @@
 package invapp.business;
 
 import invapp.data.DAOProduct;
-import invapp.data.DAOSell;
 import invapp.dto.DTOProduct;
 import java.util.List;
 

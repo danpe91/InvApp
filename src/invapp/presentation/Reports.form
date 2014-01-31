@@ -101,6 +101,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -425,7 +426,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="welcome2Button" min="-2" pref="94" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="generateMonthlyReportButton" max="32767" attributes="0"/>
+                                      <Component id="generateMonthlyReportButton" pref="106" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>

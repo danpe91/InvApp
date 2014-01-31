@@ -12,20 +12,20 @@ import javax.swing.text.BadLocationException;
 
 public class Sell extends javax.swing.JFrame {
 
-    private List<DTOSell> listForSell;
+    private List<DTOSell> cartList;
     private DTOProduct currentProduct;
     private Integer sellNumber;
-    private List<String> codesList;
+    private List<String> barCodes;
 
     public Sell() {
 
         setTitle("Nueva Venta");
         setLocationByPlatform(true);
         sellNumber = new LogicSell().getNewSellNumber();
-        codesList = new LogicProduct().getListOfCodes();
+        barCodes = new LogicProduct().getListOfCodes();
         initComponents();
         setLookAndFeel();
-        listForSell = new LinkedList<>();
+        cartList = new LinkedList<>();
         cleanFields();
         cartTable.setFocusable(false);
 
@@ -421,9 +421,9 @@ public class Sell extends javax.swing.JFrame {
 
     private void newSellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSellButtonActionPerformed
 
-        new LogicSell().insertSells(listForSell);
-        listForSell.clear();
-        llenarTabla(listForSell);
+        new LogicSell().insertSells(cartList);
+        cartList.clear();
+        llenarTabla(cartList);
         dispose();
         new Sell().setVisible(true);
         
@@ -443,9 +443,9 @@ public class Sell extends javax.swing.JFrame {
         sell.setProduct(currentProduct);
         sell.setQuantity((int) quantitySpinner.getValue());
         sell.setSellNumber(sellNumber);
-        listForSell.add(sell);
+        cartList.add(sell);
 
-        llenarTabla(listForSell);
+        llenarTabla(cartList);
         cleanFields();
         getRootPane().setDefaultButton(seekButton);
         codeTextField.requestFocus();
@@ -461,10 +461,10 @@ public class Sell extends javax.swing.JFrame {
         if (!(evt.getKeyCode() >= 65 && evt.getKeyCode() <= 90 || evt.getKeyCode() > 96 && evt.getKeyCode() <= 122 || evt.getKeyCode() >= 48 && evt.getKeyCode() <= 57)) {
             return;
         }
-        if (codeTextField.getText().isEmpty() || codesList.isEmpty()) {
+        if (codeTextField.getText().isEmpty() || barCodes.isEmpty()) {
             return;
         }
-        setCodeAndSelectExtraText(codeTextField, getExistingCode(codeTextField.getText(), codesList));
+        setCodeAndSelectExtraText(codeTextField, getExistingCode(codeTextField.getText(), barCodes));
     }//GEN-LAST:event_codeTextFieldKeyReleased
 
     private void codeTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeTextFieldKeyPressed
@@ -480,7 +480,7 @@ public class Sell extends javax.swing.JFrame {
 
         if (codeTextField != null && !codeTextField.getText().isEmpty()) {
 
-            for (String finalCode : codesList) {
+            for (String finalCode : barCodes) {
                 if (finalCode.equalsIgnoreCase(codeTextField.getText())) {
                     codeTextField.setText(finalCode);
                     fillInFields(new LogicProduct().readProductByCode(finalCode));
@@ -498,8 +498,8 @@ public class Sell extends javax.swing.JFrame {
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         
         removeButton.setEnabled(false);
-        listForSell.remove(cartTable.getSelectedRow());
-        llenarTabla(listForSell);
+        cartList.remove(cartTable.getSelectedRow());
+        llenarTabla(cartList);
         
     }//GEN-LAST:event_removeButtonActionPerformed
 
