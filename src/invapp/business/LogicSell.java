@@ -1,6 +1,5 @@
 package invapp.business;
 
-import invapp.data.DAOSell;
 import invapp.dto.DTOSell;
 import invapp.helper.MyTimestamp;
 import java.util.List;
@@ -13,12 +12,12 @@ public class LogicSell {
         
         for(DTOSell sell : sells) {
             sell.setDate(date);
-            new DAOSell().insertSell(sell);
+            // new DAOSell().insertSell(sell);
         }
     }
 
     public Integer getNewSellNumber() {
-        return new DAOSell().getNewSellNumber() + 1;
+        return 0;// new DAOSell().getNewSellNumber() + 1;
     }
 
 }
