@@ -11,13 +11,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DAOReports {
-    
+
     public List<DTOSell> getDailyReport(Integer day, Integer month, Integer year) {
         List<DTOSell> lista = new LinkedList<>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
-        
+
         try {
             conn = MySQLConnector.getMySqlConnection();
             cs = conn.prepareCall("call GetDailyReport(?,?,?)");
@@ -25,14 +25,10 @@ public class DAOReports {
             cs.setInt("p_month", month);
             cs.setInt("p_year", year);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
-                lista.add(new DTOSell(rs.getInt("idsell"), rs.getInt("quantity"), 
-                        new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"),
-                                rs.getInt("stock"), rs.getInt("sold"),
-                                rs.getDouble("unitprice"), rs.getString("size"),
-                                rs.getString("code"), rs.getString("color"),
-                                rs.getString("brand"), rs.getString("model")),
+
+            while (rs.next()) {
+                lista.add(new DTOSell(rs.getInt("idsell"), rs.getInt("quantity"),
+                        new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
             }
         } catch (SQLException e) {
@@ -57,21 +53,17 @@ public class DAOReports {
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
-        
+
         try {
             conn = MySQLConnector.getMySqlConnection();
             cs = conn.prepareCall("call GetMonthlyReport(?,?)");
             cs.setInt("p_month", month);
             cs.setInt("p_year", year);
             rs = cs.executeQuery();
-            
-            while(rs.next()) {
-                lista.add(new DTOSell(rs.getInt("idsell"), rs.getInt("quantity"), 
-                        new DTOProduct(rs.getInt("idproduct"), rs.getString("accesoryname"),
-                                rs.getInt("stock"), rs.getInt("sold"),
-                                rs.getDouble("unitprice"), rs.getString("size"),
-                                rs.getString("code"), rs.getString("color"),
-                                rs.getString("brand"), rs.getString("model")),
+
+            while (rs.next()) {
+                lista.add(new DTOSell(rs.getInt("idsell"), rs.getInt("quantity"),
+                        new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
             }
         } catch (SQLException e) {
@@ -90,5 +82,5 @@ public class DAOReports {
         }
         return lista;
     }
-    
+
 }

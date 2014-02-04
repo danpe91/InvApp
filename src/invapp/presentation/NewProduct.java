@@ -4,91 +4,80 @@ import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
 
 public class NewProduct extends javax.swing.JFrame {
-
+    
     private boolean edit;
-    private Integer idProduct;
-
+    
+    static {
+        setLookAndFeel();
+    }
+    
     public NewProduct(DTOProduct inv) {
-
-        setTitle("Nueva Prenda");
+        
+        setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
-        setLookAndFeel();
-        accesoryTextField.setText(inv.getAccesory());
-        quantitySpinner.setValue(inv.getStock());
+        prepareRadioButtonsSet();
+        productTextField.setText(inv.getProduct());
         unitPriceTextField.setText(inv.getUnitPrice().toString());
-        sizeTextField.setText(inv.getSize());
-        codeTextField.setText(inv.getCode());
-        brandTextField.setText(inv.getBrand());
-        modelTextField.setText(inv.getModel());
-        colorTextField.setText(inv.getColor());
-        agregarButton.setText("Guardar");
-        idProduct = inv.getIdAccesory();
+        unitPriceTextField.setText(inv.getUnitPrice().toString());
+        codeTextField.setText(inv.getCode().toString());
+        addButton.setText("Guardar");
         edit = true;
     }
-
+    
     public NewProduct() {
+        
+        setTitle("Nuevo Producto");
         initComponents();
-
+        setLocationByPlatform(true);
+        prepareRadioButtonsSet();
+        edit = false;
     }
-
-    public void insertAccesory() {
-
+    
+    public void insertProduct() {
+        
         if (checkEmptyFields()) {
-
+            
             try {
                 
-            DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
-                    (Integer) quantitySpinner.getValue(), 0,
-                    Double.parseDouble(unitPriceTextField.getText()),
-                    sizeTextField.getText(), codeTextField.getText(),
-                    colorTextField.getText(), brandTextField.getText(),
-                    modelTextField.getText());
-            
-            new LogicProduct().insertProduct(nacc);
-            cleanFields();
-
-            } catch (NumberFormatException e) {
+                DTOProduct nacc = new DTOProduct();
                 
+                new LogicProduct().insertProduct(nacc);
+                cleanFields();
+                
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
         }
     }
-
+    
     public void cleanFields() {
         
-        accesoryTextField.setText("");
-        quantitySpinner.setValue(0);
+        productTextField.setText("");
         unitPriceTextField.setText("");
-        sizeTextField.setText("");
         codeTextField.setText("");
-        brandTextField.setText("");
-        modelTextField.setText("");
-        colorTextField.setText("");
     }
-
+    
     public void editAccesory() {
         
-        DTOProduct nacc = new DTOProduct(idProduct, accesoryTextField.getText(),
-                (Integer) quantitySpinner.getValue(), 0,
-                Double.parseDouble(unitPriceTextField.getText()),
-                sizeTextField.getText(), codeTextField.getText(),
-                colorTextField.getText(), brandTextField.getText(),
-                modelTextField.getText());
-
+        DTOProduct nacc = new DTOProduct();
+        
         new LogicProduct().editProduct(nacc);
         cleanFields();
     }
-
+    
     private boolean checkEmptyFields() {
-
-        return !(accesoryTextField.getText().isEmpty()
+        
+        return !(productTextField.getText().isEmpty()
                 || unitPriceTextField.getText().isEmpty()
-                || sizeTextField.getText().isEmpty()
-                || colorTextField.getText().isEmpty()
-                || brandTextField.getText().isEmpty()
-                || modelTextField.getText().isEmpty()
-                || codeTextField.getText().isEmpty());
-
+                || codeTextField.getText().isEmpty()
+                || (weightRadioButton.isSelected() && quantityRadioButton.isSelected()));
+    }
+    
+    private void prepareRadioButtonsSet() {
+        
+        buttonGroup.add(weightRadioButton);
+        buttonGroup.add(quantityRadioButton);
     }
 
     /**
@@ -100,43 +89,35 @@ public class NewProduct extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        accesoryTextField = new javax.swing.JTextField();
-        quantitySpinner = new javax.swing.JSpinner();
+        productTextField = new javax.swing.JTextField();
         unitPriceTextField = new javax.swing.JTextField();
-        agregarButton = new javax.swing.JButton();
-        sizeTextField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        colorTextField = new javax.swing.JTextField();
-        brandTextField = new javax.swing.JTextField();
-        modelTextField = new javax.swing.JTextField();
+        weightRadioButton = new javax.swing.JRadioButton();
+        quantityRadioButton = new javax.swing.JRadioButton();
+        codeLabel = new javax.swing.JLabel();
         codeTextField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Accesorio");
+        jLabel1.setText("Producto");
 
-        jLabel2.setText("Existencia");
+        jLabel2.setText("Tipo de venta");
 
         jLabel4.setText("Precio Unitario");
 
-        agregarButton.setMnemonic('A');
-        agregarButton.setText("Agregar");
-        agregarButton.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setMnemonic('A');
+        addButton.setText("Agregar");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarButtonActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
-
-        jLabel6.setText("Talla");
 
         salirButton.setMnemonic('s');
         salirButton.setText("Salir");
@@ -146,50 +127,46 @@ public class NewProduct extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Color");
+        weightRadioButton.setText("Por peso");
 
-        jLabel5.setText("Marca");
+        quantityRadioButton.setText("Por cantidad");
 
-        jLabel7.setText("Modelo");
-
-        jLabel8.setText("Código");
+        codeLabel.setText("Clave");
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                        .addComponent(agregarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
-                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(accesoryTextField)
-                            .addComponent(quantitySpinner)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(quantityRadioButton)
+                                    .addComponent(weightRadioButton))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(productTextField))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
+                            .addComponent(codeLabel))
                         .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(modelTextField, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(unitPriceTextField)
-                            .addComponent(sizeTextField)
-                            .addComponent(colorTextField)
-                            .addComponent(brandTextField)
                             .addComponent(codeTextField))))
                 .addContainerGap())
         );
@@ -199,63 +176,49 @@ public class NewProduct extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(accesoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(weightRadioButton))
+                .addGap(2, 2, 2)
+                .addComponent(quantityRadioButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(unitPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(colorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(codeLabel)
+                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(83, 83, 83)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(agregarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
-        getRootPane().setDefaultButton(agregarButton);
+        getRootPane().setDefaultButton(addButton);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         
         if (!edit) {
-            insertAccesory();
+            insertProduct();
         } else {
             editAccesory();
             dispose();
         }
-    }//GEN-LAST:event_agregarButtonActionPerformed
+    }//GEN-LAST:event_addButtonActionPerformed
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
-
+        
         dispose();
     }//GEN-LAST:event_salirButtonActionPerformed
-
-    private void setLookAndFeel() {
+    
+    private static void setLookAndFeel() {
         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -266,27 +229,21 @@ public class NewProduct extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
         }
-
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField accesoryTextField;
-    private javax.swing.JButton agregarButton;
-    private javax.swing.JTextField brandTextField;
+    private javax.swing.JButton addButton;
+    private javax.swing.ButtonGroup buttonGroup;
+    private javax.swing.JLabel codeLabel;
     private javax.swing.JTextField codeTextField;
-    private javax.swing.JTextField colorTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JTextField modelTextField;
-    private javax.swing.JSpinner quantitySpinner;
+    private javax.swing.JTextField productTextField;
+    private javax.swing.JRadioButton quantityRadioButton;
     private javax.swing.JButton salirButton;
-    private javax.swing.JTextField sizeTextField;
     private javax.swing.JTextField unitPriceTextField;
+    private javax.swing.JRadioButton weightRadioButton;
     // End of variables declaration//GEN-END:variables
 }

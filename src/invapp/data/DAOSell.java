@@ -50,7 +50,7 @@ public class DAOSell {
         try {
             conn = MySQLConnector.getMySqlConnection();
             cs = conn.prepareCall("call InsertSell(?,?,?,?,?)");
-            cs.setInt("p_idproduct", sell.getProduct().getIdAccesory());
+            cs.setInt("p_code", sell.getProduct().getCode());
             cs.setInt("p_sellnumber", sell.getSellNumber());
             cs.setInt("p_quantity", sell.getQuantity());
             cs.setDouble("p_total", sell.getProduct().getUnitPrice() * sell.getQuantity());

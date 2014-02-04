@@ -10,14 +10,14 @@ import javax.swing.table.DefaultTableModel;
  * @author daniel
  */
 public class Inventory extends javax.swing.JFrame {
-    
+
     public Inventory() {
         setTitle("Inventario");
         setLocationByPlatform(true);
         initComponents();
         setLookAndFeel();
         editButton.setVisible(false);
-        
+
     }
 
     /**
@@ -58,14 +58,14 @@ public class Inventory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Accesorio", "Marca", "Modelo", "Existencia", "Vendidas", "Precio Unitario", "Talla", "Color"
+                "Código", "Producto", "Precio Unitario", "Tipo de venta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -154,22 +154,25 @@ public class Inventory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nuevoAccesorioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAccesorioButtonActionPerformed
+
         new NewProduct().setVisible(true);
         //dispose();
     }//GEN-LAST:event_nuevoAccesorioButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+
         int pos = inventoryTable.getSelectedRow();
         new NewProduct(new LogicProduct().readInventory().get(pos)).setVisible(true);
         // dispose();
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
+
         editButton.setVisible(true);
     }//GEN-LAST:event_inventoryTableMouseClicked
 
     private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
-        
+
         dispose();
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
@@ -178,35 +181,31 @@ public class Inventory extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
+
         new Welcome().setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void llenarTabla(List<DTOProduct> inventoryList) {
-        DefaultTableModel currentModel = 
-                (DefaultTableModel) this.inventoryTable.getModel();
-        
+        DefaultTableModel currentModel
+                = (DefaultTableModel) this.inventoryTable.getModel();
+
         currentModel.getDataVector().removeAllElements();
-       
+
         for (DTOProduct inv : inventoryList) {
+
             Object[] row = {
                 inv.getCode(),
-                inv.getAccesory(),
-                inv.getBrand(),
-                inv.getModel(),
-                inv.getStock(),
-                inv.getSold(),
+                inv.getProduct(),
                 inv.getUnitPrice(),
-                inv.getSize(),
-                inv.getColor()
+                inv.getSaleType()
             };
             currentModel.addRow(row);
         }
-        
+
     }
-    
+
     private void setLookAndFeel() {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -215,10 +214,10 @@ public class Inventory extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            
+
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;
