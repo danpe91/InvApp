@@ -17,7 +17,7 @@ public class DAOProduct {
 
     public List<DTOProduct> readInventory() {
 
-        List<DTOProduct> lista = new LinkedList<DTOProduct>();
+        List<DTOProduct> lista = new LinkedList<>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
@@ -103,38 +103,6 @@ public class DAOProduct {
                 e.printStackTrace();
             }
         }
-    }
-
-    public List<DTOProduct> readProducts() {
-
-        List<DTOProduct> lista = new LinkedList<DTOProduct>();
-        Connection conn = null;
-        ResultSet rs = null;
-        CallableStatement cs;
-
-        try {
-            conn = MySQLConnector.getMySqlConnection();
-            cs = conn.prepareCall("call readProducts()");
-            rs = cs.executeQuery();
-
-            while (rs.next()) {
-                lista.add(new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                try {
-                    conn.close();
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return lista;
     }
 
     public List<DTOProduct> readDataForProduct(String accesoryname) {

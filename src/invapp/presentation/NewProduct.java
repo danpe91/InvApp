@@ -4,78 +4,86 @@ import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
 
 public class NewProduct extends javax.swing.JFrame {
-    
+
     private boolean edit;
-    
+
     static {
         setLookAndFeel();
     }
-    
+
     public NewProduct(DTOProduct inv) {
-        
+
         setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
         prepareRadioButtonsSet();
         productTextField.setText(inv.getProduct());
         unitPriceTextField.setText(inv.getUnitPrice().toString());
-        unitPriceTextField.setText(inv.getUnitPrice().toString());
         codeTextField.setText(inv.getCode().toString());
         addButton.setText("Guardar");
         edit = true;
+        codeTextField.setEditable(false);
     }
-    
+
     public NewProduct() {
-        
+
         setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
         prepareRadioButtonsSet();
         edit = false;
     }
-    
+
     public void insertProduct() {
-        
+
         if (checkEmptyFields()) {
-            
+
             try {
-                
-                DTOProduct nacc = new DTOProduct();
-                
-                new LogicProduct().insertProduct(nacc);
+
+                boolean saleType;
+                saleType = quantityRadioButton.isSelected();
+
+                DTOProduct prod = new DTOProduct(Integer.valueOf(codeTextField.getText()),
+                        productTextField.getText(), Double.valueOf(unitPriceTextField.getText()), saleType);
+
+                new LogicProduct().insertProduct(prod);
                 cleanFields();
-                
+
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     public void cleanFields() {
-        
+
         productTextField.setText("");
         unitPriceTextField.setText("");
         codeTextField.setText("");
     }
-    
+
     public void editAccesory() {
-        
-        DTOProduct nacc = new DTOProduct();
-        
-        new LogicProduct().editProduct(nacc);
+
+        boolean saleType;
+        saleType = quantityRadioButton.isSelected();
+
+        DTOProduct prod = new DTOProduct(Integer.valueOf(codeTextField.getText()),
+                productTextField.getText(), Double.valueOf(unitPriceTextField.getText()), saleType);
+
+        new LogicProduct().editProduct(prod);
         cleanFields();
     }
-    
+
     private boolean checkEmptyFields() {
-        
+
         return !(productTextField.getText().isEmpty()
                 || unitPriceTextField.getText().isEmpty()
                 || codeTextField.getText().isEmpty()
                 || (weightRadioButton.isSelected() && quantityRadioButton.isSelected()));
     }
-    
+
     private void prepareRadioButtonsSet() {
-        
+
         buttonGroup.add(weightRadioButton);
         buttonGroup.add(quantityRadioButton);
     }
@@ -204,7 +212,7 @@ public class NewProduct extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        
+
         if (!edit) {
             insertProduct();
         } else {
@@ -214,12 +222,12 @@ public class NewProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
-        
+
         dispose();
     }//GEN-LAST:event_salirButtonActionPerformed
-    
+
     private static void setLookAndFeel() {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -229,7 +237,7 @@ public class NewProduct extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
         }
-        
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
