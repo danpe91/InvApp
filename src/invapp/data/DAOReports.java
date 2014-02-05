@@ -1,7 +1,7 @@
 package invapp.data;
 
 import invapp.dto.DTOProduct;
-import invapp.dto.DTOSell;
+import invapp.dto.DTOSale;
 import invapp.helper.MySQLConnector;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -12,8 +12,8 @@ import java.util.List;
 
 public class DAOReports {
 
-    public List<DTOSell> getDailyReport(Integer day, Integer month, Integer year) {
-        List<DTOSell> lista = new LinkedList<>();
+    public List<DTOSale> getDailyReport(Integer day, Integer month, Integer year) {
+        List<DTOSale> lista = new LinkedList<>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
@@ -27,7 +27,7 @@ public class DAOReports {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOSell(rs.getInt("idsell"), rs.getInt("quantity"),
+                lista.add(new DTOSale(rs.getInt("idsell"), rs.getInt("quantity"),
                         new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
             }
@@ -48,8 +48,8 @@ public class DAOReports {
         return lista;
     }
 
-    public List<DTOSell> getMonthlyReport(Integer month, Integer year) {
-        List<DTOSell> lista = new LinkedList<DTOSell>();
+    public List<DTOSale> getMonthlyReport(Integer month, Integer year) {
+        List<DTOSale> lista = new LinkedList<DTOSale>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
@@ -62,7 +62,7 @@ public class DAOReports {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOSell(rs.getInt("idsell"), rs.getInt("quantity"),
+                lista.add(new DTOSale(rs.getInt("idsell"), rs.getInt("quantity"),
                         new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
             }

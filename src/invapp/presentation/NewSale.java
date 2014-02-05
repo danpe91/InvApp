@@ -3,21 +3,21 @@ package invapp.presentation;
 import invapp.business.LogicProduct;
 import invapp.business.LogicSell;
 import invapp.dto.DTOProduct;
-import invapp.dto.DTOSell;
+import invapp.dto.DTOSale;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 
-public class Sell extends javax.swing.JFrame {
+public class NewSale extends javax.swing.JFrame {
 
-    private List<DTOSell> cartList;
+    private List<DTOSale> cartList;
     private DTOProduct currentProduct;
     private Integer sellNumber;
     private List<String> barCodes;
 
-    public Sell() {
+    public NewSale() {
 
         setTitle("Nueva Venta");
         setLocationByPlatform(true);
@@ -33,24 +33,24 @@ public class Sell extends javax.swing.JFrame {
 
     public void initCombo(DTOProduct product, boolean firstTime) {
 
-        productTextField.setText(product.getAccesory());
+        productTextField.setText(product.getProduct());
         
     }
 
-    private void llenarTabla(List<DTOSell> products) {
+    private void llenarTabla(List<DTOSale> products) {
         DefaultTableModel currentModel =
                 (DefaultTableModel) this.cartTable.getModel();
         Double totalCost = 0.0;
 
         currentModel.getDataVector().removeAllElements();
         try {
-            for (DTOSell product : products) {
+            for (DTOSale product : products) {
 
                 Object[] row = {
-                    product.getProduct().getAccesory(),
+                    //product.getProduct().getAccesory(),
                     product.getQuantity(),
-                    product.getProduct().getSize(),
-                    product.getProduct().getColor(),
+                    //product.getProduct().getSize(),
+                    //product.getProduct().getColor(),
                     product.getProduct().getUnitPrice(),
                     product.getProduct().getUnitPrice() * product.getQuantity()
                 };
@@ -63,12 +63,6 @@ public class Sell extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-    }
-
-    private void initSizeCombo(DTOProduct size) {
-
-        sizeTextField.setText(size.getSize());
-        
     }
 
     /**
@@ -92,18 +86,10 @@ public class Sell extends javax.swing.JFrame {
         totalTextField = new javax.swing.JTextField();
         addToCartButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         codeTextField = new javax.swing.JTextField();
-        brandTextField = new javax.swing.JTextField();
-        modelTextField = new javax.swing.JTextField();
-        colorTextField = new javax.swing.JTextField();
         seekButton = new javax.swing.JButton();
         productTextField = new javax.swing.JTextField();
-        sizeTextField = new javax.swing.JTextField();
         removeButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -193,14 +179,6 @@ public class Sell extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Talla");
-
-        jLabel6.setText("Marca");
-
-        jLabel7.setText("Modelo");
-
-        jLabel8.setText("Color");
-
         jLabel9.setText("Código");
 
         codeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -211,12 +189,6 @@ public class Sell extends javax.swing.JFrame {
                 codeTextFieldKeyReleased(evt);
             }
         });
-
-        brandTextField.setEditable(false);
-
-        modelTextField.setEditable(false);
-
-        colorTextField.setEditable(false);
 
         seekButton.setMnemonic('b');
         seekButton.setText("Buscar");
@@ -317,20 +289,12 @@ public class Sell extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel3)
                                             .addComponent(jLabel2)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel8)
                                             .addComponent(jLabel1))
                                         .addGap(81, 81, 81)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(costTextField)
                                             .addComponent(quantitySpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                            .addComponent(brandTextField)
-                                            .addComponent(modelTextField)
-                                            .addComponent(colorTextField)
-                                            .addComponent(productTextField)
-                                            .addComponent(sizeTextField)))
+                                            .addComponent(productTextField)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel9)
                                         .addGap(97, 97, 97)
@@ -366,36 +330,20 @@ public class Sell extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(sizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(costTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(modelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(colorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(costTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(85, 85, 85)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -405,7 +353,7 @@ public class Sell extends javax.swing.JFrame {
                             .addComponent(newSellButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                            .addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                             .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -425,7 +373,7 @@ public class Sell extends javax.swing.JFrame {
         cartList.clear();
         llenarTabla(cartList);
         dispose();
-        new Sell().setVisible(true);
+        new NewSale().setVisible(true);
         
     }//GEN-LAST:event_newSellButtonActionPerformed
 
@@ -438,7 +386,7 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_quantitySpinnerStateChanged
 
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
-        DTOSell sell = new DTOSell();
+        DTOSale sell = new DTOSale();
 
         sell.setProduct(currentProduct);
         sell.setQuantity((int) quantitySpinner.getValue());
@@ -551,13 +499,9 @@ public class Sell extends javax.swing.JFrame {
         
         currentProduct = product;
         initCombo(product, false);
-        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, product.getStock().intValue(), 1));
+        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 1000, 1));
         costTextField.setText(product.getUnitPrice().toString());
-        brandTextField.setText(product.getBrand());
-        modelTextField.setText(product.getModel());
-        colorTextField.setText(product.getColor());
-        initSizeCombo(product);
-
+        
     }
     
     private void cleanFields() {
@@ -567,14 +511,9 @@ public class Sell extends javax.swing.JFrame {
         productTextField.setText("");
         quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 0, 1));
         costTextField.setText("");
-        brandTextField.setText("");
-        modelTextField.setText("");
-        colorTextField.setText("");
-        sizeTextField.setText("");
-
+        
     }
     
-
     private void setLookAndFeel() {
 
         try {
@@ -590,10 +529,8 @@ public class Sell extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton addToCartButton;
-    private javax.swing.JTextField brandTextField;
     private javax.swing.JTable cartTable;
     private javax.swing.JTextField codeTextField;
-    private javax.swing.JTextField colorTextField;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JTextField costTextField;
@@ -608,14 +545,9 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JTextField modelTextField;
     private javax.swing.JButton newSellButton;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
@@ -625,7 +557,6 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JButton seekButton;
-    private javax.swing.JTextField sizeTextField;
     private javax.swing.JTextField totalTextField;
     // End of variables declaration//GEN-END:variables
 }

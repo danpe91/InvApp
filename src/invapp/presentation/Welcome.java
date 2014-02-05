@@ -169,7 +169,7 @@ public class Welcome extends javax.swing.JFrame {
 
     private void VentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentaButtonActionPerformed
         dispose();
-        new Sell().setVisible(true);
+        new NewSale().setVisible(true);
     }//GEN-LAST:event_VentaButtonActionPerformed
 
     private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed

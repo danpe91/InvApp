@@ -1,6 +1,6 @@
 package invapp.data;
 
-import invapp.dto.DTOSell;
+import invapp.dto.DTOSale;
 import invapp.helper.MySQLConnector;
 import java.sql.*;
 import java.util.LinkedList;
@@ -10,10 +10,10 @@ import java.util.List;
  *
  * @author daniel
  */
-public class DAOSell {
+public class DAOSale {
     
-    public List<DTOSell> sreadSells() {
-        List<DTOSell> lista = new LinkedList<>();
+    public List<DTOSale> sreadSells() {
+        List<DTOSale> lista = new LinkedList<>();
         Connection conn = null;
         ResultSet rs = null;
         CallableStatement cs;
@@ -24,7 +24,7 @@ public class DAOSell {
             rs = cs.executeQuery();
             
             while(rs.next()) {
-                lista.add(new DTOSell());
+                lista.add(new DTOSale());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class DAOSell {
         return lista;
     }
     
-    public void insertSell(DTOSell sell) {
+    public void insertSell(DTOSale sell) {
         Connection conn = null;
         CallableStatement cs;
         

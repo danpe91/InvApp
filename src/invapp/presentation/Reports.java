@@ -3,13 +3,13 @@ package invapp.presentation;
 import invapp.business.LogicProduct;
 import invapp.business.LogicReport;
 import invapp.dto.DTOProduct;
-import invapp.dto.DTOSell;
+import invapp.dto.DTOSale;
 import java.util.Date;
 import java.util.List;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
+ 
 public class Reports extends javax.swing.JFrame {
 
     private final String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",  "Octubre", "Noviembre", "Diciembre" };
@@ -35,7 +35,7 @@ public class Reports extends javax.swing.JFrame {
         llenarTablaRelacionDeVentas(new LogicProduct().readInventory());
     }
 
-    private double llenarTabla(List<DTOSell> products, javax.swing.JTable table) {
+    private double llenarTabla(List<DTOSale> products, javax.swing.JTable table) {
         
         DefaultTableModel currentModel = 
                (DefaultTableModel) table.getModel();
@@ -43,12 +43,12 @@ public class Reports extends javax.swing.JFrame {
         
         currentModel.getDataVector().removeAllElements();
 
-        for (DTOSell product : products) {
+        for (DTOSale product : products) {
             double amount = product.getProduct().getUnitPrice() * product.getQuantity();
             Object[] row = {
                 product.getSellNumber(),
-                product.getProduct().getAccesory(),
-                product.getProduct().getSize(),
+                //product.getProduct().getAccesory(),
+                //product.getProduct().getSize(),
                 product.getQuantity(),
                 amount,
                 product.getDate()
@@ -139,11 +139,11 @@ public class Reports extends javax.swing.JFrame {
         for (DTOProduct product : products) {
             
             Object[] row = {
-                product.getAccesory(),
+                /*product.getAccesory(),
                 product.getStock(),
                 product.getSize(),
                 product.getSold(),
-                product.getUnitPrice() * product.getSold()
+                product.getUnitPrice() * product.getSold()*/
             };
             currentModel.addRow(row);
         }

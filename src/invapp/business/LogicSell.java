@@ -1,16 +1,16 @@
 package invapp.business;
 
-import invapp.dto.DTOSell;
+import invapp.dto.DTOSale;
 import invapp.helper.MyTimestamp;
 import java.util.List;
 
 public class LogicSell {
     
-    public void insertSells(List<DTOSell> sells) {
+    public void insertSells(List<DTOSale> sells) {
         
         MyTimestamp date = new MyTimestamp();
         
-        for(DTOSell sell : sells) {
+        for(DTOSale sell : sells) {
             sell.setDate(date);
             // new DAOSell().insertSell(sell);
         }

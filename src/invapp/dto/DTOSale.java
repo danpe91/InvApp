@@ -2,7 +2,7 @@ package invapp.dto;
 
 import invapp.helper.MyTimestamp;
 
-public class DTOSell {
+public class DTOSale {
     
     private Integer idSell;
     private DTOProduct product;
@@ -11,11 +11,11 @@ public class DTOSell {
     private String seller;
     private MyTimestamp date;
     
-    public DTOSell() {
+    public DTOSale() {
         
     }
     
-    public DTOSell(Integer idSell, Integer quantity, DTOProduct product,
+    public DTOSale(Integer idSell, Integer quantity, DTOProduct product,
                     String seller, java.sql.Timestamp date, Integer sellNumber) {
         this.idSell = idSell;
         this.quantity = quantity;
