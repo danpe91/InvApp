@@ -1,11 +1,54 @@
 package invapp.presentation;
 
+import invapp.business.LogicProduct;
+import invapp.dto.DTOProduct;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
         setTitle("Inicio");
         setLocationByPlatform(true);
         initComponents();
+        insertProductsFromFile("productos.cvs");
+    }
+
+    private void insertProductsFromFile(String fileName) {
+        System.out.println("read");
+        try {
+            System.out.println("try");
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String line = "";
+            String data[];
+            while (line != null) {
+
+                line = br.readLine();
+                if (line == null || line.trim().isEmpty() || line.charAt(0) == '#') {
+                    continue;
+                } else {
+                    data = line.split(",");
+                    LogicProduct lp = new LogicProduct();
+                    DTOProduct product = new DTOProduct(Integer.valueOf(data[0]),
+                            data[1], Double.valueOf(data[2]), data[3]);
+                    
+                    DTOProduct existentProduct = lp.readProductByCode(product.getCode());
+                    if (existentProduct == null) {
+                        System.out.println("New product: " + product);
+                        new LogicProduct().insertProduct(product);
+                    }
+                }
+            }        
+
+        } catch (FileNotFoundException fne) {
+            fne.printStackTrace();
+        } catch (IOException fne) {
+            fne.printStackTrace();
+        }
+
     }
 
     @SuppressWarnings("unchecked")

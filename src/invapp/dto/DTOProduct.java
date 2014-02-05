@@ -18,6 +18,13 @@ public class DTOProduct {
         this.saleType = saleType;
     }
 
+    public DTOProduct(Integer code, String product, Double unitPrice, String saleType) {
+        this.code = code;
+        this.product = product.trim();
+        this.unitPrice = unitPrice;
+        this.saleType = saleType.trim().equals("1");
+    }
+
     public Integer getCode() {
         return code;
     }
@@ -50,4 +57,10 @@ public class DTOProduct {
         this.saleType = saleType;
     }
 
+    @Override
+    public String toString() {
+        return "DTOProduct{" + "code=" + code + ", product=" + product + ", unitPrice=" + unitPrice + ", saleType=" + saleType + '}';
+    }
+
+    
 }

@@ -45,10 +45,15 @@ public class LogicProduct {
         return new java.util.ArrayList(); // new DAOProduct().getListOfCodes();
     }
 
-    public DTOProduct readProductByCode(String code) {
+    public DTOProduct readProductByCode(Integer code) {
         
-        System.out.println("readProductByCode!  LogicProduct.java:44");
-        return new DTOProduct(); // new DAOProduct().readProductByCode(code);
+        DTOProduct producto = new DAOProduct().readProductByCode(code);
+        
+        if (producto.getCode() == null) {
+            return null;
+        } else {
+            return producto;
+        }
     }
 
 }

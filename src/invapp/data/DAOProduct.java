@@ -170,7 +170,7 @@ public class DAOProduct {
         return list;
     }
 
-    public DTOProduct readProductByCode(String code) {
+    public DTOProduct readProductByCode(Integer code) {
         DTOProduct product = new DTOProduct();
         Connection conn = null;
         ResultSet rs = null;
@@ -179,7 +179,7 @@ public class DAOProduct {
         try {
             conn = MySQLConnector.getMySqlConnection();
             cs = conn.prepareCall("call ReadProductByCode(?)");
-            cs.setString("p_code", code);
+            cs.setInt("p_code", code);
             rs = cs.executeQuery();
 
             if (rs.next()) {
