@@ -1,5 +1,6 @@
 package invapp.data;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import invapp.dto.DTOProduct;
 import invapp.helper.MySQLConnector;
 import java.sql.CallableStatement;
@@ -63,6 +64,11 @@ public class DAOProduct {
 
             cs.executeUpdate();
 
+        } catch (MySQLIntegrityConstraintViolationException e) {
+            
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: ya se encuentra un producto con "
+                    + "esa clave", "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {

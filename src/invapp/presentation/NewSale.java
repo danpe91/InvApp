@@ -34,12 +34,12 @@ public class NewSale extends javax.swing.JFrame {
     public void initCombo(DTOProduct product, boolean firstTime) {
 
         productTextField.setText(product.getProduct());
-        
+
     }
 
     private void llenarTabla(List<DTOSale> products) {
-        DefaultTableModel currentModel =
-                (DefaultTableModel) this.cartTable.getModel();
+        DefaultTableModel currentModel
+                = (DefaultTableModel) this.cartTable.getModel();
         Double totalCost = 0.0;
 
         currentModel.getDataVector().removeAllElements();
@@ -47,7 +47,7 @@ public class NewSale extends javax.swing.JFrame {
             for (DTOSale product : products) {
 
                 Object[] row = {
-                    //product.getProduct().getAccesory(),
+                    product.getProduct().getProduct(),
                     product.getQuantity(),
                     //product.getProduct().getSize(),
                     //product.getProduct().getColor(),
@@ -55,7 +55,7 @@ public class NewSale extends javax.swing.JFrame {
                     product.getProduct().getUnitPrice() * product.getQuantity()
                 };
                 currentModel.addRow(row);
-                totalCost += (double) row[5];
+                totalCost += (double) row[3];
             }
 
             totalTextField.setText(totalCost.toString());
@@ -135,14 +135,14 @@ public class NewSale extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Accesorio", "Cantidad", "Talla", "Color", "Costo", "Total"
+                "Producto", "Cantidad", "Costo", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -332,9 +332,9 @@ public class NewSale extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                         .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -374,7 +374,7 @@ public class NewSale extends javax.swing.JFrame {
         llenarTabla(cartList);
         dispose();
         new NewSale().setVisible(true);
-        
+
     }//GEN-LAST:event_newSellButtonActionPerformed
 
     private void quantitySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quantitySpinnerStateChanged
@@ -386,6 +386,7 @@ public class NewSale extends javax.swing.JFrame {
     }//GEN-LAST:event_quantitySpinnerStateChanged
 
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
+        
         DTOSale sell = new DTOSale();
 
         sell.setProduct(currentProduct);
@@ -423,7 +424,7 @@ public class NewSale extends javax.swing.JFrame {
     }//GEN-LAST:event_codeTextFieldKeyPressed
 
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
-        
+
         getRootPane().setDefaultButton(addToCartButton);
 
         if (codeTextField != null && !codeTextField.getText().isEmpty()) {
@@ -435,24 +436,22 @@ public class NewSale extends javax.swing.JFrame {
                 }
             }
         }
-
     }//GEN-LAST:event_seekButtonActionPerformed
 
     private void cartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartTableMouseClicked
-        
+
         removeButton.setEnabled(true);
     }//GEN-LAST:event_cartTableMouseClicked
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        
+
         removeButton.setEnabled(false);
         cartList.remove(cartTable.getSelectedRow());
         llenarTabla(cartList);
-        
+
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private int getPositionInVector(String code, List<String> codes) {
-
 
         for (int i = 0; i < codes.size(); i++) {
             try {
@@ -460,13 +459,11 @@ public class NewSale extends javax.swing.JFrame {
                     return i;
                 }
             } catch (java.lang.StringIndexOutOfBoundsException e) {
-                
+
             }
-
         }
-
+        
         return -1;
-
     }
 
     private String getExistingCode(String code, List<String> codes) {
@@ -496,24 +493,24 @@ public class NewSale extends javax.swing.JFrame {
     }
 
     private void fillInFields(DTOProduct product) {
-        
+
         currentProduct = product;
         initCombo(product, false);
         quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 1000, 1));
         costTextField.setText(product.getUnitPrice().toString());
-        
+
     }
-    
+
     private void cleanFields() {
-        
+
         codeTextField.setText("");
         currentProduct = null;
         productTextField.setText("");
         quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 0, 1));
         costTextField.setText("");
-        
+
     }
-    
+
     private void setLookAndFeel() {
 
         try {

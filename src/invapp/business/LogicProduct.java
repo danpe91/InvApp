@@ -42,7 +42,7 @@ public class LogicProduct {
     public List<String> getListOfCodes() {
 
         System.out.println("getListOfCodes!  LogicProduct.java:44");
-        return new java.util.ArrayList(); // new DAOProduct().getListOfCodes();
+        return new DAOProduct().getListOfCodes();
     }
 
     public DTOProduct readProductByCode(String code) {

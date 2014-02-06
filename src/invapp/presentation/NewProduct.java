@@ -52,6 +52,10 @@ public class NewProduct extends javax.swing.JFrame {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: verifique los datos ingresados! ",
+                    "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
@@ -79,7 +83,8 @@ public class NewProduct extends javax.swing.JFrame {
         return !(productTextField.getText().isEmpty()
                 || unitPriceTextField.getText().isEmpty()
                 || codeTextField.getText().isEmpty()
-                || (weightRadioButton.isSelected() && quantityRadioButton.isSelected()));
+                || (weightRadioButton.isSelected() && quantityRadioButton.isSelected())
+                || (!weightRadioButton.isSelected() && !quantityRadioButton.isSelected()));
     }
 
     private void prepareRadioButtonsSet() {

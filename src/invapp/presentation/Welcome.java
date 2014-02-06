@@ -3,7 +3,6 @@ package invapp.presentation;
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,9 +17,9 @@ public class Welcome extends javax.swing.JFrame {
     }
 
     private void insertProductsFromFile(String fileName) {
-        System.out.println("read");
+        
         try {
-            System.out.println("try");
+            
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line = "";
             String data[];
