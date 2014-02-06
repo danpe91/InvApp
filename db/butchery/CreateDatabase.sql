@@ -12,7 +12,7 @@ USE `butchery` ;
 DROP TABLE IF EXISTS `butchery`.`products` ;
 
 CREATE  TABLE IF NOT EXISTS `butchery`.`products` (
-  `code` INT NOT NULL ,
+  `code` VARCHAR(10) NOT NULL ,
   `product` VARCHAR(100) NOT NULL ,
   `unitprice` DOUBLE NOT NULL ,
   `saletype` TINYINT NOT NULL ,
@@ -27,16 +27,16 @@ DROP TABLE IF EXISTS `butchery`.`sales` ;
 
 CREATE  TABLE IF NOT EXISTS `butchery`.`sales` (
   `idsale` INT NOT NULL AUTO_INCREMENT ,
-  `idproduct` INT NOT NULL ,
+  `code` VARCHAR(10) NOT NULL ,
   `salenumber` INT NOT NULL ,
   `quantity` INT NOT NULL ,
   `total` DOUBLE NOT NULL ,
   `date` DATETIME NOT NULL ,
   PRIMARY KEY (`idsale`) ,
-  INDEX `FK_sales_Products` (`idproduct` ASC) ,
+  INDEX `FK_sales_Products` (`code` ASC) ,
   CONSTRAINT `FK_sales_Products`
-    FOREIGN KEY (`idproduct` )
-    REFERENCES `butchery`.`products` (`idproduct` )
+    FOREIGN KEY (`code` )
+    REFERENCES `butchery`.`products` (`code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -87,7 +87,7 @@ DELIMITER $$
 USE `butchery`$$
 
 
-CREATE PROCEDURE `butchery`.`Insertsale`(IN p_idproduct INT,
+CREATE PROCEDURE `butchery`.`Insertsale`(IN p_code VARCHAR(10),
                                           IN p_salenumber INT,
                                           IN p_quantity INT,
                                           IN p_total DOUBLE,
@@ -96,10 +96,10 @@ BEGIN
     UPDATE products
         SET stock = stock - p_quantity,
             sold = sold + p_quantity
-        WHERE idproduct = p_idproduct;
+        WHERE code = p_code;
 
-    INSERT INTO sales(idproduct, salenumber, quantity, total, date)
-            VALUES(p_idproduct, p_salenumber, p_quantity, p_total, p_date);
+    INSERT INTO sales(code, salenumber, quantity, total, date)
+            VALUES(p_code, p_salenumber, p_quantity, p_total, p_date);
 END
 $$
 
@@ -186,7 +186,7 @@ USE `butchery`$$
 
 
 
-CREATE PROCEDURE `butchery`.`UpdateProduct`(IN p_code INT,
+CREATE PROCEDURE `butchery`.`UpdateProduct`(IN p_code VARCHAR(10),
                         IN p_product VARCHAR(100),
                         IN p_unitprice DOUBLE,
                         IN p_saletype TINYINT)
@@ -214,7 +214,7 @@ USE `butchery`$$
 
 
 
-CREATE PROCEDURE `butchery`.`InsertProduct`(IN p_code INT,
+CREATE PROCEDURE `butchery`.`InsertProduct`(IN p_code VARCHAR(10),
                         IN p_product VARCHAR(100),
                         IN p_unitprice DOUBLE,
                         IN p_saletype TINYINT)
@@ -256,7 +256,7 @@ DELIMITER $$
 USE `butchery`$$
 
 
-CREATE PROCEDURE `butchery`.`ReadProductByCode`(IN p_code VARCHAR(50))
+CREATE PROCEDURE `butchery`.`ReadProductByCode`(IN p_code VARCHAR(10))
 BEGIN
     SELECT * FROM products
     WHERE code = p_code;
@@ -279,7 +279,7 @@ CREATE PROCEDURE `butchery`.`GetDailyReport` (IN p_day INT,
                                                 IN p_year INT)
 BEGIN
     SELECT * FROM sales
-    INNER JOIN products USING(idproduct)
+    INNER JOIN products USING(code)
     WHERE DAY(date) = p_day
     AND MONTH(date) = p_month
     AND YEAR(date) = p_year
@@ -306,7 +306,7 @@ CREATE PROCEDURE `butchery`.`GetMonthlyReport` (IN p_month INT,
                                                 IN p_year INT)
 BEGIN
     SELECT * FROM sales
-    INNER JOIN products USING(idproduct)
+    INNER JOIN products USING(code)
     WHERE MONTH(date) = p_month
     AND YEAR(date) = p_year
     ORDER BY salenumber;

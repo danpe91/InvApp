@@ -43,7 +43,7 @@ public class NewProduct extends javax.swing.JFrame {
                 boolean saleType;
                 saleType = quantityRadioButton.isSelected();
 
-                DTOProduct prod = new DTOProduct(Integer.valueOf(codeTextField.getText()),
+                DTOProduct prod = new DTOProduct(codeTextField.getText(),
                         productTextField.getText(), Double.valueOf(unitPriceTextField.getText()), saleType);
 
                 new LogicProduct().insertProduct(prod);
@@ -67,7 +67,7 @@ public class NewProduct extends javax.swing.JFrame {
         boolean saleType;
         saleType = quantityRadioButton.isSelected();
 
-        DTOProduct prod = new DTOProduct(Integer.valueOf(codeTextField.getText()),
+        DTOProduct prod = new DTOProduct(codeTextField.getText(),
                 productTextField.getText(), Double.valueOf(unitPriceTextField.getText()), saleType);
 
         new LogicProduct().editProduct(prod);

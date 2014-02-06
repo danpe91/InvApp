@@ -28,7 +28,7 @@ public class DAOReports {
 
             while (rs.next()) {
                 lista.add(new DTOSale(rs.getInt("idsell"), rs.getInt("quantity"),
-                        new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
+                        new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
             }
         } catch (SQLException e) {
@@ -63,7 +63,7 @@ public class DAOReports {
 
             while (rs.next()) {
                 lista.add(new DTOSale(rs.getInt("idsell"), rs.getInt("quantity"),
-                        new DTOProduct(rs.getInt("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
+                        new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
             }
         } catch (SQLException e) {

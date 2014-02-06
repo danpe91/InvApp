@@ -45,7 +45,7 @@ public class LogicProduct {
         return new java.util.ArrayList(); // new DAOProduct().getListOfCodes();
     }
 
-    public DTOProduct readProductByCode(Integer code) {
+    public DTOProduct readProductByCode(String code) {
         
         DTOProduct producto = new DAOProduct().readProductByCode(code);
         
