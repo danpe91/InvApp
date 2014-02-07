@@ -13,13 +13,17 @@ public class Welcome extends javax.swing.JFrame {
         setTitle("Inicio");
         setLocationByPlatform(true);
         initComponents();
-        insertProductsFromFile("productos.cvs");
+//        insertProductsFromFile("productos.cvs");
+//        String[] nombreFuentes = getToolkit().getFontList();
+//        for (String nombreFuente : nombreFuentes) {
+//            System.out.println(nombreFuente);
+//        }
     }
 
     private void insertProductsFromFile(String fileName) {
-        
+
         try {
-            
+
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line = "";
             String data[];
@@ -33,14 +37,14 @@ public class Welcome extends javax.swing.JFrame {
                     LogicProduct lp = new LogicProduct();
                     DTOProduct product = new DTOProduct(data[0],
                             data[1], Double.valueOf(data[2]), data[3]);
-                    
+
                     DTOProduct existentProduct = lp.readProductByCode(product.getCode());
                     if (existentProduct == null) {
                         System.out.println("New product: " + product);
                         new LogicProduct().insertProduct(product);
                     }
                 }
-            }        
+            }
 
         } catch (FileNotFoundException fne) {
             fne.printStackTrace();

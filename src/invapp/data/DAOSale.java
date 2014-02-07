@@ -21,7 +21,7 @@ public class DAOSale {
             cs = conn.prepareCall("call InsertSale(?,?,?,?,?)");
             cs.setString("p_code", sale.getProduct().getCode());
             cs.setInt("p_salenumber", sale.getSaleNumber());
-            cs.setInt("p_quantity", sale.getQuantity());
+            cs.setDouble("p_quantity", sale.getQuantity());
             cs.setDouble("p_total", sale.getProduct().getUnitPrice() * sale.getQuantity());
             cs.setTimestamp("p_date", (Timestamp)sale.getDate());
             cs.execute();

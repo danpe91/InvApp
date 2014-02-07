@@ -182,7 +182,12 @@ public class Reports extends javax.swing.JFrame {
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel2.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -606,6 +611,11 @@ public class Reports extends javax.swing.JFrame {
         if(yearComboBox != null && yearComboBox.getItemCount() > 0)
         llenarMonthsCombo((int)yearComboBox.getSelectedItem());
     }//GEN-LAST:event_yearComboBoxActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        
+        new Welcome().setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     private void setLookAndFeel() {
         

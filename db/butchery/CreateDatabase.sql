@@ -29,7 +29,7 @@ CREATE  TABLE IF NOT EXISTS `butchery`.`sales` (
   `idsale` INT NOT NULL AUTO_INCREMENT ,
   `code` VARCHAR(10) NOT NULL ,
   `salenumber` INT NOT NULL ,
-  `quantity` INT NOT NULL ,
+  `quantity` DOUBLE NOT NULL ,
   `total` DOUBLE NOT NULL ,
   `date` DATETIME NOT NULL ,
   PRIMARY KEY (`idsale`) ,

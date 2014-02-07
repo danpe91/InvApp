@@ -31,12 +31,6 @@ public class NewSale extends javax.swing.JFrame {
 
     }
 
-    public void initCombo(DTOProduct product, boolean firstTime) {
-
-        productTextField.setText(product.getProduct());
-
-    }
-
     private void llenarTabla(List<DTOSale> products) {
         DefaultTableModel currentModel
                 = (DefaultTableModel) this.cartTable.getModel();
@@ -73,10 +67,9 @@ public class NewSale extends javax.swing.JFrame {
     private void initComponents() {
 
         newSaleButton = new javax.swing.JButton();
-        quantitySpinner = new javax.swing.JSpinner();
         costTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        quantityLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cartTable = new javax.swing.JTable();
@@ -89,6 +82,7 @@ public class NewSale extends javax.swing.JFrame {
         seekButton = new javax.swing.JButton();
         productTextField = new javax.swing.JTextField();
         removeButton = new javax.swing.JButton();
+        quantityTextField = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -104,7 +98,12 @@ public class NewSale extends javax.swing.JFrame {
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         newSaleButton.setMnemonic('v');
         newSaleButton.setText("Vender");
@@ -114,17 +113,11 @@ public class NewSale extends javax.swing.JFrame {
             }
         });
 
-        quantitySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                quantitySpinnerStateChanged(evt);
-            }
-        });
-
         costTextField.setEditable(false);
 
         jLabel1.setText("Producto");
 
-        jLabel2.setText("Cantidad");
+        quantityLabel.setText("Cantidad");
 
         jLabel3.setText("Costo");
 
@@ -286,13 +279,13 @@ public class NewSale extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel3)
-                                            .addComponent(jLabel2)
+                                            .addComponent(quantityLabel)
                                             .addComponent(jLabel1))
                                         .addGap(81, 81, 81)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(costTextField)
-                                            .addComponent(quantitySpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                            .addComponent(productTextField)))
+                                            .addComponent(costTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                                            .addComponent(productTextField)
+                                            .addComponent(quantityTextField)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel9)
                                         .addGap(97, 97, 97)
@@ -328,15 +321,15 @@ public class NewSale extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(quantityLabel)
+                            .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -368,6 +361,7 @@ public class NewSale extends javax.swing.JFrame {
     private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
 
         new LogicSale().insertSales(cartList);
+        new LogicSale().printData(cartList);
         cartList.clear();
         llenarTabla(cartList);
         dispose();
@@ -375,32 +369,43 @@ public class NewSale extends javax.swing.JFrame {
 
     }//GEN-LAST:event_newSaleButtonActionPerformed
 
-    private void quantitySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_quantitySpinnerStateChanged
-        if (productTextField != null && !productTextField.getText().isEmpty()) {
-            double cost = currentProduct.getUnitPrice().doubleValue() * Double.valueOf(quantitySpinner.getValue().toString());
-            costTextField.setText(String.valueOf(cost));
-        }
+    private boolean validateEmptyFields() {
 
-    }//GEN-LAST:event_quantitySpinnerStateChanged
+        return !((codeTextField.getText().isEmpty())
+                || (productTextField.getText().isEmpty())
+                || (quantityTextField.getText().isEmpty()));
+    }
 
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
-        
-        DTOSale sale = new DTOSale();
 
-        sale.setProduct(currentProduct);
-        sale.setQuantity((int) quantitySpinner.getValue());
-        sale.setSaleNumber(saleNumber);
-        cartList.add(sale);
+        if (validateEmptyFields()) {
+            
+            DTOSale sale = new DTOSale();
 
-        llenarTabla(cartList);
-        cleanFields();
-        getRootPane().setDefaultButton(seekButton);
-        codeTextField.requestFocus();
+            sale.setProduct(currentProduct);
+            sale.setQuantity(Double.valueOf(quantityTextField.getText()));
+            sale.setSaleNumber(saleNumber);
+            cartList.add(sale);
+
+            llenarTabla(cartList);
+            cleanFields();
+            getRootPane().setDefaultButton(seekButton);
+            codeTextField.requestFocus();
+            
+        } else {
+            if (quantityTextField.getText().isEmpty() && !productTextField.getText().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Error: cantidad no ingresada.",
+                    "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: no se ha seleccionado algun producto.",
+                    "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+
         dispose();
-        new Welcome().setVisible(true);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void codeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeTextFieldKeyReleased
@@ -431,9 +436,11 @@ public class NewSale extends javax.swing.JFrame {
                 if (finalCode.equalsIgnoreCase(codeTextField.getText())) {
                     codeTextField.setText(finalCode);
                     fillInFields(new LogicProduct().readProductByCode(finalCode));
+                    return;
                 }
             }
         }
+        cleanFields();
     }//GEN-LAST:event_seekButtonActionPerformed
 
     private void cartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartTableMouseClicked
@@ -449,6 +456,11 @@ public class NewSale extends javax.swing.JFrame {
 
     }//GEN-LAST:event_removeButtonActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+        new Welcome().setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     private int getPositionInVector(String code, List<String> codes) {
 
         for (int i = 0; i < codes.size(); i++) {
@@ -460,7 +472,7 @@ public class NewSale extends javax.swing.JFrame {
 
             }
         }
-        
+
         return -1;
     }
 
@@ -493,9 +505,11 @@ public class NewSale extends javax.swing.JFrame {
     private void fillInFields(DTOProduct product) {
 
         currentProduct = product;
-        initCombo(product, false);
-        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 1000, 1));
+        productTextField.setText(product.getProduct());
         costTextField.setText(product.getUnitPrice().toString());
+        quantityLabel.setText(((product.getSaleType())
+                ? ("Cantidad(piezas)")
+                : ("Cantidad(Kg)")));
 
     }
 
@@ -504,7 +518,7 @@ public class NewSale extends javax.swing.JFrame {
         codeTextField.setText("");
         currentProduct = null;
         productTextField.setText("");
-        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 0, 1));
+        quantityTextField.setText("");
         costTextField.setText("");
 
     }
@@ -537,7 +551,6 @@ public class NewSale extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
@@ -547,7 +560,8 @@ public class NewSale extends javax.swing.JFrame {
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JTextField productTextField;
-    private javax.swing.JSpinner quantitySpinner;
+    private javax.swing.JLabel quantityLabel;
+    private javax.swing.JTextField quantityTextField;
     private javax.swing.JButton removeButton;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;

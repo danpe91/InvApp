@@ -27,7 +27,7 @@ public class DAOReports {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOSale(rs.getInt("idsale"), rs.getInt("quantity"),
+                lista.add(new DTOSale(rs.getInt("idsale"), rs.getDouble("quantity"),
                         new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("salenumber")));
             }
@@ -62,7 +62,7 @@ public class DAOReports {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOSale(rs.getInt("idsale"), rs.getInt("quantity"),
+                lista.add(new DTOSale(rs.getInt("idsale"), rs.getDouble("quantity"),
                         new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
                         "", rs.getTimestamp("date"), rs.getInt("salenumber")));
             }
