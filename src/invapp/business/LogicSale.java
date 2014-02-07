@@ -23,11 +23,12 @@ import java.util.List;
 public class LogicSale {
 
     private final String[] HEADERS = {
-        "Carniceria   La   Esperanza", "Jose de J. Torres Davalos", "Libertad # 701 Col. del Carmen" + "  CP: 20050", "RFC: TODJ710923U61",
+        "Carniceria   La   Esperanza", "Jose de J. Torres Davalos", "Libertad # 701 Col. del Carmen",
+        "CP: 20050", "RFC: TODJ710923U61",
         "Tel:(449)242-28-40"
 
     };
-    private final String[] LABELS = {"Folio: ", "Fecha: ", "Hora: "};
+    private final String[] LABELS = {"Ticket no.: ", "Fecha: ", "Hora: "};
 
     public void insertSales(List<DTOSale> sales) {
 
@@ -50,9 +51,9 @@ public class LogicSale {
         PageFormat pf = job.defaultPage();
         Paper ticketPaper = pf.getPaper();
 
-        double paperWidth = 3;
+        double paperWidth = 2.5;
         // TODO implement method to calculate height
-        double paperHeight = 3;
+        double paperHeight = 2.5;
 
         ticketPaper.setSize(paperWidth * 72.0, paperHeight * 72.0);
         ticketPaper.setImageableArea(0, 5, paperWidth * 72d, paperHeight * 72d);
@@ -131,7 +132,7 @@ public class LogicSale {
             g2d.translate(pf.getImageableX(), pf.getImageableY());
 
             // Now we perform our rendering
-            Font newFont = new Font("Monospaced", Font.PLAIN, 8);
+            Font newFont = new Font("Serif", Font.PLAIN, 8);
             g.setFont(newFont);
             FontMetrics fm = g.getFontMetrics();
             height = fm.getHeight();
@@ -152,22 +153,31 @@ public class LogicSale {
                 yMargin += height;
             }
 
-            g.drawString("PRODUCTO\t|\tCANTIDAD\t|\tPRECIO\t|\tIMPORTE", xMargin, yMargin);
+            g.drawString("PRODUCTO |", xMargin, yMargin);
+            g.drawString("CANTIDAD |", xMargin + (11 * 5), yMargin);
+            g.drawString("PRECIO |", xMargin + (21 * 5), yMargin);
+            g.drawString("IMPORTE", xMargin + (29 * 5), yMargin);
             yMargin += height;
 
             for (DTOSale sale : sales) {
 
                 yMargin += height;
-                StringBuilder line = new StringBuilder();
-                line.append(sale.getProduct().getProduct());
-                line.append("\t|\t");
-                line.append(sale.getQuantity());
-                line.append("\t|\t");
-                line.append(sale.getProduct().getUnitPrice());
-                line.append("\t|\t");
-                line.append(sale.getProduct().getUnitPrice() * sale.getQuantity());
-                System.out.println(line.toString());
-                g.drawString(line.toString(), xMargin, yMargin);
+                String text = "";
+                text = sale.getProduct().getProduct();
+                if (text.length() > 16) {
+                    text = text.substring(0, 16);
+                }
+                g.drawString(text, xMargin, yMargin);
+                
+                text = sale.getQuantity().toString();
+                g.drawString(text, xMargin + (17 * 5), yMargin);
+                
+                text = sale.getProduct().getUnitPrice().toString();
+                g.drawString(text, xMargin + (25 * 5), yMargin);
+                
+                Double price = sale.getProduct().getUnitPrice().doubleValue() * sale.getQuantity().doubleValue();
+                text = price.toString();
+                g.drawString(text, xMargin + (40 * 5), yMargin);
             }
 
             // tell the caller that this page is part

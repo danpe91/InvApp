@@ -153,12 +153,12 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="weightRadioButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Por peso"/>
+        <Property name="text" type="java.lang.String" value="Peso"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="quantityRadioButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Por cantidad"/>
+        <Property name="text" type="java.lang.String" value="Pieza"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="codeLabel">

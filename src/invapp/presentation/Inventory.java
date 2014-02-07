@@ -164,7 +164,6 @@ public class Inventory extends javax.swing.JFrame {
 
         int pos = inventoryTable.getSelectedRow();
         new NewProduct(new LogicProduct().readInventory().get(pos)).setVisible(true);
-        // dispose();
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void inventoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryTableMouseClicked
@@ -183,7 +182,6 @@ public class Inventory extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
 
-        new Welcome().setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     private void llenarTabla(List<DTOProduct> inventoryList) {
@@ -198,7 +196,7 @@ public class Inventory extends javax.swing.JFrame {
                 inv.getCode(),
                 inv.getProduct(),
                 inv.getUnitPrice(),
-                ((inv.getSaleType())? ("Por pieza") :("Por peso"))
+                ((inv.getSaleType())? ("Pieza") :("Peso"))
             };
             currentModel.addRow(row);
         }

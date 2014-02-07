@@ -458,7 +458,6 @@ public class NewSale extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
 
-        new Welcome().setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
     private int getPositionInVector(String code, List<String> codes) {

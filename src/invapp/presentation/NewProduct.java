@@ -17,12 +17,18 @@ public class NewProduct extends javax.swing.JFrame {
         initComponents();
         setLocationByPlatform(true);
         prepareRadioButtonsSet();
+
+        if (inv.getSaleType()) {
+            quantityRadioButton.setSelected(true);
+        } else {
+            weightRadioButton.setSelected(true);
+        }
         productTextField.setText(inv.getProduct());
         unitPriceTextField.setText(inv.getUnitPrice().toString());
         codeTextField.setText(inv.getCode().toString());
+        codeTextField.setEditable(false);
         addButton.setText("Guardar");
         edit = true;
-        codeTextField.setEditable(false);
     }
 
     public NewProduct() {
@@ -43,8 +49,8 @@ public class NewProduct extends javax.swing.JFrame {
                 boolean saleType;
                 saleType = quantityRadioButton.isSelected();
 
-                DTOProduct prod = new DTOProduct(codeTextField.getText(),
-                        productTextField.getText(), Double.valueOf(unitPriceTextField.getText()), saleType);
+                DTOProduct prod = new DTOProduct(codeTextField.getText().trim(),
+                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()), saleType);
 
                 new LogicProduct().insertProduct(prod);
                 cleanFields();
@@ -71,11 +77,16 @@ public class NewProduct extends javax.swing.JFrame {
         boolean saleType;
         saleType = quantityRadioButton.isSelected();
 
-        DTOProduct prod = new DTOProduct(codeTextField.getText(),
-                productTextField.getText(), Double.valueOf(unitPriceTextField.getText()), saleType);
+        try {
+            DTOProduct prod = new DTOProduct(codeTextField.getText(),
+                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()), saleType);
+            new LogicProduct().editProduct(prod);
+            cleanFields();
 
-        new LogicProduct().editProduct(prod);
-        cleanFields();
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: verifique el precio unitario! ",
+                    "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private boolean checkEmptyFields() {
@@ -140,9 +151,9 @@ public class NewProduct extends javax.swing.JFrame {
             }
         });
 
-        weightRadioButton.setText("Por peso");
+        weightRadioButton.setText("Peso");
 
-        quantityRadioButton.setText("Por cantidad");
+        quantityRadioButton.setText("Pieza");
 
         codeLabel.setText("Clave");
         setJMenuBar(menuBar);

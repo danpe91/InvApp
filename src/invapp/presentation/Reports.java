@@ -1,18 +1,16 @@
 package invapp.presentation;
 
-import invapp.business.LogicProduct;
 import invapp.business.LogicReport;
-import invapp.dto.DTOProduct;
 import invapp.dto.DTOSale;
 import java.util.Date;
 import java.util.List;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
- 
+
 public class Reports extends javax.swing.JFrame {
 
-    private final String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",  "Octubre", "Noviembre", "Diciembre" };
+    private final String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
     private final int[] daysOfMonths = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     public Reports() {
@@ -21,25 +19,25 @@ public class Reports extends javax.swing.JFrame {
         initComponents();
         setLookAndFeel();
         Date date = new Date();
-        
-        daylyTotalAmountLabel.setText( "$" + 
-        llenarTabla(new LogicReport().getDailyReport( date.getDate(),
-                                                        date.getMonth() + 1,
-                                                        date.getYear() + 1900), dailyReportTable));
-        
-        monthlyTotalAmountLabel.setText( "$" + 
-        llenarTabla(new LogicReport().getMonthlyReport( date.getMonth() + 1,
-                                                        date.getYear() + 1900), monthlyReportTable));
+
+        daylyTotalAmountLabel.setText("$"
+                + llenarTabla(new LogicReport().getDailyReport(date.getDate(),
+                                date.getMonth() + 1,
+                                date.getYear() + 1900), dailyReportTable));
+
+        monthlyTotalAmountLabel.setText("$"
+                + llenarTabla(new LogicReport().getMonthlyReport(date.getMonth() + 1,
+                                date.getYear() + 1900), monthlyReportTable));
         llenarYearsCombo();
         llenarYearsCombo2();
     }
 
     private double llenarTabla(List<DTOSale> products, javax.swing.JTable table) {
-        
-        DefaultTableModel currentModel = 
-               (DefaultTableModel) table.getModel();
+
+        DefaultTableModel currentModel
+                = (DefaultTableModel) table.getModel();
         Double totalAmount = 0d;
-        
+
         currentModel.getDataVector().removeAllElements();
 
         for (DTOSale product : products) {
@@ -52,11 +50,11 @@ public class Reports extends javax.swing.JFrame {
                 product.getDate()
             };
             System.out.println(product.getDate());
-            
+
             currentModel.addRow(row);
             totalAmount += amount;
         }
-        
+
         for (int i = 0; i < table.getColumnCount(); i++) {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -65,73 +63,74 @@ public class Reports extends javax.swing.JFrame {
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
         tcr.setHorizontalAlignment(SwingConstants.LEFT);
         table.getColumnModel().getColumn(1).setCellRenderer(tcr);
-        
-        if(products.isEmpty()) {
-            Object[] row = { null, null, null, null };
+
+        if (products.isEmpty()) {
+            Object[] row = {null, null, null, null};
             currentModel.addRow(row);
             currentModel.removeRow(0);
         }
-        
+
         return totalAmount;
-        
+
     }
-    
+
     private void llenarYearsCombo() {
-        
+
         yearComboBox.removeAllItems();
-        for ( int i = new Date().getYear() + 1900; i >= 2000; i--) {
+        for (int i = new Date().getYear() + 1900; i >= 2000; i--) {
             yearComboBox.addItem(i);
         }
-        
-        llenarMonthsCombo((int)yearComboBox.getSelectedItem());
+
+        llenarMonthsCombo((int) yearComboBox.getSelectedItem());
     }
-    
+
     private void llenarMonthsCombo(int year) {
-        
+
         monthComboBox.removeAllItems();
         Date date = new Date();
-        int limit = (year == date.getYear() + 1900)? date.getMonth() : 11;
-        
+        int limit = (year == date.getYear() + 1900) ? date.getMonth() : 11;
+
         for (int i = 0; i <= limit; i++) {
             monthComboBox.addItem(months[i]);
         }
-        
+
         llenarDaysCombo(year, monthComboBox.getSelectedIndex());
     }
-    
+
     private void llenarDaysCombo(int year, int month) {
-        
+
         dayComboBox.removeAllItems();
-        
-        int leapYear = (year % 4 == 0 && month == 1)? 1 : 0;
-        
-        for ( int i = 1; i <= daysOfMonths[month] + leapYear; i++)
+
+        int leapYear = (year % 4 == 0 && month == 1) ? 1 : 0;
+
+        for (int i = 1; i <= daysOfMonths[month] + leapYear; i++) {
             dayComboBox.addItem(i);
-        
+        }
+
     }
-    
+
     private void llenarYearsCombo2() {
-        
+
         yearComboBox2.removeAllItems();
-        for ( int i = new Date().getYear() + 1900; i >= 2000; i--) {
+        for (int i = new Date().getYear() + 1900; i >= 2000; i--) {
             yearComboBox2.addItem(i);
         }
-        
-        llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
+
+        llenarMonthsCombo2((int) yearComboBox2.getSelectedItem());
     }
-    
+
     private void llenarMonthsCombo2(int year) {
-        
+
         monthComboBox2.removeAllItems();
         Date date = new Date();
-        int limit = (year == date.getYear() + 1900)? date.getMonth() : 11;
-        
+        int limit = (year == date.getYear() + 1900) ? date.getMonth() : 11;
+
         for (int i = 0; i <= limit; i++) {
             monthComboBox2.addItem(months[i]);
         }
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -569,20 +568,20 @@ public class Reports extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3ComponentShown
 
     private void generateMonthlyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateMonthlyReportButtonActionPerformed
-        monthlyTotalAmountLabel.setText( "$" +
-            llenarTabla(new LogicReport().getMonthlyReport( monthComboBox2.getSelectedIndex() + 1,
-                (int)yearComboBox2.getSelectedItem()),
-            monthlyReportTable));
+        monthlyTotalAmountLabel.setText("$"
+                + llenarTabla(new LogicReport().getMonthlyReport(monthComboBox2.getSelectedIndex() + 1,
+                                (int) yearComboBox2.getSelectedItem()),
+                        monthlyReportTable));
     }//GEN-LAST:event_generateMonthlyReportButtonActionPerformed
 
     private void welcome2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcome2ButtonActionPerformed
         dispose();
-        new Welcome().setVisible(true);
     }//GEN-LAST:event_welcome2ButtonActionPerformed
 
     private void yearComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBox2ActionPerformed
-        if(yearComboBox2 != null && yearComboBox2.getItemCount() > 0)
-        llenarMonthsCombo2((int)yearComboBox2.getSelectedItem());
+        if (yearComboBox2 != null && yearComboBox2.getItemCount() > 0) {
+            llenarMonthsCombo2((int) yearComboBox2.getSelectedItem());
+        }
     }//GEN-LAST:event_yearComboBox2ActionPerformed
 
     private void jPanel2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentShown
@@ -591,34 +590,34 @@ public class Reports extends javax.swing.JFrame {
 
     private void welcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeButtonActionPerformed
         dispose();
-        new Welcome().setVisible(true);
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
     private void generateDailyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateDailyReportButtonActionPerformed
-        daylyTotalAmountLabel.setText( "$" +
-            llenarTabla(new LogicReport().getDailyReport((int)dayComboBox.getSelectedItem(),
-                monthComboBox.getSelectedIndex() + 1,
-                (int)yearComboBox.getSelectedItem()),
-            dailyReportTable));
+        daylyTotalAmountLabel.setText("$"
+                + llenarTabla(new LogicReport().getDailyReport((int) dayComboBox.getSelectedItem(),
+                                monthComboBox.getSelectedIndex() + 1,
+                                (int) yearComboBox.getSelectedItem()),
+                        dailyReportTable));
     }//GEN-LAST:event_generateDailyReportButtonActionPerformed
 
     private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
-        if(monthComboBox != null && monthComboBox.getItemCount() > 0)
-        llenarDaysCombo((int)yearComboBox.getSelectedItem(), monthComboBox.getSelectedIndex());
+        if (monthComboBox != null && monthComboBox.getItemCount() > 0) {
+            llenarDaysCombo((int) yearComboBox.getSelectedItem(), monthComboBox.getSelectedIndex());
+        }
     }//GEN-LAST:event_monthComboBoxActionPerformed
 
     private void yearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboBoxActionPerformed
-        if(yearComboBox != null && yearComboBox.getItemCount() > 0)
-        llenarMonthsCombo((int)yearComboBox.getSelectedItem());
+        if (yearComboBox != null && yearComboBox.getItemCount() > 0) {
+            llenarMonthsCombo((int) yearComboBox.getSelectedItem());
+        }
     }//GEN-LAST:event_yearComboBoxActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
-        new Welcome().setVisible(true);
+
     }//GEN-LAST:event_formWindowClosed
 
     private void setLookAndFeel() {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -627,10 +626,10 @@ public class Reports extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            
+
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;

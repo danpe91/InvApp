@@ -13,11 +13,11 @@ public class Welcome extends javax.swing.JFrame {
         setTitle("Inicio");
         setLocationByPlatform(true);
         initComponents();
-//        insertProductsFromFile("productos.cvs");
-//        String[] nombreFuentes = getToolkit().getFontList();
-//        for (String nombreFuente : nombreFuentes) {
-//            System.out.println(nombreFuente);
-//        }
+        insertProductsFromFile("productos.cvs");
+        String[] nombreFuentes = getToolkit().getFontList();
+        for (String nombreFuente : nombreFuentes) {
+            System.out.println(nombreFuente);
+        }
     }
 
     private void insertProductsFromFile(String fileName) {
@@ -209,17 +209,17 @@ public class Welcome extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
-        dispose();
+
         new Inventory().setVisible(true);
     }//GEN-LAST:event_InventarioButtonActionPerformed
 
     private void VentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentaButtonActionPerformed
-        dispose();
+
         new NewSale().setVisible(true);
     }//GEN-LAST:event_VentaButtonActionPerformed
 
     private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
-        dispose();
+
         new Reports().setVisible(true);
     }//GEN-LAST:event_reportsButtonActionPerformed
 
