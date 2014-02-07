@@ -165,7 +165,7 @@
                               <Component id="removeButton" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="newSellButton" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="newSaleButton" min="-2" pref="150" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="addToCartButton" min="-2" pref="163" max="-2" attributes="0"/>
                           </Group>
@@ -217,7 +217,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="addToCartButton" pref="43" max="32767" attributes="0"/>
-                          <Component id="newSellButton" max="32767" attributes="0"/>
+                          <Component id="newSaleButton" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -232,13 +232,13 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="newSellButton">
+    <Component class="javax.swing.JButton" name="newSaleButton">
       <Properties>
         <Property name="mnemonic" type="int" value="118"/>
         <Property name="text" type="java.lang.String" value="Vender"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newSellButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newSaleButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSpinner" name="quantitySpinner">

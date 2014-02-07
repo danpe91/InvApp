@@ -27,9 +27,9 @@ public class DAOReports {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOSale(rs.getInt("idsell"), rs.getInt("quantity"),
+                lista.add(new DTOSale(rs.getInt("idsale"), rs.getInt("quantity"),
                         new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
-                        "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
+                        "", rs.getTimestamp("date"), rs.getInt("salenumber")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,9 +62,9 @@ public class DAOReports {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOSale(rs.getInt("idsell"), rs.getInt("quantity"),
+                lista.add(new DTOSale(rs.getInt("idsale"), rs.getInt("quantity"),
                         new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")),
-                        "", rs.getTimestamp("date"), rs.getInt("sellnumber")));
+                        "", rs.getTimestamp("date"), rs.getInt("salenumber")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

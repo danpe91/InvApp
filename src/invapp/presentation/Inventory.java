@@ -76,6 +76,7 @@ public class Inventory extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        inventoryTable.getTableHeader().setReorderingAllowed(false);
         inventoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 inventoryTableMouseClicked(evt);
@@ -197,7 +198,7 @@ public class Inventory extends javax.swing.JFrame {
                 inv.getCode(),
                 inv.getProduct(),
                 inv.getUnitPrice(),
-                inv.getSaleType()
+                ((inv.getSaleType())? ("Por pieza") :("Por peso"))
             };
             currentModel.addRow(row);
         }

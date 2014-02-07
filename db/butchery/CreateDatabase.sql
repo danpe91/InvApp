@@ -93,11 +93,6 @@ CREATE PROCEDURE `butchery`.`Insertsale`(IN p_code VARCHAR(10),
                                           IN p_total DOUBLE,
                                           IN p_date DATETIME)
 BEGIN
-    UPDATE products
-        SET stock = stock - p_quantity,
-            sold = sold + p_quantity
-        WHERE code = p_code;
-
     INSERT INTO sales(code, salenumber, quantity, total, date)
             VALUES(p_code, p_salenumber, p_quantity, p_total, p_date);
 END

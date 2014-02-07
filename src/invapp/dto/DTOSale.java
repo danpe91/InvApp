@@ -4,34 +4,34 @@ import invapp.helper.MyTimestamp;
 
 public class DTOSale {
     
-    private Integer idSell;
+    private Integer idSale;
     private DTOProduct product;
     private Integer quantity;
-    private Integer sellNumber;
-    private String seller;
+    private Integer saleNumber;
+    private String saleer;
     private MyTimestamp date;
     
     public DTOSale() {
         
     }
     
-    public DTOSale(Integer idSell, Integer quantity, DTOProduct product,
-                    String seller, java.sql.Timestamp date, Integer sellNumber) {
-        this.idSell = idSell;
+    public DTOSale(Integer idSale, Integer quantity, DTOProduct product,
+                    String saleer, java.sql.Timestamp date, Integer saleNumber) {
+        this.idSale = idSale;
         this.quantity = quantity;
         this.product = product;
-        this.seller = seller;
+        this.saleer = saleer;
         this.date = new MyTimestamp(date);
-        this.sellNumber = sellNumber;
+        this.saleNumber = saleNumber;
         
     }
 
-    public Integer getIdSell() {
-        return idSell;
+    public Integer getIdSale() {
+        return idSale;
     }
 
-    public void setIdSell(Integer idSell) {
-        this.idSell = idSell;
+    public void setIdSale(Integer idSale) {
+        this.idSale = idSale;
     }
 
     public Integer getQuantity() {
@@ -42,20 +42,20 @@ public class DTOSale {
         this.quantity = quantity;
     }
 
-    public String getSeller() {
-        return seller;
+    public String getSaleer() {
+        return saleer;
     }
 
-    public void setSeller(String seller) {
-        this.seller = seller;
+    public void setSaleer(String saleer) {
+        this.saleer = saleer;
     }
 
-    public Integer getSellNumber() {
-        return sellNumber;
+    public Integer getSaleNumber() {
+        return saleNumber;
     }
     
-    public void setSellNumber(Integer sellNumber) {
-        this.sellNumber = sellNumber;
+    public void setSaleNumber(Integer saleNumber) {
+        this.saleNumber = saleNumber;
     }
 
     public DTOProduct getProduct() {

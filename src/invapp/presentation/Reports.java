@@ -32,7 +32,6 @@ public class Reports extends javax.swing.JFrame {
                                                         date.getYear() + 1900), monthlyReportTable));
         llenarYearsCombo();
         llenarYearsCombo2();
-        llenarTablaRelacionDeVentas(new LogicProduct().readInventory());
     }
 
     private double llenarTabla(List<DTOSale> products, javax.swing.JTable table) {
@@ -46,13 +45,13 @@ public class Reports extends javax.swing.JFrame {
         for (DTOSale product : products) {
             double amount = product.getProduct().getUnitPrice() * product.getQuantity();
             Object[] row = {
-                product.getSellNumber(),
-                //product.getProduct().getAccesory(),
-                //product.getProduct().getSize(),
+                product.getSaleNumber(),
+                product.getProduct().getProduct(),
                 product.getQuantity(),
                 amount,
                 product.getDate()
             };
+            System.out.println(product.getDate());
             
             currentModel.addRow(row);
             totalAmount += amount;
@@ -63,6 +62,9 @@ public class Reports extends javax.swing.JFrame {
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
             table.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.LEFT);
+        table.getColumnModel().getColumn(1).setCellRenderer(tcr);
         
         if(products.isEmpty()) {
             Object[] row = { null, null, null, null };
@@ -130,32 +132,6 @@ public class Reports extends javax.swing.JFrame {
         
     }
     
-    private void llenarTablaRelacionDeVentas(List<DTOProduct> products) {
-         DefaultTableModel currentModel = 
-               (DefaultTableModel) sellsTable.getModel();
-        
-        currentModel.getDataVector().removeAllElements();
-
-        for (DTOProduct product : products) {
-            
-            Object[] row = {
-                /*product.getAccesory(),
-                product.getStock(),
-                product.getSize(),
-                product.getSold(),
-                product.getUnitPrice() * product.getSold()*/
-            };
-            currentModel.addRow(row);
-        }
-        
-        for (int i = 0; i < sellsTable.getColumnCount(); i++) {
-            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-            tcr.setHorizontalAlignment(SwingConstants.CENTER);
-            sellsTable.getColumnModel().getColumn(i).setCellRenderer(tcr);
-        }
-        
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,7 +153,7 @@ public class Reports extends javax.swing.JFrame {
         dayComboBox = new javax.swing.JComboBox();
         generateDailyReportButton = new javax.swing.JButton();
         welcomeButton = new javax.swing.JButton();
-        daylyTotalSellsLabel = new javax.swing.JLabel();
+        daylyTotalSalesLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         daylyTotalAmountLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -189,12 +165,8 @@ public class Reports extends javax.swing.JFrame {
         generateMonthlyReportButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         monthlyReportTable = new javax.swing.JTable();
-        monthlyTotalSellsLabel = new javax.swing.JLabel();
+        monthlyTotalSalesLabel = new javax.swing.JLabel();
         monthlyTotalAmountLabel = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        sellsTable = new javax.swing.JTable();
-        startButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -220,20 +192,20 @@ public class Reports extends javax.swing.JFrame {
 
         dailyReportTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Número de Venta", "Descripción", "Talla", "Cantidad", "Monto", "Fecha/Hora"
+                "Número de Venta", "Producto", "Cantidad", "Monto", "Fecha/Hora"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -245,11 +217,13 @@ public class Reports extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(dailyReportTable);
-        dailyReportTable.getColumnModel().getColumn(0).setMinWidth(130);
-        dailyReportTable.getColumnModel().getColumn(0).setPreferredWidth(130);
-        dailyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
-        dailyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
-        dailyReportTable.getColumnModel().getColumn(1).setMaxWidth(300);
+        if (dailyReportTable.getColumnModel().getColumnCount() > 0) {
+            dailyReportTable.getColumnModel().getColumn(0).setMinWidth(130);
+            dailyReportTable.getColumnModel().getColumn(0).setPreferredWidth(130);
+            dailyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
+            dailyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            dailyReportTable.getColumnModel().getColumn(1).setMaxWidth(300);
+        }
 
         jLabel1.setText("Año");
 
@@ -289,9 +263,9 @@ public class Reports extends javax.swing.JFrame {
             }
         });
 
-        daylyTotalSellsLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N
-        daylyTotalSellsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        daylyTotalSellsLabel.setText("Venta Total");
+        daylyTotalSalesLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N
+        daylyTotalSalesLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        daylyTotalSalesLabel.setText("Venta Total");
 
         daylyTotalAmountLabel.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         daylyTotalAmountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -326,7 +300,7 @@ public class Reports extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(daylyTotalSellsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(daylyTotalSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(66, 66, 66)
                                 .addComponent(daylyTotalAmountLabel)
@@ -358,7 +332,7 @@ public class Reports extends javax.swing.JFrame {
                             .addComponent(generateDailyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(welcomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(51, 51, 51)
-                        .addComponent(daylyTotalSellsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(daylyTotalSalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(daylyTotalAmountLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -406,20 +380,20 @@ public class Reports extends javax.swing.JFrame {
 
         monthlyReportTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Número de Venta", "Descripción", "Talla", "Cantidad", "Monto", "Fecha/Hora"
+                "Número de Venta", "Producto", "Cantidad", "Monto", "Fecha/Hora"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -431,14 +405,16 @@ public class Reports extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(monthlyReportTable);
-        monthlyReportTable.getColumnModel().getColumn(0).setMinWidth(130);
-        monthlyReportTable.getColumnModel().getColumn(0).setPreferredWidth(130);
-        monthlyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
-        monthlyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        if (monthlyReportTable.getColumnModel().getColumnCount() > 0) {
+            monthlyReportTable.getColumnModel().getColumn(0).setMinWidth(130);
+            monthlyReportTable.getColumnModel().getColumn(0).setPreferredWidth(130);
+            monthlyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
+            monthlyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        }
 
-        monthlyTotalSellsLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N
-        monthlyTotalSellsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        monthlyTotalSellsLabel.setText("Venta Total");
+        monthlyTotalSalesLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N
+        monthlyTotalSalesLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        monthlyTotalSalesLabel.setText("Venta Total");
 
         monthlyTotalAmountLabel.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         monthlyTotalAmountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -465,7 +441,7 @@ public class Reports extends javax.swing.JFrame {
                                 .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
-                    .addComponent(monthlyTotalSellsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(monthlyTotalSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(monthlyTotalAmountLabel)
@@ -493,7 +469,7 @@ public class Reports extends javax.swing.JFrame {
                             .addComponent(generateMonthlyReportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(welcome2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(63, 63, 63)
-                        .addComponent(monthlyTotalSellsLabel)
+                        .addComponent(monthlyTotalSalesLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(monthlyTotalAmountLabel)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -501,61 +477,6 @@ public class Reports extends javax.swing.JFrame {
         );
 
         mainTabbedPane.addTab("Mensual", jPanel3);
-
-        jPanel4.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                jPanel4ComponentShown(evt);
-            }
-        });
-
-        sellsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Descripción", "Existencia", "Talla", "Ventas", "Total Vendido"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(sellsTable);
-
-        startButton.setMnemonic('i');
-        startButton.setText("Inicio");
-        startButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(385, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
-        );
-
-        mainTabbedPane.addTab("Relación de Ventas", jPanel4);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -638,15 +559,6 @@ public class Reports extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
-        getRootPane().setDefaultButton(startButton);
-    }//GEN-LAST:event_jPanel4ComponentShown
-
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        dispose();
-        new Welcome().setVisible(true);
-    }//GEN-LAST:event_startButtonActionPerformed
-
     private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
         getRootPane().setDefaultButton(generateMonthlyReportButton);
     }//GEN-LAST:event_jPanel3ComponentShown
@@ -717,7 +629,7 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JTable dailyReportTable;
     private javax.swing.JComboBox dayComboBox;
     private javax.swing.JLabel daylyTotalAmountLabel;
-    private javax.swing.JLabel daylyTotalSellsLabel;
+    private javax.swing.JLabel daylyTotalSalesLabel;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
@@ -733,9 +645,7 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
@@ -743,13 +653,11 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JComboBox monthComboBox2;
     private javax.swing.JTable monthlyReportTable;
     private javax.swing.JLabel monthlyTotalAmountLabel;
-    private javax.swing.JLabel monthlyTotalSellsLabel;
+    private javax.swing.JLabel monthlyTotalSalesLabel;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
-    private javax.swing.JTable sellsTable;
-    private javax.swing.JButton startButton;
     private javax.swing.JButton welcome2Button;
     private javax.swing.JButton welcomeButton;
     private javax.swing.JComboBox yearComboBox;

@@ -124,7 +124,7 @@
                   <Component id="exitButton" pref="125" max="32767" attributes="0"/>
                   <Component id="reportsButton" alignment="1" max="32767" attributes="0"/>
                   <Component id="inventoryButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="newSellButton" alignment="0" pref="125" max="32767" attributes="0"/>
+                  <Component id="newSaleButton" alignment="0" pref="125" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="97" max="32767" attributes="0"/>
           </Group>
@@ -136,7 +136,7 @@
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Component id="inventoryButton" min="-2" pref="62" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="newSellButton" min="-2" pref="58" max="-2" attributes="0"/>
+              <Component id="newSaleButton" min="-2" pref="58" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="reportsButton" min="-2" pref="59" max="-2" attributes="0"/>
               <EmptySpace pref="103" max="32767" attributes="0"/>
@@ -156,7 +156,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InventarioButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="newSellButton">
+    <Component class="javax.swing.JButton" name="newSaleButton">
       <Properties>
         <Property name="mnemonic" type="int" value="86"/>
         <Property name="text" type="java.lang.String" value="Venta"/>

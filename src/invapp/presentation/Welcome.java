@@ -55,7 +55,7 @@ public class Welcome extends javax.swing.JFrame {
     private void initComponents() {
 
         inventoryButton = new javax.swing.JButton();
-        newSellButton = new javax.swing.JButton();
+        newSaleButton = new javax.swing.JButton();
         reportsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
@@ -83,9 +83,9 @@ public class Welcome extends javax.swing.JFrame {
             }
         });
 
-        newSellButton.setMnemonic('V');
-        newSellButton.setText("Venta");
-        newSellButton.addActionListener(new java.awt.event.ActionListener() {
+        newSaleButton.setMnemonic('V');
+        newSaleButton.setText("Venta");
+        newSaleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VentaButtonActionPerformed(evt);
             }
@@ -180,7 +180,7 @@ public class Welcome extends javax.swing.JFrame {
                     .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                     .addComponent(reportsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(inventoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newSellButton, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                    .addComponent(newSaleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
                 .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,7 +189,7 @@ public class Welcome extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addComponent(inventoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(newSellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(reportsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
@@ -256,7 +256,7 @@ public class Welcome extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JButton inventoryButton;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JButton newSellButton;
+    private javax.swing.JButton newSaleButton;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JButton reportsButton;

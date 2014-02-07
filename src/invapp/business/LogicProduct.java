@@ -41,7 +41,6 @@ public class LogicProduct {
     
     public List<String> getListOfCodes() {
 
-        System.out.println("getListOfCodes!  LogicProduct.java:44");
         return new DAOProduct().getListOfCodes();
     }
 
