@@ -32,18 +32,22 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="acceptButton" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="cancelButton" pref="147" max="32767" attributes="0"/>
                           <Component id="fontsComboBox" alignment="1" max="32767" attributes="0"/>
+                          <Component id="fontSizeComboBox" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -61,12 +65,17 @@
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="fontsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fontSizeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="acceptButton" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="cancelButton" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="45" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,7 +102,7 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="fontsComboBox.setSelectedIndex(index);"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="int index = 0;&#xa;String currentFont = FontReader.readFontFromFile(&quot;fontFile&quot;);&#xa;String[] nombreFuentes = getToolkit().getFontList();&#xa;for (int i = 0; i &lt; nombreFuentes.length; i++) {&#xa;    if (currentFont.equals(nombreFuentes[i])) {&#xa;        index = i;&#xa;        break;&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="int index = 0;&#xa;GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();&#xa;String currentFont = FontReader.readFontNameFromFile(&quot;fontFile&quot;);&#xa;// String[] nombreFuentes = getToolkit().getFontList();&#xa;String[] nombreFuentes = e.getAvailableFontFamilyNames();&#xa;for (int i = 0; i &lt; nombreFuentes.length; i++) {&#xa;    if (currentFont.equals(nombreFuentes[i])) {&#xa;        index = i;&#xa;        break;&#xa;    }&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="acceptButton">
@@ -113,6 +122,22 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tama&#xf1;o"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="fontSizeComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(modelList)" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String fontSize = Integer.toString(FontReader.readFontSizeFromFile(&quot;fontFile&quot;));&#xa;int size = modelList.length;&#xa;index = 0;&#xa;for (int i = 0; i &lt; size; i++) {&#xa;    if(fontSize.equals(modelList[i])) {&#xa;        index = i;&#xa;        break;&#xa;    }&#xa;}&#xa;fontSizeComboBox.setSelectedIndex(index);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String modelList[] = new String[] { &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;11&quot;, &quot;12&quot;, &quot;13&quot;, &quot;14&quot; };"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

@@ -133,8 +133,9 @@ public class LogicSale {
             g2d.translate(pf.getImageableX(), pf.getImageableY());
 
             // Now we perform our rendering
-            String font = FontReader.readFontFromFile("fontFile");
-            Font newFont = new Font(font, Font.PLAIN, 8);
+            String fontName = FontReader.readFontNameFromFile("fontFile");
+            int fontSize = FontReader.readFontSizeFromFile("fontFile");
+            Font newFont = new Font(fontName, Font.PLAIN, fontSize);
             g.setFont(newFont);
             FontMetrics fm = g.getFontMetrics();
             height = fm.getHeight();

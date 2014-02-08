@@ -1,6 +1,7 @@
 package invapp.presentation;
 
 import invapp.helper.FontReader;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class FontSetting extends javax.swing.JFrame {
         setLocationByPlatform(true);
         initComponents();
         setLookAndFeel();
+        getRootPane().setDefaultButton(acceptButton);
     }
 
     /**
@@ -30,6 +32,8 @@ public class FontSetting extends javax.swing.JFrame {
         fontsComboBox = new javax.swing.JComboBox();
         acceptButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        fontSizeComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -39,8 +43,10 @@ public class FontSetting extends javax.swing.JFrame {
         jLabel2.setText("Fuentes disponibles");
 
         int index = 0;
-        String currentFont = FontReader.readFontFromFile("fontFile");
-        String[] nombreFuentes = getToolkit().getFontList();
+        GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String currentFont = FontReader.readFontNameFromFile("fontFile");
+        // String[] nombreFuentes = getToolkit().getFontList();
+        String[] nombreFuentes = e.getAvailableFontFamilyNames();
         for (int i = 0; i < nombreFuentes.length; i++) {
             if (currentFont.equals(nombreFuentes[i])) {
                 index = i;
@@ -66,6 +72,21 @@ public class FontSetting extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Tamaño");
+
+        String modelList[] = new String[] { "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" };
+        fontSizeComboBox.setModel(new javax.swing.DefaultComboBoxModel(modelList));
+        String fontSize = Integer.toString(FontReader.readFontSizeFromFile("fontFile"));
+        int size = modelList.length;
+        index = 0;
+        for (int i = 0; i < size; i++) {
+            if(fontSize.equals(modelList[i])) {
+                index = i;
+                break;
+            }
+        }
+        fontSizeComboBox.setSelectedIndex(index);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,15 +99,18 @@ public class FontSetting extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(acceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(acceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                            .addComponent(fontsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(fontsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fontSizeComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -98,11 +122,15 @@ public class FontSetting extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(fontsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(fontSizeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -120,8 +148,12 @@ public class FontSetting extends javax.swing.JFrame {
             FileWriter fw;
             fw = new FileWriter(file, false);
 
-            String selectedFont = (String) fontsComboBox.getSelectedItem();
-            fw.write(selectedFont);
+            String selectedFontName = (String) fontsComboBox.getSelectedItem();
+            fw.write(selectedFontName);
+            fw.write(",");
+            String selectedFontSize = (String)fontSizeComboBox.getSelectedItem();
+            fw.write(selectedFontSize);
+            
             fw.close();
 
         } catch (IOException ex) {
@@ -150,8 +182,10 @@ public class FontSetting extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JComboBox fontSizeComboBox;
     private javax.swing.JComboBox fontsComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
