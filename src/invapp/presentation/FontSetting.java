@@ -1,9 +1,7 @@
 package invapp.presentation;
 
-import java.io.BufferedReader;
+import invapp.helper.FontReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,36 +14,6 @@ public class FontSetting extends javax.swing.JFrame {
         setLocationByPlatform(true);
         initComponents();
         setLookAndFeel();
-    }
-
-    private String readFontFromFile(String fileName) {
-
-        String currentFont = "";
-        try {
-
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-            currentFont = br.readLine();
-
-            if (currentFont != null) {
-                currentFont = currentFont.trim();
-            } else {
-                currentFont = "";
-            }
-
-        } catch (FileNotFoundException fne) {
-            
-            try {
-                java.io.File file = new java.io.File(fileName);
-            file.createNewFile();
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
-            
-            fne.printStackTrace();
-        } catch (IOException fne) {
-            fne.printStackTrace();
-        }
-        return currentFont;
     }
 
     /**
@@ -71,7 +39,7 @@ public class FontSetting extends javax.swing.JFrame {
         jLabel2.setText("Fuentes disponibles");
 
         int index = 0;
-        String currentFont = readFontFromFile("fontFile");
+        String currentFont = FontReader.readFontFromFile("fontFile");
         String[] nombreFuentes = getToolkit().getFontList();
         for (int i = 0; i < nombreFuentes.length; i++) {
             if (currentFont.equals(nombreFuentes[i])) {
@@ -151,11 +119,11 @@ public class FontSetting extends javax.swing.JFrame {
             File file = new File("fontFile");
             FileWriter fw;
             fw = new FileWriter(file, false);
-            
+
             String selectedFont = (String) fontsComboBox.getSelectedItem();
             fw.write(selectedFont);
             fw.close();
-            
+
         } catch (IOException ex) {
             System.out.println("IOException");
             Logger.getLogger(FontSetting.class.getName()).log(Level.SEVERE, null, ex);

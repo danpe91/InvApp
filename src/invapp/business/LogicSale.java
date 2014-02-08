@@ -2,6 +2,7 @@ package invapp.business;
 
 import invapp.data.DAOSale;
 import invapp.dto.DTOSale;
+import invapp.helper.FontReader;
 import invapp.helper.MyTimestamp;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -132,7 +133,8 @@ public class LogicSale {
             g2d.translate(pf.getImageableX(), pf.getImageableY());
 
             // Now we perform our rendering
-            Font newFont = new Font("Serif", Font.PLAIN, 8);
+            String font = FontReader.readFontFromFile("fontFile");
+            Font newFont = new Font(font, Font.PLAIN, 8);
             g.setFont(newFont);
             FontMetrics fm = g.getFontMetrics();
             height = fm.getHeight();
@@ -168,16 +170,16 @@ public class LogicSale {
                     text = text.substring(0, 16);
                 }
                 g.drawString(text, xMargin, yMargin);
-                
+
                 text = sale.getQuantity().toString();
                 g.drawString(text, xMargin + (17 * 5), yMargin);
-                
+
                 text = sale.getProduct().getUnitPrice().toString();
                 g.drawString(text, xMargin + (25 * 5), yMargin);
-                
+
                 Double price = sale.getProduct().getUnitPrice().doubleValue() * sale.getQuantity().doubleValue();
                 text = price.toString();
-                g.drawString(text, xMargin + (40 * 5), yMargin);
+                g.drawString(text, xMargin + (37 * 5), yMargin);
             }
 
             // tell the caller that this page is part

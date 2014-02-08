@@ -93,7 +93,7 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="fontsComboBox.setSelectedIndex(index);"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="int index = 0;&#xa;String currentFont = readFontFromFile(&quot;fontFile&quot;);&#xa;String[] nombreFuentes = getToolkit().getFontList();&#xa;for (int i = 0; i &lt; nombreFuentes.length; i++) {&#xa;    if (currentFont.equals(nombreFuentes[i])) {&#xa;        index = i;&#xa;        break;&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="int index = 0;&#xa;String currentFont = FontReader.readFontFromFile(&quot;fontFile&quot;);&#xa;String[] nombreFuentes = getToolkit().getFontList();&#xa;for (int i = 0; i &lt; nombreFuentes.length; i++) {&#xa;    if (currentFont.equals(nombreFuentes[i])) {&#xa;        index = i;&#xa;        break;&#xa;    }&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="acceptButton">
