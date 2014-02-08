@@ -11,6 +11,7 @@ nbproject/private/
 *.swp
 *.out
 *.cvs
+fontFile
 
 /build/
 /dist/

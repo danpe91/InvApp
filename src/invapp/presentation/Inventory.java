@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class Inventory extends javax.swing.JFrame {
 
     public Inventory() {
-        setTitle("Inventario");
+        setTitle("Productos");
         setLocationByPlatform(true);
         initComponents();
         setLookAndFeel();
