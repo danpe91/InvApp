@@ -45,8 +45,8 @@ public class FontSetting extends javax.swing.JFrame {
         int index = 0;
         GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String currentFont = FontReader.readFontNameFromFile("fontFile");
-        // String[] nombreFuentes = getToolkit().getFontList();
-        String[] nombreFuentes = e.getAvailableFontFamilyNames();
+        String[] nombreFuentes = getToolkit().getFontList();
+        //String[] nombreFuentes = e.getAvailableFontFamilyNames();
         for (int i = 0; i < nombreFuentes.length; i++) {
             if (currentFont.equals(nombreFuentes[i])) {
                 index = i;

@@ -436,6 +436,7 @@ public class NewSale extends javax.swing.JFrame {
                 if (finalCode.equalsIgnoreCase(codeTextField.getText())) {
                     codeTextField.setText(finalCode);
                     fillInFields(new LogicProduct().readProductByCode(finalCode));
+                    quantityTextField.requestFocus();
                     return;
                 }
             }

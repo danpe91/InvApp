@@ -119,6 +119,7 @@ public class LogicSale {
             int numberOfHeaders = HEADERS.length;
             int yMargin = 10;
             int xMargin = 0;
+            int extraX = 0;
             // We have only one page, and 'page'
             // is zero-based
             if (page > 0) {
@@ -156,32 +157,49 @@ public class LogicSale {
                 yMargin += height;
             }
 
+            String text = "-----------------------------------------------"
+                    + "-----------------------------------------------------------";
+            g.drawString(text, xMargin, yMargin - (height / 3));
+
+            yMargin += (height / 2);
             g.drawString("PRODUCTO |", xMargin, yMargin);
             g.drawString("CANTIDAD |", xMargin + (11 * 5), yMargin);
             g.drawString("PRECIO |", xMargin + (21 * 5), yMargin);
             g.drawString("IMPORTE", xMargin + (29 * 5), yMargin);
-            yMargin += height;
+            yMargin += (height / 2);
 
             for (DTOSale sale : sales) {
 
                 yMargin += height;
-                String text = "";
                 text = sale.getProduct().getProduct();
-                if (text.length() > 16) {
-                    text = text.substring(0, 16);
+                if (text.length() > 15) {
+                    text = text.substring(0, 15);
                 }
                 g.drawString(text, xMargin, yMargin);
 
-                text = sale.getQuantity().toString();
-                g.drawString(text, xMargin + (17 * 5), yMargin);
+                if (sale.getProduct().getSaleType()) {
 
-                text = sale.getProduct().getUnitPrice().toString();
-                g.drawString(text, xMargin + (25 * 5), yMargin);
+                    text = String.format("%.0f", sale.getQuantity());
+                    extraX = 2 * 5;
+                } else {
+                    text = String.format("%.2f", sale.getQuantity());
+                    extraX = 0;
+                }
+
+                g.drawString(text, xMargin + (16 * 5) + extraX, yMargin);
+
+                text = String.format("%.2f", sale.getProduct().getUnitPrice());
+                g.drawString(text, xMargin + (22 * 5), yMargin);
 
                 Double price = sale.getProduct().getUnitPrice().doubleValue() * sale.getQuantity().doubleValue();
-                text = price.toString();
-                g.drawString(text, xMargin + (37 * 5), yMargin);
+                text = String.format("%.2f", price);
+                g.drawString(text, xMargin + (30 * 5), yMargin);
             }
+
+            yMargin += (2 * height);
+
+            g.drawString("Gracias por su preferencia!", xMargin, yMargin);
+            g.drawString("Vuelva pronto", xMargin, yMargin + height);
 
             // tell the caller that this page is part
             // of the printed document

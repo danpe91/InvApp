@@ -43,26 +43,38 @@ public class Reports extends javax.swing.JFrame {
         for (DTOSale product : products) {
             double amount = product.getProduct().getUnitPrice() * product.getQuantity();
             Object[] row = {
-                product.getSaleNumber(),
+                product.getSaleNumber().toString(),
                 product.getProduct().getProduct(),
-                product.getQuantity(),
-                amount,
+                ((product.getProduct().getSaleType())
+                ? (String.format("%.0f", product.getQuantity()))
+                : (String.format("%.2fkg", product.getQuantity()))),
+                String.format("$%.2f", amount),
                 product.getDate()
             };
-            System.out.println(product.getDate());
 
             currentModel.addRow(row);
             totalAmount += amount;
         }
 
-        for (int i = 0; i < table.getColumnCount(); i++) {
+        for (int i = 0;
+                i < table.getColumnCount();
+                i++) {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
             table.getColumnModel().getColumn(i).setCellRenderer(tcr);
         }
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer tcrRight = new DefaultTableCellRenderer();
+
         tcr.setHorizontalAlignment(SwingConstants.LEFT);
-        table.getColumnModel().getColumn(1).setCellRenderer(tcr);
+        tcrRight.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        table.getColumnModel()
+                .getColumn(1).setCellRenderer(tcr);
+        table.getColumnModel()
+                .getColumn(2).setCellRenderer(tcrRight);
+        table.getColumnModel()
+                .getColumn(3).setCellRenderer(tcrRight);
 
         if (products.isEmpty()) {
             Object[] row = {null, null, null, null};
@@ -206,7 +218,7 @@ public class Reports extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -222,11 +234,14 @@ public class Reports extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(dailyReportTable);
         if (dailyReportTable.getColumnModel().getColumnCount() > 0) {
-            dailyReportTable.getColumnModel().getColumn(0).setMinWidth(130);
-            dailyReportTable.getColumnModel().getColumn(0).setPreferredWidth(130);
+            dailyReportTable.getColumnModel().getColumn(0).setMinWidth(40);
+            dailyReportTable.getColumnModel().getColumn(0).setPreferredWidth(40);
             dailyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
             dailyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
             dailyReportTable.getColumnModel().getColumn(1).setMaxWidth(300);
+            dailyReportTable.getColumnModel().getColumn(2).setPreferredWidth(40);
+            dailyReportTable.getColumnModel().getColumn(3).setPreferredWidth(40);
+            dailyReportTable.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
         jLabel1.setText("Año");
@@ -394,7 +409,7 @@ public class Reports extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -410,10 +425,11 @@ public class Reports extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(monthlyReportTable);
         if (monthlyReportTable.getColumnModel().getColumnCount() > 0) {
-            monthlyReportTable.getColumnModel().getColumn(0).setMinWidth(130);
-            monthlyReportTable.getColumnModel().getColumn(0).setPreferredWidth(130);
-            monthlyReportTable.getColumnModel().getColumn(1).setMinWidth(100);
-            monthlyReportTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            monthlyReportTable.getColumnModel().getColumn(0).setMinWidth(40);
+            monthlyReportTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            monthlyReportTable.getColumnModel().getColumn(2).setPreferredWidth(40);
+            monthlyReportTable.getColumnModel().getColumn(3).setPreferredWidth(40);
+            monthlyReportTable.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
         monthlyTotalSalesLabel.setFont(new java.awt.Font("DejaVu Sans", 1, 20)); // NOI18N

@@ -19,7 +19,7 @@ public class MyTimestamp extends Timestamp {
         String sec = (getSeconds() < 10)? "0": "";
         return getDate() + "/" +
                 getMonth() + "/" +
-                getYear() + " " +
+                (getYear() + 1900) + " " +
                 getHours() + ":" + min + 
                 getMinutes() + ":" + sec + 
                 getSeconds();
