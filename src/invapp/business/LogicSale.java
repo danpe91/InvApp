@@ -45,7 +45,7 @@ public class LogicSale {
         return new DAOSale().getNewSaleNumber() + 1;
     }
 
-    public void printData(List<DTOSale> sales) {
+    public void printData(List<DTOSale> sales, double total) {
 
         Book book = new Book();
         PrinterJob job = PrinterJob.getPrinterJob();

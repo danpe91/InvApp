@@ -40,17 +40,19 @@ public class NewSale extends javax.swing.JFrame {
         try {
             for (DTOSale product : products) {
 
+                double total = product.getProduct().getUnitPrice() * product.getQuantity();
                 Object[] row = {
                     product.getProduct().getProduct(),
                     product.getQuantity(),
-                    product.getProduct().getUnitPrice(),
-                    product.getProduct().getUnitPrice() * product.getQuantity()
+                    String.format("$%.2f", product.getProduct().getUnitPrice()),
+                    String.format("$%.2f", total)
+
                 };
                 currentModel.addRow(row);
-                totalCost += (double) row[3];
+                totalCost += total;
             }
 
-            totalTextField.setText(totalCost.toString());
+            totalTextField.setText(String.format("$%.2f", totalCost));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +132,7 @@ public class NewSale extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -153,6 +155,9 @@ public class NewSale extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Cantarell", 1, 12)); // NOI18N
         jLabel4.setText("Total");
+
+        totalTextField.setEditable(false);
+        totalTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         addToCartButton.setMnemonic('a');
         addToCartButton.setText("Agregar");
@@ -269,42 +274,36 @@ public class NewSale extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(81, 81, 81)
-                                .addComponent(totalTextField))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(quantityLabel)
-                                            .addComponent(jLabel1))
-                                        .addGap(81, 81, 81)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(costTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                                            .addComponent(productTextField)
-                                            .addComponent(quantityTextField)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(97, 97, 97)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(21, 21, Short.MAX_VALUE)))
+                        .addComponent(jLabel9)
+                        .addGap(97, 97, 97)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(seekButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(81, 81, 81)
+                            .addComponent(totalTextField))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(quantityLabel)
+                                .addComponent(jLabel1))
+                            .addGap(81, 81, 81)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(costTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                                .addComponent(productTextField)
+                                .addComponent(quantityTextField))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(removeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(newSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -360,13 +359,14 @@ public class NewSale extends javax.swing.JFrame {
 
     private void newSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newSaleButtonActionPerformed
 
-        new LogicSale().insertSales(cartList);
-        new LogicSale().printData(cartList);
-        cartList.clear();
-        llenarTabla(cartList);
-        dispose();
-        new NewSale().setVisible(true);
+        double total = 0d;
 
+        for (DTOSale sale : cartList) {
+
+            total += (sale.getProduct().getUnitPrice().doubleValue() * sale.getQuantity().doubleValue());
+        }
+
+        new PaymentChange(this, cartList, total).setVisible(true);
     }//GEN-LAST:event_newSaleButtonActionPerformed
 
     private boolean validateEmptyFields() {
@@ -379,7 +379,7 @@ public class NewSale extends javax.swing.JFrame {
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
 
         if (validateEmptyFields()) {
-            
+
             DTOSale sale = new DTOSale();
 
             sale.setProduct(currentProduct);
@@ -391,14 +391,14 @@ public class NewSale extends javax.swing.JFrame {
             cleanFields();
             getRootPane().setDefaultButton(seekButton);
             codeTextField.requestFocus();
-            
+
         } else {
             if (quantityTextField.getText().isEmpty() && !productTextField.getText().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Error: cantidad no ingresada.",
-                    "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
             } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "Error: no se ha seleccionado algun producto.",
-                    "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(null, "Error: no se ha seleccionado algun producto.",
+                        "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_addToCartButtonActionPerformed

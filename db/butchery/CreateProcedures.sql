@@ -9,12 +9,12 @@ USE `invapp` ;
 -- procedure ReadInventory
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`ReadInventory`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`ReadInventory`;
 
 DELIMITER $$
-USE `invapp`$$
-CREATE PROCEDURE `invapp`.`ReadInventory`()
+USE `butchery`$$
+CREATE PROCEDURE `butchery`.`ReadInventory`()
 BEGIN
     SELECT * FROM products;
 END
@@ -23,88 +23,63 @@ $$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure ReadSells
+-- procedure Readsales
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`ReadSells`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`Readsales`;
 
 DELIMITER $$
-USE `invapp`$$
-CREATE PROCEDURE `invapp`.`ReadSells`()
+USE `butchery`$$
+CREATE PROCEDURE `butchery`.`Readsales`()
 BEGIN
-    SELECT * FROM sells;
+    SELECT * FROM sales;
 END
 $$
 
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure InsertSell
+-- procedure Insertsale
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`InsertSell`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`Insertsale`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
-CREATE PROCEDURE `invapp`.`InsertSell`(IN p_idproduct INT,
-                                          IN p_sellnumber INT,
-                                          IN p_quantity INT,
+CREATE PROCEDURE `butchery`.`Insertsale`(IN p_code VARCHAR(10),
+                                          IN p_salenumber INT,
+                                          IN p_quantity DOUBLE,
                                           IN p_total DOUBLE,
                                           IN p_date DATETIME)
 BEGIN
-    UPDATE products
-        SET stock = stock - p_quantity,
-            sold = sold + p_quantity
-        WHERE idproduct = p_idproduct;
-
-    INSERT INTO sells(idproduct, sellnumber, quantity, total, date)
-            VALUES(p_idproduct, p_sellnumber, p_quantity, p_total, p_date);
+    INSERT INTO sales(code, salenumber, quantity, total, date)
+            VALUES(p_code, p_salenumber, p_quantity, p_total, p_date);
 END
 $$
 
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure GetNewSellNumber
+-- procedure GetNewsaleNumber
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`GetNewSellNumber`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`GetNewsaleNumber`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
 
 
-CREATE PROCEDURE `invapp`.`GetNewSellNumber` ()
+CREATE PROCEDURE `butchery`.`GetNewsaleNumber` ()
 BEGIN
-    SELECT MAX(sellnumber) as sellnumber
-    FROM sells;
-END
-$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
--- procedure ReadProducts
--- -----------------------------------------------------
-
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`ReadProducts`;
-
-DELIMITER $$
-USE `invapp`$$
-
-
-CREATE PROCEDURE `invapp`.`ReadProducts`()
-BEGIN
-    SELECT * FROM products
-    GROUP BY accesoryname;
+    SELECT MAX(salenumber) as salenumber
+    FROM sales;
 END
 $$
 
@@ -114,16 +89,16 @@ DELIMITER ;
 -- procedure GetDataByName
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`GetDataByName`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`GetDataByName`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
 
 
-CREATE PROCEDURE `invapp`.`GetDataByName`(IN p_accesoryname VARCHAR(50))
+CREATE PROCEDURE `butchery`.`GetDataByName`(IN p_accesoryname VARCHAR(50))
 BEGIN
     SELECT * FROM products
     WHERE accesoryname = p_accesoryname ;
@@ -136,16 +111,16 @@ DELIMITER ;
 -- procedure GetDataByNameAndSize
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`GetDataByNameAndSize`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`GetDataByNameAndSize`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
 
 
-CREATE PROCEDURE `invapp`.`GetDataByNameAndSize`(IN p_accesoryname VARCHAR(50),
+CREATE PROCEDURE `butchery`.`GetDataByNameAndSize`(IN p_accesoryname VARCHAR(50),
                                                     IN p_size VARCHAR(20))
 BEGIN
     SELECT * FROM products
@@ -160,35 +135,25 @@ DELIMITER ;
 -- procedure UpdateProduct
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`UpdateProduct`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`UpdateProduct`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
 
 
-CREATE PROCEDURE `invapp`.`UpdateProduct`(IN p_idproduct INT,
-                        IN p_accesoryname VARCHAR(50),
-                        IN p_stock INT,
+CREATE PROCEDURE `butchery`.`UpdateProduct`(IN p_code VARCHAR(10),
+                        IN p_product VARCHAR(100),
                         IN p_unitprice DOUBLE,
-                        IN p_size VARCHAR(20),
-                        IN p_code VARCHAR(50),
-                        IN p_brand VARCHAR(50),
-                        IN p_model VARCHAR(50),
-                        IN p_color VARCHAR(50))
+                        IN p_saletype TINYINT)
 BEGIN
     UPDATE products
-        SET accesoryname = p_accesoryname,
-            stock = p_stock,
+        SET product = p_product,
             unitprice = p_unitprice,
-            size = p_size,
-            code = p_code,
-            brand = p_brand,
-            model = p_model,
-            color = p_color
-        WHERE idproduct = p_idproduct;
+            saletype = p_saletype
+        WHERE code = p_code;
 END
 $$
 
@@ -198,26 +163,22 @@ DELIMITER ;
 -- procedure InsertProduct
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`InsertProduct`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`InsertProduct`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
 
 
-CREATE PROCEDURE `invapp`.`InsertProduct`(IN p_accesoryname VARCHAR(50),
-                        IN p_stock INT,
+CREATE PROCEDURE `butchery`.`InsertProduct`(IN p_code VARCHAR(10),
+                        IN p_product VARCHAR(100),
                         IN p_unitprice DOUBLE,
-                        IN p_size VARCHAR(20),
-                        IN p_code VARCHAR(50),
-                        IN p_brand VARCHAR(50),
-                        IN p_model VARCHAR(50),
-                        IN p_color VARCHAR(50))
+                        IN p_saletype TINYINT)
 BEGIN
-    INSERT INTO products(accesoryname, stock, sold, unitprice, size, code, brand, model, color)
-                VALUES(p_accesoryname, p_stock, 0, p_unitprice, p_size, p_code, p_brand, p_model, p_color);
+    INSERT INTO products(code, product, unitprice, saletype)
+                VALUES(p_code, p_product, p_unitprice, p_saletype);
 END
 $$
 
@@ -227,14 +188,14 @@ DELIMITER ;
 -- procedure ReadCodes
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`ReadCodes`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`ReadCodes`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
-CREATE PROCEDURE `invapp`.`ReadCodes`()
+CREATE PROCEDURE `butchery`.`ReadCodes`()
 BEGIN
     SELECT code FROM products;
 END
@@ -246,14 +207,14 @@ DELIMITER ;
 -- procedure ReadProductByCode
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`ReadProductByCode`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`ReadProductByCode`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
-CREATE PROCEDURE `invapp`.`ReadProductByCode`(IN p_code VARCHAR(50))
+CREATE PROCEDURE `butchery`.`ReadProductByCode`(IN p_code VARCHAR(10))
 BEGIN
     SELECT * FROM products
     WHERE code = p_code;
@@ -266,21 +227,21 @@ DELIMITER ;
 -- procedure GetDailyReport
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`GetDailyReport`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`GetDailyReport`;
 
 DELIMITER $$
-USE `invapp`$$
-CREATE PROCEDURE `invapp`.`GetDailyReport` (IN p_day INT,
+USE `butchery`$$
+CREATE PROCEDURE `butchery`.`GetDailyReport` (IN p_day INT,
                                                 IN p_month INT,
                                                 IN p_year INT)
 BEGIN
-    SELECT * FROM sells
-    INNER JOIN products USING(idproduct)
+    SELECT * FROM sales
+    INNER JOIN products USING(code)
     WHERE DAY(date) = p_day
     AND MONTH(date) = p_month
     AND YEAR(date) = p_year
-    ORDER BY sellnumber;
+    ORDER BY salenumber;
 END
 $$
 
@@ -290,23 +251,23 @@ DELIMITER ;
 -- procedure GetMonthlyReport
 -- -----------------------------------------------------
 
-USE `invapp`;
-DROP procedure IF EXISTS `invapp`.`GetMonthlyReport`;
+USE `butchery`;
+DROP procedure IF EXISTS `butchery`.`GetMonthlyReport`;
 
 DELIMITER $$
-USE `invapp`$$
+USE `butchery`$$
 
 
 
 
-CREATE PROCEDURE `invapp`.`GetMonthlyReport` (IN p_month INT,
+CREATE PROCEDURE `butchery`.`GetMonthlyReport` (IN p_month INT,
                                                 IN p_year INT)
 BEGIN
-    SELECT * FROM sells
-    INNER JOIN products USING(idproduct)
+    SELECT * FROM sales
+    INNER JOIN products USING(code)
     WHERE MONTH(date) = p_month
     AND YEAR(date) = p_year
-    ORDER BY sellnumber;
+    ORDER BY salenumber;
 END
 $$
 

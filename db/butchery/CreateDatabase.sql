@@ -89,7 +89,7 @@ USE `butchery`$$
 
 CREATE PROCEDURE `butchery`.`Insertsale`(IN p_code VARCHAR(10),
                                           IN p_salenumber INT,
-                                          IN p_quantity INT,
+                                          IN p_quantity DOUBLE,
                                           IN p_total DOUBLE,
                                           IN p_date DATETIME)
 BEGIN
