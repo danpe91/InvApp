@@ -38,21 +38,28 @@ public class NewSale extends javax.swing.JFrame {
 
         currentModel.getDataVector().removeAllElements();
         try {
-            for (DTOSale product : products) {
+            if (products == null || products.isEmpty()) {
 
-                double total = product.getProduct().getUnitPrice() * product.getQuantity();
-                Object[] row = {
-                    product.getProduct().getProduct(),
-                    product.getQuantity(),
-                    String.format("$%.2f", product.getProduct().getUnitPrice()),
-                    String.format("$%.2f", total)
-
-                };
+                Object[] row = {null, null, null, null};
                 currentModel.addRow(row);
-                totalCost += total;
-            }
+                currentModel.removeRow(0);
+            } else {
 
-            totalTextField.setText(String.format("$%.2f", totalCost));
+                for (DTOSale product : products) {
+
+                    double total = product.getProduct().getUnitPrice() * product.getQuantity();
+
+                    Object[] row = {
+                        product.getProduct().getProduct(),
+                        product.getQuantity(),
+                        String.format("$%.2f", product.getProduct().getUnitPrice()),
+                        String.format("$%.2f", total)
+                    };
+                    currentModel.addRow(row);
+                    totalCost += total;
+                }
+                totalTextField.setText(String.format("$%.2f", totalCost));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -451,10 +458,10 @@ public class NewSale extends javax.swing.JFrame {
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
 
-        removeButton.setEnabled(false);
         cartList.remove(cartTable.getSelectedRow());
         llenarTabla(cartList);
-
+        cartTable.clearSelection();
+        removeButton.setEnabled(false);
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

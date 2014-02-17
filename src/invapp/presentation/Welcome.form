@@ -113,7 +113,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="inventoryButton">
       <Properties>
-        <Property name="mnemonic" type="int" value="73"/>
+        <Property name="mnemonic" type="int" value="112"/>
         <Property name="text" type="java.lang.String" value="Productos"/>
       </Properties>
       <Events>

@@ -69,7 +69,7 @@ public class Welcome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        inventoryButton.setMnemonic('I');
+        inventoryButton.setMnemonic('p');
         inventoryButton.setText("Productos");
         inventoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

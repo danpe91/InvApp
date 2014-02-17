@@ -22,6 +22,7 @@ public class PaymentChange extends javax.swing.JFrame {
         this.cartList = cartList;
         this.total = total;
         this.parent = (javax.swing.JFrame)c;
+        getRootPane().setDefaultButton(acceptButton);
     }
 
     /**
