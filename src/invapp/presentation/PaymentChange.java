@@ -7,6 +7,7 @@ import java.util.List;
 
 public class PaymentChange extends javax.swing.JFrame {
 
+    private double moneyGiven;
     private final double total;
     private final List<DTOSale> cartList;
     private final javax.swing.JFrame parent;
@@ -128,7 +129,7 @@ public class PaymentChange extends javax.swing.JFrame {
     private void moneyGivenTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_moneyGivenTextFieldKeyReleased
 
         String moneyGivenString = moneyGivenTextField.getText();
-        double moneyGiven;
+        
 
         try {
             moneyGiven = ((moneyGivenString.isEmpty())
@@ -146,7 +147,7 @@ public class PaymentChange extends javax.swing.JFrame {
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         
         new LogicSale().insertSales(cartList);
-        new LogicSale().printData(cartList, total);
+        new LogicSale().printData(cartList, total, moneyGiven);
 
         parent.dispose();
         dispose();

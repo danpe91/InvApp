@@ -23,6 +23,9 @@ import java.util.List;
 
 public class LogicSale {
 
+    private double total;
+    private double moneyGiven;
+
     private final String[] HEADERS = {
         "Carniceria   La   Esperanza", "Jose de J. Torres Davalos", "Libertad # 701 Col. del Carmen",
         "CP: 20050", "RFC: TODJ710923U61",
@@ -45,8 +48,10 @@ public class LogicSale {
         return new DAOSale().getNewSaleNumber() + 1;
     }
 
-    public void printData(List<DTOSale> sales, double total) {
+    public void printData(List<DTOSale> sales, double total, double moneyGiven) {
 
+        this.total = total;
+        this.moneyGiven = moneyGiven;
         Book book = new Book();
         PrinterJob job = PrinterJob.getPrinterJob();
         PageFormat pf = job.defaultPage();
@@ -54,7 +59,8 @@ public class LogicSale {
 
         double paperWidth = 2.5;
         // TODO implement method to calculate height
-        double paperHeight = 2.5;
+        double paperHeight = 2.6;
+        paperHeight += sales.size() * 0.12;
 
         ticketPaper.setSize(paperWidth * 72.0, paperHeight * 72.0);
         ticketPaper.setImageableArea(0, 5, paperWidth * 72d, paperHeight * 72d);
@@ -182,24 +188,34 @@ public class LogicSale {
                     text = String.format("%.0f", sale.getQuantity());
                     extraX = 2 * 5;
                 } else {
-                    text = String.format("%.2f", sale.getQuantity());
+                    text = String.format("%.2fkg", sale.getQuantity());
                     extraX = 0;
                 }
 
                 g.drawString(text, xMargin + (16 * 5) + extraX, yMargin);
 
-                text = String.format("%.2f", sale.getProduct().getUnitPrice());
+                text = String.format("$ %.2f", sale.getProduct().getUnitPrice());
                 g.drawString(text, xMargin + (22 * 5), yMargin);
 
                 Double price = sale.getProduct().getUnitPrice().doubleValue() * sale.getQuantity().doubleValue();
-                text = String.format("%.2f", price);
+                text = String.format("$ %.2f", price);
                 g.drawString(text, xMargin + (30 * 5), yMargin);
             }
 
+            extraX = 16 * 5;
+            yMargin += height;
+            g.drawString("TOTAL", xMargin + extraX, yMargin);
+            g.drawString(String.format("$ %.2f", total), xMargin + (30 * 5), yMargin);
+            yMargin += height;
+            g.drawString("RECIBO", xMargin + extraX, yMargin);
+            g.drawString(String.format("$ %.2f", moneyGiven), xMargin + (30 * 5), yMargin);
+            yMargin += height;
+            g.drawString("CAMBIO", xMargin + extraX, yMargin);
+            g.drawString(String.format("$ %.2f", moneyGiven - total), xMargin + (30 * 5), yMargin);
             yMargin += (2 * height);
 
-            g.drawString("Gracias por su preferencia!", xMargin, yMargin);
-            g.drawString("Vuelva pronto", xMargin, yMargin + height);
+            g.drawString("GRACIAS POR SU PREFERENCIA!", xMargin, yMargin);
+            g.drawString("VUELVA PRONTO", xMargin, yMargin + height);
 
             // tell the caller that this page is part
             // of the printed document

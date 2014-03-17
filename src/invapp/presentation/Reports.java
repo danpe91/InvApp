@@ -20,14 +20,15 @@ public class Reports extends javax.swing.JFrame {
         setLookAndFeel();
         Date date = new Date();
 
-        daylyTotalAmountLabel.setText("$"
-                + llenarTabla(new LogicReport().getDailyReport(date.getDate(),
-                                date.getMonth() + 1,
-                                date.getYear() + 1900), dailyReportTable));
+        double daylyAmount = llenarTabla(new LogicReport().getDailyReport(date.getDate(),
+                date.getMonth() + 1,
+                date.getYear() + 1900), dailyReportTable);
+        double monthlyAmount = llenarTabla(new LogicReport().getMonthlyReport(date.getMonth() + 1,
+                date.getYear() + 1900), monthlyReportTable);
 
-        monthlyTotalAmountLabel.setText("$"
-                + llenarTabla(new LogicReport().getMonthlyReport(date.getMonth() + 1,
-                                date.getYear() + 1900), monthlyReportTable));
+        daylyTotalAmountLabel.setText(String.format("$ %.2f", daylyAmount));
+        monthlyTotalAmountLabel.setText(String.format("$ %.2f", monthlyAmount));
+
         llenarYearsCombo();
         llenarYearsCombo2();
     }
@@ -584,10 +585,13 @@ public class Reports extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3ComponentShown
 
     private void generateMonthlyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateMonthlyReportButtonActionPerformed
-        monthlyTotalAmountLabel.setText("$"
-                + llenarTabla(new LogicReport().getMonthlyReport(monthComboBox2.getSelectedIndex() + 1,
-                                (int) yearComboBox2.getSelectedItem()),
-                        monthlyReportTable));
+
+        double monthlyTotalAmount;
+        monthlyTotalAmount = llenarTabla(new LogicReport().getMonthlyReport(monthComboBox2.getSelectedIndex() + 1,
+                (int) yearComboBox2.getSelectedItem()),
+                monthlyReportTable);
+        
+        monthlyTotalAmountLabel.setText(String.format("$ %.2f", monthlyTotalAmount));
     }//GEN-LAST:event_generateMonthlyReportButtonActionPerformed
 
     private void welcome2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcome2ButtonActionPerformed
@@ -609,11 +613,14 @@ public class Reports extends javax.swing.JFrame {
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
     private void generateDailyReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateDailyReportButtonActionPerformed
-        daylyTotalAmountLabel.setText("$"
-                + llenarTabla(new LogicReport().getDailyReport((int) dayComboBox.getSelectedItem(),
-                                monthComboBox.getSelectedIndex() + 1,
-                                (int) yearComboBox.getSelectedItem()),
-                        dailyReportTable));
+
+        double daylyTotalAmount;
+        daylyTotalAmount = llenarTabla(new LogicReport().getDailyReport((int) dayComboBox.getSelectedItem(),
+                monthComboBox.getSelectedIndex() + 1,
+                (int) yearComboBox.getSelectedItem()),
+                dailyReportTable);
+
+        daylyTotalAmountLabel.setText(String.format("$ %.2f", daylyTotalAmount));
     }//GEN-LAST:event_generateDailyReportButtonActionPerformed
 
     private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
