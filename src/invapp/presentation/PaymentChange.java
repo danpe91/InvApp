@@ -147,7 +147,7 @@ public class PaymentChange extends javax.swing.JFrame {
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         
         new LogicSale().insertSales(cartList);
-        new LogicSale().printData(cartList, total, moneyGiven);
+        // new LogicSale().printData(cartList, total, moneyGiven);
 
         parent.dispose();
         dispose();

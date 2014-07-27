@@ -46,6 +46,7 @@ public class Reports extends javax.swing.JFrame {
             Object[] row = {
                 product.getSaleNumber().toString(),
                 product.getProduct().getProduct(),
+                product.getQuantity(),
                 String.format("$%.2f", amount),
                 product.getDate()
             };
@@ -104,6 +105,7 @@ public class Reports extends javax.swing.JFrame {
             monthComboBox.addItem(months[i]);
         }
 
+        monthComboBox.setSelectedIndex(limit);
         llenarDaysCombo(year, monthComboBox.getSelectedIndex());
     }
 
@@ -112,11 +114,14 @@ public class Reports extends javax.swing.JFrame {
         dayComboBox.removeAllItems();
 
         int leapYear = (year % 4 == 0 && month == 1) ? 1 : 0;
-
-        for (int i = 1; i <= daysOfMonths[month] + leapYear; i++) {
+        int currentDay = new Date().getDate();
+        int limit = ((currentDay < daysOfMonths[month])?(currentDay):(daysOfMonths[month]));
+                
+        for (int i = 1; i <= limit + leapYear; i++) {
             dayComboBox.addItem(i);
         }
 
+        dayComboBox.setSelectedIndex(limit - 1);
     }
 
     private void llenarYearsCombo2() {
@@ -139,6 +144,7 @@ public class Reports extends javax.swing.JFrame {
             monthComboBox2.addItem(months[i]);
         }
 
+        monthComboBox2.setSelectedIndex(limit);
     }
 
     /**
