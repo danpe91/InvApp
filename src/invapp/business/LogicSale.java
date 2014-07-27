@@ -183,23 +183,12 @@ public class LogicSale {
                 }
                 g.drawString(text, xMargin, yMargin);
 
-                if (sale.getProduct().getSaleType()) {
-
-                    text = String.format("%.0f", sale.getQuantity());
-                    extraX = 2 * 5;
-                } else {
-                    text = String.format("%.2fkg", sale.getQuantity());
-                    extraX = 0;
-                }
-
-                g.drawString(text, xMargin + (16 * 5) + extraX, yMargin);
-
                 text = String.format("$ %.2f", sale.getProduct().getUnitPrice());
-                g.drawString(text, xMargin + (22 * 5), yMargin);
+                g.drawString(text, xMargin + (16 * 5), yMargin);
 
                 Double price = sale.getProduct().getUnitPrice().doubleValue() * sale.getQuantity().doubleValue();
                 text = String.format("$ %.2f", price);
-                g.drawString(text, xMargin + (30 * 5), yMargin);
+                g.drawString(text, xMargin + (24 * 5), yMargin);
             }
 
             extraX = 16 * 5;

@@ -58,14 +58,14 @@ public class Inventory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Producto", "Precio Unitario", "Tipo de venta"
+                "Código", "Producto", "Precio Unitario"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -85,7 +85,7 @@ public class Inventory extends javax.swing.JFrame {
         jScrollPane1.setViewportView(inventoryTable);
 
         nuevoAccesorioButton.setMnemonic('n');
-        nuevoAccesorioButton.setText("Nuevo Accesorio");
+        nuevoAccesorioButton.setText("Nuevo Producto");
         nuevoAccesorioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nuevoAccesorioButtonActionPerformed(evt);
@@ -134,8 +134,8 @@ public class Inventory extends javax.swing.JFrame {
                         .addComponent(welcomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(201, 201, 201)
                         .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
-                        .addComponent(nuevoAccesorioButton)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                        .addComponent(nuevoAccesorioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -195,8 +195,7 @@ public class Inventory extends javax.swing.JFrame {
             Object[] row = {
                 inv.getCode(),
                 inv.getProduct(),
-                inv.getUnitPrice(),
-                ((inv.getSaleType())? ("Pieza") :("Peso"))
+                inv.getUnitPrice()
             };
             currentModel.addRow(row);
         }

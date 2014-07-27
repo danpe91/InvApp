@@ -514,9 +514,6 @@ public class NewSale extends javax.swing.JFrame {
         currentProduct = product;
         productTextField.setText(product.getProduct());
         costTextField.setText(product.getUnitPrice().toString());
-        quantityLabel.setText(((product.getSaleType())
-                ? ("Cantidad(piezas)")
-                : ("Cantidad(Kg)")));
 
     }
 

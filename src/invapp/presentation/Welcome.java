@@ -13,7 +13,7 @@ public class Welcome extends javax.swing.JFrame {
         setTitle("Inicio");
         setLocationByPlatform(true);
         initComponents();
-        insertProductsFromFile("productos.cvs");
+        // insertProductsFromFile("productos.cvs");
     }
 
     private void insertProductsFromFile(String fileName) {
@@ -32,7 +32,7 @@ public class Welcome extends javax.swing.JFrame {
                     data = line.split(",");
                     LogicProduct lp = new LogicProduct();
                     DTOProduct product = new DTOProduct(data[0],
-                            data[1], Double.valueOf(data[2]), data[3]);
+                            data[1], Double.valueOf(data[2]));
 
                     DTOProduct existentProduct = lp.readProductByCode(product.getCode());
                     if (existentProduct == null) {

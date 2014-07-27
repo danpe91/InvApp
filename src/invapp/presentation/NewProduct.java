@@ -16,13 +16,7 @@ public class NewProduct extends javax.swing.JFrame {
         setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
-        prepareRadioButtonsSet();
-
-        if (inv.getSaleType()) {
-            quantityRadioButton.setSelected(true);
-        } else {
-            weightRadioButton.setSelected(true);
-        }
+        
         productTextField.setText(inv.getProduct());
         unitPriceTextField.setText(inv.getUnitPrice().toString());
         codeTextField.setText(inv.getCode().toString());
@@ -36,7 +30,6 @@ public class NewProduct extends javax.swing.JFrame {
         setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
-        prepareRadioButtonsSet();
         edit = false;
     }
 
@@ -46,11 +39,8 @@ public class NewProduct extends javax.swing.JFrame {
 
             try {
 
-                boolean saleType;
-                saleType = quantityRadioButton.isSelected();
-
                 DTOProduct prod = new DTOProduct(codeTextField.getText().trim(),
-                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()), saleType);
+                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()));
 
                 new LogicProduct().insertProduct(prod);
                 cleanFields();
@@ -74,12 +64,9 @@ public class NewProduct extends javax.swing.JFrame {
 
     public void editAccesory() {
 
-        boolean saleType;
-        saleType = quantityRadioButton.isSelected();
-
         try {
             DTOProduct prod = new DTOProduct(codeTextField.getText(),
-                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()), saleType);
+                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()));
             new LogicProduct().editProduct(prod);
             cleanFields();
 
@@ -93,15 +80,7 @@ public class NewProduct extends javax.swing.JFrame {
 
         return !(productTextField.getText().isEmpty()
                 || unitPriceTextField.getText().isEmpty()
-                || codeTextField.getText().isEmpty()
-                || (weightRadioButton.isSelected() && quantityRadioButton.isSelected())
-                || (!weightRadioButton.isSelected() && !quantityRadioButton.isSelected()));
-    }
-
-    private void prepareRadioButtonsSet() {
-
-        buttonGroup.add(weightRadioButton);
-        buttonGroup.add(quantityRadioButton);
+                || codeTextField.getText().isEmpty());
     }
 
     /**
@@ -115,14 +94,11 @@ public class NewProduct extends javax.swing.JFrame {
 
         buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         productTextField = new javax.swing.JTextField();
         unitPriceTextField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
         salirButton = new javax.swing.JButton();
-        weightRadioButton = new javax.swing.JRadioButton();
-        quantityRadioButton = new javax.swing.JRadioButton();
         codeLabel = new javax.swing.JLabel();
         codeTextField = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
@@ -130,8 +106,6 @@ public class NewProduct extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Producto");
-
-        jLabel2.setText("Tipo de venta");
 
         jLabel4.setText("Precio Unitario");
 
@@ -151,10 +125,6 @@ public class NewProduct extends javax.swing.JFrame {
             }
         });
 
-        weightRadioButton.setText("Peso");
-
-        quantityRadioButton.setText("Pieza");
-
         codeLabel.setText("Clave");
         setJMenuBar(menuBar);
 
@@ -171,19 +141,9 @@ public class NewProduct extends javax.swing.JFrame {
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(quantityRadioButton)
-                                    .addComponent(weightRadioButton))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(productTextField))))
+                        .addComponent(jLabel1)
+                        .addGap(45, 45, 45)
+                        .addComponent(productTextField))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -201,13 +161,7 @@ public class NewProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(productTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(weightRadioButton))
-                .addGap(2, 2, 2)
-                .addComponent(quantityRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(unitPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -215,11 +169,11 @@ public class NewProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(codeLabel)
                     .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(83, 83, 83)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(74, 74, 74)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         getRootPane().setDefaultButton(addButton);
@@ -261,13 +215,10 @@ public class NewProduct extends javax.swing.JFrame {
     private javax.swing.JLabel codeLabel;
     private javax.swing.JTextField codeTextField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JTextField productTextField;
-    private javax.swing.JRadioButton quantityRadioButton;
     private javax.swing.JButton salirButton;
     private javax.swing.JTextField unitPriceTextField;
-    private javax.swing.JRadioButton weightRadioButton;
     // End of variables declaration//GEN-END:variables
 }

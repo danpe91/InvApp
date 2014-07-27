@@ -46,9 +46,6 @@ public class Reports extends javax.swing.JFrame {
             Object[] row = {
                 product.getSaleNumber().toString(),
                 product.getProduct().getProduct(),
-                ((product.getProduct().getSaleType())
-                ? (String.format("%.0f", product.getQuantity()))
-                : (String.format("%.2fkg", product.getQuantity()))),
                 String.format("$%.2f", amount),
                 product.getDate()
             };

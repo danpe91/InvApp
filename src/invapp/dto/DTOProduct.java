@@ -5,24 +5,15 @@ public class DTOProduct {
     private String code;
     private String product;
     private Double unitPrice;
-    private Boolean saleType;   // 0 for weight and 1 for quantity
-
+    
     public DTOProduct() {
 
     }
 
-    public DTOProduct(String code, String product, Double unitPrice, Boolean saleType) {
+    public DTOProduct(String code, String product, Double unitPrice) {
         this.code = code;
         this.product = product;
         this.unitPrice = unitPrice;
-        this.saleType = saleType;
-    }
-
-    public DTOProduct(String code, String product, Double unitPrice, String saleType) {
-        this.code = code;
-        this.product = product.trim();
-        this.unitPrice = unitPrice;
-        this.saleType = saleType.trim().equals("1");
     }
 
     public String getCode() {
@@ -49,17 +40,9 @@ public class DTOProduct {
         this.unitPrice = unitPrice;
     }
 
-    public Boolean getSaleType() {
-        return saleType;
-    }
-
-    public void setSaleType(Boolean saleType) {
-        this.saleType = saleType;
-    }
-
     @Override
     public String toString() {
-        return "DTOProduct{" + "code=" + code + ", product=" + product + ", unitPrice=" + unitPrice + ", saleType=" + saleType + '}';
+        return "DTOProduct{" + "code=" + code + ", product=" + product + ", unitPrice=" + unitPrice +  '}';
     }
 
     
