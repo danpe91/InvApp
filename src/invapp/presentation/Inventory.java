@@ -3,6 +3,7 @@ package invapp.presentation;
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
 import java.util.List;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -82,6 +83,7 @@ public class Inventory extends javax.swing.JFrame {
                 inventoryTableMouseClicked(evt);
             }
         });
+        inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(inventoryTable);
 
         nuevoAccesorioButton.setMnemonic('n');

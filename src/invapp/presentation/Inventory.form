@@ -134,6 +134,9 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="inventoryTableMouseClicked"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
