@@ -29,7 +29,7 @@ public class DAOProduct {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice")));
+                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getInt("stock")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,10 +56,11 @@ public class DAOProduct {
         try {
 
             conn = MySQLConnector.getMySqlConnection();
-            cs = conn.prepareCall("call InsertProduct(?,?,?)");
+            cs = conn.prepareCall("call InsertProduct(?,?,?,?)");
             cs.setString("p_code", prod.getCode());
             cs.setString("p_product", prod.getProduct());
             cs.setDouble("p_unitprice", prod.getUnitPrice());
+            cs.setInt("p_stock", prod.getStock());
 
             cs.executeUpdate();
 
@@ -89,10 +90,11 @@ public class DAOProduct {
         try {
 
             conn = MySQLConnector.getMySqlConnection();
-            cs = conn.prepareCall("call UpdateProduct(?,?,?)");
+            cs = conn.prepareCall("call UpdateProduct(?,?,?,?)");
             cs.setString("p_code", prod.getCode());
             cs.setString("p_product", prod.getProduct());
             cs.setDouble("p_unitprice", prod.getUnitPrice());
+            cs.setInt("p_stock", prod.getStock());
 
             cs.executeUpdate();
 
@@ -123,7 +125,7 @@ public class DAOProduct {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice")));
+                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getInt("stock")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,7 +189,7 @@ public class DAOProduct {
             rs = cs.executeQuery();
 
             if (rs.next()) {
-                product = new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"));
+                product = new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getInt("stock"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -16,12 +16,15 @@ public class NewProduct extends javax.swing.JFrame {
         setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
-        
+
+        stockSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, Integer.MAX_VALUE, 1));
         productTextField.setText(inv.getProduct());
-        unitPriceTextField.setText(inv.getUnitPrice().toString());
+        unitPriceTextField.setText(String.format("%.2f",inv.getUnitPrice()));
         codeTextField.setText(inv.getCode().toString());
+        stockSpinner.setValue(inv.getStock());
         codeTextField.setEditable(false);
         addButton.setText("Guardar");
+        
         edit = true;
     }
 
@@ -30,6 +33,9 @@ public class NewProduct extends javax.swing.JFrame {
         setTitle("Nuevo Producto");
         initComponents();
         setLocationByPlatform(true);
+        
+        stockSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, Integer.MAX_VALUE, 1));
+        
         edit = false;
     }
 
@@ -40,7 +46,7 @@ public class NewProduct extends javax.swing.JFrame {
             try {
 
                 DTOProduct prod = new DTOProduct(codeTextField.getText().trim(),
-                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()));
+                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()), (int) stockSpinner.getValue());
 
                 new LogicProduct().insertProduct(prod);
                 cleanFields();
@@ -60,13 +66,14 @@ public class NewProduct extends javax.swing.JFrame {
         productTextField.setText("");
         unitPriceTextField.setText("");
         codeTextField.setText("");
+        stockSpinner.setValue(1);
     }
 
     public void editAccesory() {
 
         try {
             DTOProduct prod = new DTOProduct(codeTextField.getText(),
-                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()));
+                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()), (int)stockSpinner.getValue());
             new LogicProduct().editProduct(prod);
             cleanFields();
 
@@ -101,6 +108,8 @@ public class NewProduct extends javax.swing.JFrame {
         salirButton = new javax.swing.JButton();
         codeLabel = new javax.swing.JLabel();
         codeTextField = new javax.swing.JTextField();
+        stockSpinner = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -108,6 +117,8 @@ public class NewProduct extends javax.swing.JFrame {
         jLabel1.setText("Producto");
 
         jLabel4.setText("Precio Unitario");
+
+        unitPriceTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         addButton.setMnemonic('A');
         addButton.setText("Agregar");
@@ -126,6 +137,8 @@ public class NewProduct extends javax.swing.JFrame {
         });
 
         codeLabel.setText("Clave");
+
+        jLabel2.setText("Cantidad");
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,9 +160,11 @@ public class NewProduct extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
+                            .addComponent(jLabel2)
                             .addComponent(codeLabel))
                         .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(stockSpinner, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(unitPriceTextField)
                             .addComponent(codeTextField))))
                 .addContainerGap())
@@ -166,14 +181,18 @@ public class NewProduct extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(unitPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(codeLabel)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(74, 74, 74)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stockSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codeLabel))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         getRootPane().setDefaultButton(addButton);
@@ -215,10 +234,12 @@ public class NewProduct extends javax.swing.JFrame {
     private javax.swing.JLabel codeLabel;
     private javax.swing.JTextField codeTextField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JTextField productTextField;
     private javax.swing.JButton salirButton;
+    private javax.swing.JSpinner stockSpinner;
     private javax.swing.JTextField unitPriceTextField;
     // End of variables declaration//GEN-END:variables
 }

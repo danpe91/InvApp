@@ -91,7 +91,7 @@ public class NewSale extends javax.swing.JFrame {
         seekButton = new javax.swing.JButton();
         productTextField = new javax.swing.JTextField();
         removeButton = new javax.swing.JButton();
-        quantityTextField = new javax.swing.JTextField();
+        quantitySpinner = new javax.swing.JSpinner();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -300,7 +300,7 @@ public class NewSale extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(costTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                                 .addComponent(productTextField)
-                                .addComponent(quantityTextField))))
+                                .addComponent(quantitySpinner))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -335,7 +335,7 @@ public class NewSale extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(quantityLabel)
-                            .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -380,7 +380,7 @@ public class NewSale extends javax.swing.JFrame {
 
         return !((codeTextField.getText().isEmpty())
                 || (productTextField.getText().isEmpty())
-                || (quantityTextField.getText().isEmpty()));
+                || (((int)quantitySpinner.getValue()) == 0));
     }
 
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
@@ -390,7 +390,7 @@ public class NewSale extends javax.swing.JFrame {
             DTOSale sale = new DTOSale();
 
             sale.setProduct(currentProduct);
-            sale.setQuantity(Double.valueOf(quantityTextField.getText()));
+            sale.setQuantity((int)quantitySpinner.getValue());
             sale.setSaleNumber(saleNumber);
             cartList.add(sale);
 
@@ -400,7 +400,7 @@ public class NewSale extends javax.swing.JFrame {
             codeTextField.requestFocus();
 
         } else {
-            if (quantityTextField.getText().isEmpty() && !productTextField.getText().isEmpty()) {
+            if ((((int)quantitySpinner.getValue()) == 0) && !productTextField.getText().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Error: cantidad no ingresada.",
                         "Ha ocurrido un error", javax.swing.JOptionPane.ERROR_MESSAGE);
             } else {
@@ -436,14 +436,17 @@ public class NewSale extends javax.swing.JFrame {
     private void seekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seekButtonActionPerformed
 
         getRootPane().setDefaultButton(addToCartButton);
-
+        DTOProduct prod = null;
+        
         if (codeTextField != null && !codeTextField.getText().isEmpty()) {
 
             for (String finalCode : barCodes) {
                 if (finalCode.equalsIgnoreCase(codeTextField.getText())) {
                     codeTextField.setText(finalCode);
-                    fillInFields(new LogicProduct().readProductByCode(finalCode));
-                    quantityTextField.requestFocus();
+                    prod = new LogicProduct().readProductByCode(finalCode);
+                    fillInFields(prod);
+                    quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, prod.getStock().intValue(), 1));
+                    quantitySpinner.requestFocus();
                     return;
                 }
             }
@@ -522,7 +525,7 @@ public class NewSale extends javax.swing.JFrame {
         codeTextField.setText("");
         currentProduct = null;
         productTextField.setText("");
-        quantityTextField.setText("");
+        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, Integer.MAX_VALUE, 1));
         costTextField.setText("");
 
     }
@@ -565,7 +568,7 @@ public class NewSale extends javax.swing.JFrame {
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JTextField productTextField;
     private javax.swing.JLabel quantityLabel;
-    private javax.swing.JTextField quantityTextField;
+    private javax.swing.JSpinner quantitySpinner;
     private javax.swing.JButton removeButton;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;

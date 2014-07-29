@@ -32,7 +32,7 @@ public class Welcome extends javax.swing.JFrame {
                     data = line.split(",");
                     LogicProduct lp = new LogicProduct();
                     DTOProduct product = new DTOProduct(data[0],
-                            data[1], Double.valueOf(data[2]));
+                            data[1], Double.valueOf(data[2]), Integer.valueOf(data[3]));
 
                     DTOProduct existentProduct = lp.readProductByCode(product.getCode());
                     if (existentProduct == null) {

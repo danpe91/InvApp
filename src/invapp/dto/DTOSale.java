@@ -6,7 +6,7 @@ public class DTOSale {
     
     private Integer idSale;
     private DTOProduct product;
-    private Double quantity;
+    private Integer quantity;
     private Integer saleNumber;
     private String saleer;
     private MyTimestamp date;
@@ -15,7 +15,7 @@ public class DTOSale {
         
     }
     
-    public DTOSale(Integer idSale, Double quantity, DTOProduct product,
+    public DTOSale(Integer idSale, Integer quantity, DTOProduct product,
                     String saleer, java.sql.Timestamp date, Integer saleNumber) {
         this.idSale = idSale;
         this.quantity = quantity;
@@ -34,11 +34,11 @@ public class DTOSale {
         this.idSale = idSale;
     }
 
-    public Double getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

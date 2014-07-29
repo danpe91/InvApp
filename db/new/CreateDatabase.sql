@@ -15,6 +15,8 @@ CREATE  TABLE IF NOT EXISTS `new_database`.`products` (
   `code` VARCHAR(10) NOT NULL ,
   `product` VARCHAR(100) NOT NULL ,
   `unitprice` DOUBLE NOT NULL ,
+  `stock` INTEGER NOT NULL ,
+  `sold` INTEGER NOT NULL ,
   PRIMARY KEY (`code`) )
 ENGINE = InnoDB;
 
@@ -28,7 +30,7 @@ CREATE  TABLE IF NOT EXISTS `new_database`.`sales` (
   `idsale` INT NOT NULL AUTO_INCREMENT ,
   `code` VARCHAR(10) NOT NULL ,
   `salenumber` INT NOT NULL ,
-  `quantity` DOUBLE NOT NULL ,
+  `quantity` INTEGER NOT NULL ,
   `total` DOUBLE NOT NULL ,
   `date` DATETIME NOT NULL ,
   PRIMARY KEY (`idsale`) ,
@@ -88,10 +90,16 @@ USE `new_database`$$
 
 CREATE PROCEDURE `new_database`.`Insertsale`(IN p_code VARCHAR(10),
                                           IN p_salenumber INT,
-                                          IN p_quantity DOUBLE,
+                                          IN p_quantity INTEGER,
                                           IN p_total DOUBLE,
                                           IN p_date DATETIME)
 BEGIN
+
+	UPDATE products
+        SET stock = stock - p_quantity,
+            sold = sold + p_quantity
+        WHERE code = p_code;
+
     INSERT INTO sales(code, salenumber, quantity, total, date)
             VALUES(p_code, p_salenumber, p_quantity, p_total, p_date);
 END
@@ -182,11 +190,13 @@ USE `new_database`$$
 
 CREATE PROCEDURE `new_database`.`UpdateProduct`(IN p_code VARCHAR(10),
                         IN p_product VARCHAR(100),
-                        IN p_unitprice DOUBLE)
+                        IN p_unitprice DOUBLE,
+						IN p_stock INTEGER)
 BEGIN
     UPDATE products
         SET product = p_product,
-            unitprice = p_unitprice
+            unitprice = p_unitprice,
+			stock = p_stock
         WHERE code = p_code;
 END
 $$
@@ -208,10 +218,11 @@ USE `new_database`$$
 
 CREATE PROCEDURE `new_database`.`InsertProduct`(IN p_code VARCHAR(10),
                         IN p_product VARCHAR(100),
-                        IN p_unitprice DOUBLE)
+                        IN p_unitprice DOUBLE,
+						IN p_stock INTEGER)
 BEGIN
-    INSERT INTO products(code, product, unitprice)
-                VALUES(p_code, p_product, p_unitprice);
+    INSERT INTO products(code, product, unitprice, stock, sold)
+                VALUES(p_code, p_product, p_unitprice, p_stock, 0);
 END
 $$
 

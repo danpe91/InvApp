@@ -5,15 +5,17 @@ public class DTOProduct {
     private String code;
     private String product;
     private Double unitPrice;
+    private Integer stock;
     
     public DTOProduct() {
 
     }
 
-    public DTOProduct(String code, String product, Double unitPrice) {
+    public DTOProduct(String code, String product, Double unitPrice, Integer stock) {
         this.code = code;
         this.product = product;
         this.unitPrice = unitPrice;
+        this.stock = stock;
     }
 
     public String getCode() {
@@ -38,6 +40,14 @@ public class DTOProduct {
 
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     @Override

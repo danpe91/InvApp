@@ -47,10 +47,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="codeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="stockSpinner" alignment="1" max="32767" attributes="0"/>
                           <Component id="unitPriceTextField" max="32767" attributes="0"/>
                           <Component id="codeTextField" max="32767" attributes="0"/>
                       </Group>
@@ -74,16 +76,21 @@
                   <Component id="unitPriceTextField" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="codeLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="codeTextField" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="stockSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="codeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="codeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="salirButton" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
                   <Component id="addButton" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="48" max="32767" attributes="0"/>
+              <EmptySpace pref="51" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -102,6 +109,9 @@
     <Component class="javax.swing.JTextField" name="productTextField">
     </Component>
     <Component class="javax.swing.JTextField" name="unitPriceTextField">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="addButton">
       <Properties>
@@ -130,6 +140,13 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="codeTextField">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="stockSpinner">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cantidad"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
