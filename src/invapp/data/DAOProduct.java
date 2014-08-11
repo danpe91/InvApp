@@ -29,7 +29,7 @@ public class DAOProduct {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")));
+                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType"), rs.getInt("stock")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,7 +125,7 @@ public class DAOProduct {
             rs = cs.executeQuery();
 
             while (rs.next()) {
-                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType")));
+                lista.add(new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType"), rs.getInt("stock")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -189,7 +189,7 @@ public class DAOProduct {
             rs = cs.executeQuery();
 
             if (rs.next()) {
-                product = new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType"));
+                product = new DTOProduct(rs.getString("code"), rs.getString("product"), rs.getDouble("unitprice"), rs.getBoolean("saleType"), rs.getInt("stock"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
