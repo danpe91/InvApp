@@ -16,6 +16,7 @@ CREATE  TABLE IF NOT EXISTS `butchery`.`products` (
   `product` VARCHAR(100) NOT NULL ,
   `unitprice` DOUBLE NOT NULL ,
   `saletype` TINYINT NOT NULL ,
+  `stock` INTEGER NOT NULL ,
   PRIMARY KEY (`code`) )
 ENGINE = InnoDB;
 
@@ -93,6 +94,10 @@ CREATE PROCEDURE `butchery`.`Insertsale`(IN p_code VARCHAR(10),
                                           IN p_total DOUBLE,
                                           IN p_date DATETIME)
 BEGIN
+	UPDATE products
+        SET stock = stock - p_quantity
+        WHERE code = p_code;
+
     INSERT INTO sales(code, salenumber, quantity, total, date)
             VALUES(p_code, p_salenumber, p_quantity, p_total, p_date);
 END
@@ -184,12 +189,14 @@ USE `butchery`$$
 CREATE PROCEDURE `butchery`.`UpdateProduct`(IN p_code VARCHAR(10),
                         IN p_product VARCHAR(100),
                         IN p_unitprice DOUBLE,
-                        IN p_saletype TINYINT)
+                        IN p_saletype TINYINT,
+						IN p_stock INTEGER)
 BEGIN
     UPDATE products
         SET product = p_product,
             unitprice = p_unitprice,
-            saletype = p_saletype
+            saletype = p_saletype,
+			stock = p_stock
         WHERE code = p_code;
 END
 $$
@@ -212,10 +219,11 @@ USE `butchery`$$
 CREATE PROCEDURE `butchery`.`InsertProduct`(IN p_code VARCHAR(10),
                         IN p_product VARCHAR(100),
                         IN p_unitprice DOUBLE,
-                        IN p_saletype TINYINT)
+                        IN p_saletype TINYINT,
+						IN p_stock INTEGER)
 BEGIN
-    INSERT INTO products(code, product, unitprice, saletype)
-                VALUES(p_code, p_product, p_unitprice, p_saletype);
+    INSERT INTO products(code, product, unitprice, saletype, stock)
+                VALUES(p_code, p_product, p_unitprice, p_saletype, p_stock);
 END
 $$
 
