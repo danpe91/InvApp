@@ -25,6 +25,7 @@ public class NewProduct extends javax.swing.JFrame {
         }
         productTextField.setText(inv.getProduct());
         unitPriceTextField.setText(inv.getUnitPrice().toString());
+        stockTextField.setText(inv.getStock().toString());
         codeTextField.setText(inv.getCode().toString());
         codeTextField.setEditable(false);
         addButton.setText("Guardar");
@@ -50,7 +51,7 @@ public class NewProduct extends javax.swing.JFrame {
                 saleType = quantityRadioButton.isSelected();
 
                 DTOProduct prod = new DTOProduct(codeTextField.getText().trim(),
-                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()), saleType, (int)stockSpinner.getValue());
+                        productTextField.getText().trim(), Double.valueOf(unitPriceTextField.getText().trim()), saleType, Double.valueOf(stockTextField.getText()));
 
                 new LogicProduct().insertProduct(prod);
                 cleanFields();
@@ -79,7 +80,7 @@ public class NewProduct extends javax.swing.JFrame {
 
         try {
             DTOProduct prod = new DTOProduct(codeTextField.getText(),
-                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()), saleType, (int)stockSpinner.getValue());
+                    productTextField.getText(), Double.valueOf(unitPriceTextField.getText().trim()), saleType, Double.valueOf(stockTextField.getText()));
             new LogicProduct().editProduct(prod);
             cleanFields();
 
@@ -125,8 +126,8 @@ public class NewProduct extends javax.swing.JFrame {
         quantityRadioButton = new javax.swing.JRadioButton();
         codeLabel = new javax.swing.JLabel();
         codeTextField = new javax.swing.JTextField();
-        stockSpinner = new javax.swing.JSpinner();
         stockLabel = new javax.swing.JLabel();
+        stockTextField = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -136,6 +137,8 @@ public class NewProduct extends javax.swing.JFrame {
         jLabel2.setText("Tipo de venta");
 
         jLabel4.setText("Precio Unitario");
+
+        unitPriceTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         addButton.setMnemonic('A');
         addButton.setText("Agregar");
@@ -159,7 +162,11 @@ public class NewProduct extends javax.swing.JFrame {
 
         codeLabel.setText("Clave");
 
+        codeTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         stockLabel.setText("En existencia");
+
+        stockTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,7 +206,7 @@ public class NewProduct extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(unitPriceTextField)
-                            .addComponent(stockSpinner))))
+                            .addComponent(stockTextField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -221,8 +228,8 @@ public class NewProduct extends javax.swing.JFrame {
                     .addComponent(unitPriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stockSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stockLabel))
+                    .addComponent(stockLabel)
+                    .addComponent(stockTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codeLabel)
@@ -280,7 +287,7 @@ public class NewProduct extends javax.swing.JFrame {
     private javax.swing.JRadioButton quantityRadioButton;
     private javax.swing.JButton salirButton;
     private javax.swing.JLabel stockLabel;
-    private javax.swing.JSpinner stockSpinner;
+    private javax.swing.JTextField stockTextField;
     private javax.swing.JTextField unitPriceTextField;
     private javax.swing.JRadioButton weightRadioButton;
     // End of variables declaration//GEN-END:variables

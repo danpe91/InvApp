@@ -16,7 +16,6 @@ CREATE  TABLE IF NOT EXISTS `butchery`.`products` (
   `product` VARCHAR(100) NOT NULL ,
   `unitprice` DOUBLE NOT NULL ,
   `saletype` TINYINT NOT NULL ,
-  `stock` INTEGER NOT NULL ,
   PRIMARY KEY (`code`) )
 ENGINE = InnoDB;
 

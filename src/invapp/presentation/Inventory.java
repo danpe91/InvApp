@@ -3,6 +3,7 @@ package invapp.presentation;
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
 import java.util.List;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -58,14 +59,14 @@ public class Inventory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Producto", "Precio Unitario", "Tipo de venta"
+                "Código", "Producto", "Precio Unitario", "Tipo de venta", "En existencia"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,6 +77,7 @@ public class Inventory extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        inventoryTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         inventoryTable.getTableHeader().setReorderingAllowed(false);
         inventoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -196,7 +198,8 @@ public class Inventory extends javax.swing.JFrame {
                 inv.getCode(),
                 inv.getProduct(),
                 inv.getUnitPrice(),
-                ((inv.getSaleType())? ("Pieza") :("Peso"))
+                ((inv.getSaleType())? ("Pieza") :("Peso")),
+                inv.getStock()
             };
             currentModel.addRow(row);
         }

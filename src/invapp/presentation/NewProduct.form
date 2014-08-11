@@ -72,7 +72,7 @@
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="unitPriceTextField" max="32767" attributes="0"/>
-                          <Component id="stockSpinner" max="32767" attributes="0"/>
+                          <Component id="stockTextField" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -102,8 +102,8 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="stockSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="stockLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="stockTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -139,6 +139,9 @@
     <Component class="javax.swing.JTextField" name="productTextField">
     </Component>
     <Component class="javax.swing.JTextField" name="unitPriceTextField">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="addButton">
       <Properties>
@@ -177,12 +180,18 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="codeTextField">
-    </Component>
-    <Component class="javax.swing.JSpinner" name="stockSpinner">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="stockLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="En existencia"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="stockTextField">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
       </Properties>
     </Component>
   </SubComponents>

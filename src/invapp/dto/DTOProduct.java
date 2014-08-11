@@ -6,13 +6,13 @@ public class DTOProduct {
     private String product;
     private Double unitPrice;
     private Boolean saleType;   // 0 for weight and 1 for quantity
-    private Integer stock;
+    private Double stock;
 
     public DTOProduct() {
 
     }
 
-    public DTOProduct(String code, String product, Double unitPrice, Boolean saleType, Integer stock) {
+    public DTOProduct(String code, String product, Double unitPrice, Boolean saleType, Double stock) {
         this.code = code;
         this.product = product;
         this.unitPrice = unitPrice;
@@ -20,7 +20,7 @@ public class DTOProduct {
         this.stock = stock;
     }
 
-    public DTOProduct(String code, String product, Double unitPrice, String saleType, Integer stock) {
+    public DTOProduct(String code, String product, Double unitPrice, String saleType, Double stock) {
         this.code = code;
         this.product = product.trim();
         this.unitPrice = unitPrice;
@@ -60,11 +60,11 @@ public class DTOProduct {
         this.saleType = saleType;
     }
 
-    public Integer getStock() {
+    public Double getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(Double stock) {
         this.stock = stock;
     }
 
