@@ -1,6 +1,6 @@
 package invapp.dto;
 
-public class DTOProduct {
+public class DTOProduct implements Comparable<DTOProduct> {
 
     private String code;
     private String product;
@@ -53,6 +53,12 @@ public class DTOProduct {
     @Override
     public String toString() {
         return "DTOProduct{" + "code=" + code + ", product=" + product + ", unitPrice=" + unitPrice +  '}';
+    }
+
+    @Override
+    public int compareTo(DTOProduct o) {
+        
+        return this.product.compareTo(o.getProduct());
     }
 
     

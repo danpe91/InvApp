@@ -2,6 +2,8 @@ package invapp.presentation;
 
 import invapp.business.LogicProduct;
 import invapp.dto.DTOProduct;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -179,7 +181,10 @@ public class Inventory extends javax.swing.JFrame {
     }//GEN-LAST:event_welcomeButtonActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        llenarTabla(new LogicProduct().readInventory());
+        
+        List<DTOProduct> products = new LogicProduct().readInventory();
+        Collections.sort(products);
+        llenarTabla(products);
     }//GEN-LAST:event_formWindowGainedFocus
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
