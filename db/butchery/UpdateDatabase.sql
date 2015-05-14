@@ -13,7 +13,8 @@ USE `butchery` ;
 -- Table `butchery`.`products`
 -- -----------------------------------------------------
 ALTER  TABLE `butchery`.`products`
-  ADD `stock` INTEGER DEFAULT 0;
+-- ADD `stock` DOUBLE DEFAULT 0.0 NOT NULL;
+  MODIFY COLUMN `stock` DOUBLE DEFAULT 0.0 NOT NULL;
 
 
 -- -----------------------------------------------------
